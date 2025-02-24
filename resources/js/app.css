@@ -1,0 +1,260 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.swal2-confirm {
+    @apply bg-pastel-red-600 hover:bg-pastel-red-500 focus:ring-pastel-red-500 focus:ring-2 focus:outline-none !important;
+    @apply text-white font-bold py-2 px-4 rounded-lg !important;
+    @apply transition-colors duration-200 !important;
+}
+
+.swal2-cancel {
+    @apply bg-pastel-dark-600 hover:bg-pastel-dark-500 focus:ring-pastel-dark-500 focus:ring-2 focus:outline-none !important;
+    @apply text-white font-bold py-2 px-4 rounded-lg !important;
+    @apply transition-colors duration-200 !important;
+}
+.swal2-popup {
+    @apply bg-pastel-light-600 dark:bg-pastel-dark-700 !important;
+}
+
+.swal2-popup {
+    @apply !font-sans;
+}
+
+.sidebar {
+    @apply fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-full h-full pt-16 border-r-0 border-pastel-light-700 sm:border-r sm:w-64 bg-pastel-light-700 dark:bg-pastel-dark-700 dark:border-pastel-dark-400 lg:translate-x-0 !important;
+}
+.sidebar.open {
+    @apply translate-x-0 !important;
+}
+.sidebar.close {
+    @apply -translate-x-full lg:translate-x-0 !important;
+}
+
+.sidebar-item {
+    @apply flex items-center p-2 font-normal transition-all duration-500 rounded-lg !important;
+}
+
+.sidebar-item.inactive {
+    @apply hover:bg-pastel-light-900 dark:hover:bg-pastel-dark-600 !important;
+    @apply text-pastel-dark-800 dark:text-pastel-light-300 !important;
+}
+.sidebar-item.active {
+    @apply bg-pastel-red-600 hover:bg-pastel-red-700 !important;
+    @apply text-white !important;
+    @apply font-bold !important;
+}
+
+.navbar {
+    @apply fixed z-30 w-full !important;
+    @apply border-b border-pastel-light-700 dark:border-pastel-dark-400 !important;
+    @apply bg-pastel-light-100 dark:bg-pastel-dark-700 !important;
+}
+
+.page-header {
+    @apply p-4 rounded-lg shadow-sm bg-pastel-light-500 dark:bg-pastel-dark-700 !important;
+}
+
+.table {
+    @apply min-w-full divide-y rounded-t-lg !important;
+    @apply divide-pastel-dark-500 dark:divide-pastel-light-400 !important;
+}
+
+.thead {
+    @apply bg-pastel-light-800 dark:bg-pastel-dark-600 !important;
+}
+
+.thead .th {
+    @apply px-6 py-3 text-xs font-bold tracking-wider !important;
+    @apply text-pastel-dark-600 dark:text-pastel-light-800 !important;
+}
+
+.tbody {
+    @apply divide-y text-nowrap !important;
+    @apply bg-pastel-light-500 divide-pastel-dark-500 dark:bg-pastel-dark-700 dark:divide-pastel-light-400 !important;
+}
+
+.tbody .tr {
+    @apply hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600 !important;
+}
+
+.tbody .tr .td {
+    @apply px-6 py-3 text-sm text-pastel-dark-600 dark:text-pastel-light-600 !important;
+}
+
+.btn {
+    @apply px-4 py-2 !important;
+}
+
+.btn.btn-sm {
+    @apply px-3 py-1 !important;
+}
+
+.btn.btn-blue {
+    @apply text-white bg-pastel-blue-600 hover:bg-pastel-blue-700 !important;
+}
+
+.btn.btn-red {
+    @apply text-white bg-pastel-red-500 hover:bg-pastel-red-600 !important;
+}
+
+.btn.btn-rounded {
+    @apply rounded-full !important;
+}
+
+.class {
+    @apply !important;
+}
+
+.pagination {
+    @apply flex items-center justify-between px-4 py-3 sm:px-6 !important;
+    @apply border-t border-pastel-light-200 dark:border-pastel-dark-800 !important;
+}
+
+.pagination .pagination-summary {
+    @apply flex items-center justify-between flex-1 !important;
+}
+
+.pagination .pagination-summary .pagination-info {
+    @apply hidden md:block !important;
+}
+
+.pagination .pagination-summary .pagination-info .pagination-info-text {
+    @apply text-sm !important;
+    @apply text-pastel-dark-300 dark:text-pastel-dark-300 !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-info
+    .pagination-info-text
+    .pagination-info-subtext {
+    @apply text-sm font-medium !important;
+    @apply text-pastel-dark-700 dark:text-pastel-light-300 !important;
+}
+
+.pagination .pagination-summary .pagination-section {
+    @apply flex justify-center flex-1 md:flex-none md:justify-start !important;
+}
+
+.pagination .pagination-summary .pagination-section .pagination-nav {
+    @apply inline-flex -space-x-px rounded-md shadow-sm isolate !important;
+    @apply bg-pastel-light-600 dark:bg-pastel-dark-600 !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-first {
+    @apply relative inline-flex items-center px-2 py-2 rounded-l-md ring-1 ring-inset !important;
+    @apply text-pastel-dark-400 dark:text-pastel-light-700 ring-pastel-dark-200 hover:bg-pastel-dark-100 dark:ring-pastel-dark-500 dark:hover:bg-pastel-dark-500 !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-first.disabled {
+    @apply cursor-not-allowed bg-opacity-0 text-opacity-50 hover:bg-opacity-0 dark:hover:bg-opacity-0 !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-prev {
+    @apply relative inline-flex items-center px-2 py-2 ring-1 ring-inset  !important;
+    @apply text-pastel-dark-400 dark:text-pastel-light-700 ring-pastel-dark-200 hover:bg-pastel-dark-100 dark:ring-pastel-dark-500 dark:hover:bg-pastel-dark-500 !important;
+}
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-prev.disabled {
+    @apply cursor-not-allowed bg-opacity-0 text-opacity-50 hover:bg-opacity-0 dark:hover:bg-opacity-0 !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-item {
+    @apply relative inline-flex items-center px-4 py-2 text-sm font-semibold !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-item.active {
+    @apply ring-1 ring-inset !important;
+    @apply bg-pastel-red-600 text-pastel-light-100 ring-pastel-dark-200 dark:ring-gray-700 !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-item.inactive {
+    @apply ring-1 ring-inset !important;
+    @apply text-pastel-dark-400 dark:text-pastel-light-700 ring-pastel-dark-200 dark:ring-pastel-dark-500 hover:bg-pastel-dark-100 dark:hover:bg-pastel-dark-500 !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-next {
+    @apply relative inline-flex items-center px-2 py-2 ring-1 ring-inset !important;
+    @apply text-pastel-dark-400 dark:text-pastel-light-700 ring-pastel-dark-200 hover:bg-pastel-dark-100 dark:ring-pastel-dark-500 dark:hover:bg-pastel-dark-500 !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-next.disabled {
+    @apply cursor-not-allowed bg-opacity-0 text-opacity-50 hover:bg-opacity-0 dark:hover:bg-opacity-0 !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-last {
+    @apply relative inline-flex items-center px-2 py-2 rounded-r-md ring-1 ring-inset !important;
+    @apply text-pastel-dark-400 dark:text-pastel-light-700 ring-pastel-dark-200 hover:bg-pastel-dark-100 dark:ring-pastel-dark-500 dark:hover:bg-pastel-dark-500 !important;
+}
+
+.pagination
+    .pagination-summary
+    .pagination-section
+    .pagination-nav
+    .pagination-last.disabled {
+    @apply cursor-not-allowed bg-opacity-0 text-opacity-50 hover:bg-opacity-0 dark:hover:bg-opacity-0 !important;
+}
+
+aside {
+    @apply transition-transform duration-300 ease-in-out !important;
+    @apply will-change-transform !important;
+}
+
+* {
+    transition-property: color, background-color, border-color,
+        text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 500ms;
+}
+
+body,
+#app,
+html {
+    transition: background-color 300ms ease-in-out,
+        border-color 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.transform-transition {
+    transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
