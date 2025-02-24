@@ -6,6 +6,8 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller {
@@ -59,5 +61,35 @@ class AuthController extends Controller {
             ->json([
                 'message' => 'Successfully logged out'
             ]);
+    }
+
+    public function loginWithGoogle(Request $request) {
+        try {
+            $user = User::where('email', $request->email)->first();
+
+            if (!$user) {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'google_id' => $request->google_id,
+                    'password' => Hash::make(Str::random(24))
+                ]);
+            }
+
+            return response()->json([
+                'message' => 'Login successful',
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ],
+                'token' => $user->createToken('auth_token')->plainTextToken
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Google login failed',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

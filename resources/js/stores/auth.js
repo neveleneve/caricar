@@ -37,6 +37,36 @@ export const useAuthStore = defineStore("auth", {
             }
         },
 
+        async loginWithGoogle(googleData) {
+            try {
+                this.loading = true;
+                this.error = null;
+
+                // Kirim data Google ke endpoint backend
+                const response = await axios.post(
+                    "/api/login/google",
+                    googleData
+                );
+                const { token, user } = response.data;
+
+                this.setAuth(token);
+                this.user = user;
+                storage.setItem(STORAGE_KEYS.AUTH, user);
+
+                axios.defaults.headers.common[
+                    "Authorization"
+                ] = `Bearer ${token}`;
+
+                return response;
+            } catch (error) {
+                this.error =
+                    error.response?.data?.message || "Google login failed";
+                throw error;
+            } finally {
+                this.loading = false;
+            }
+        },
+
         setAuth(token) {
             this.token = token;
             storage.setItem(STORAGE_KEYS.TOKEN, token);

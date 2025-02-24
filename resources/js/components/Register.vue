@@ -32,9 +32,9 @@
                 <div
                     class="p-8 transition-colors duration-200 shadow-2xl bg-pastel-light-400 rounded-xl dark:bg-pastel-dark-600">
                     <div class="mb-8 text-center">
-                        <h2 class="text-2xl font-bold text-pastel-dark-700 dark:text-pastel-light-500">Selamat Datang!
+                        <h2 class="text-2xl font-bold text-pastel-dark-700 dark:text-pastel-light-500">Create Account
                         </h2>
-                        <p class="mt-2 text-pastel-dark-700 dark:text-pastel-light-500">Silakan masuk ke akun Anda</p>
+                        <p class="mt-2 text-pastel-dark-700 dark:text-pastel-light-500">Please fill in your details</p>
                     </div>
 
                     <transition name="fade">
@@ -45,11 +45,23 @@
                         </div>
                     </transition>
 
-                    <form @submit.prevent="handleLogin" class="space-y-6">
+                    <form @submit.prevent="handleRegister" class="space-y-6">
+                        <div>
+                            <label for="name"
+                                class="block mb-1 text-sm font-medium text-pastel-dark-700 dark:text-pastel-light-500">
+                                Full Name
+                            </label>
+                            <div class="relative">
+                                <input v-model="name" id="name" type="text" required
+                                    class="w-full px-4 py-3 transition duration-150 ease-in-out border border-gray-300 rounded-lg dark:bg-pastel-dark-500 dark:border-gray-600 dark:text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    :class="{ 'opacity-50': loading }" autocomplete="off">
+                            </div>
+                        </div>
+
                         <div>
                             <label for="email"
-                                class="block mb-1 text-sm font-bold text-pastel-dark-700 dark:text-pastel-light-500">
-                                Alamat Email
+                                class="block mb-1 text-sm font-medium text-pastel-dark-700 dark:text-pastel-light-500">
+                                Email Address
                             </label>
                             <div class="relative">
                                 <input v-model="email" id="email" type="email" required
@@ -61,8 +73,8 @@
 
                         <div>
                             <label for="password"
-                                class="block mb-1 text-sm font-bold text-pastel-dark-700 dark:text-pastel-light-500">
-                                Kata Sandi
+                                class="block mb-1 text-sm font-medium text-pastel-dark-700 dark:text-pastel-light-500">
+                                Password
                             </label>
                             <div class="relative">
                                 <input v-model="password" id="password" type="password" required autocomplete="off"
@@ -71,47 +83,33 @@
                             </div>
                         </div>
 
+                        <div>
+                            <label for="password_confirmation"
+                                class="block mb-1 text-sm font-medium text-pastel-dark-700 dark:text-pastel-light-500">
+                                Confirm Password
+                            </label>
+                            <div class="relative">
+                                <input v-model="password_confirmation" id="password_confirmation" type="password"
+                                    required autocomplete="off" autocapitalize="off" autocorrect="off"
+                                    :class="{ 'opacity-50': loading }"
+                                    class="w-full px-4 py-3 transition duration-150 ease-in-out border border-gray-300 rounded-lg dark:bg-pastel-dark-500 dark:border-gray-600 dark:text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                        </div>
+
                         <button type="submit" :disabled="loading"
-                            class="w-full py-3 transform rounded-lg text-pastel-light-500 bg-pastel-blue-600 hover:bg-pastel-blue-800 focus:outline-none focus:ring-2 focus:ring-pastel-blue-400 focus:ring-offset-2"
+                            class="w-full py-3 transform rounded-lg text-pastel-light-500 bg-pastel-blue-500 hover:bg-pastel-blue-400 focus:outline-none focus:ring-2 focus:ring-pastel-blue-400 focus:ring-offset-2"
                             :class="{ 'opacity-75 cursor-not-allowed': loading }">
                             <div class="flex items-center justify-center font-bold">
                                 <span v-if="loading" class="mr-2 material-icons animate-spin">
                                     sync
                                 </span>
-                                {{ loading ? 'Signing In...' : 'Sign In' }}
+                                {{ loading ? 'Creating Account...' : 'Create Account' }}
                             </div>
                         </button>
-
-                        <div class="relative py-0">
-                            <div class="absolute inset-0 flex items-center">
-                                <div class="w-full border-t border-pastel-dark-500 dark:border-pastel-light-500"></div>
-                            </div>
-                            <div class="relative flex justify-center text-sm">
-                                <span
-                                    class="px-2 text-pastel-dark-500 dark:text-pastel-light-500 bg-pastel-light-400 dark:bg-pastel-dark-600">
-                                    Atau masuk dengan
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <button type="button" @click="handleGoogleLogin"
-                                class="flex items-center justify-center w-full px-4 py-2 text-sm font-bold transition-colors duration-200 border border-gray-300 rounded-lg bg-pastel-light-400 dark:bg-pastel-dark-500 dark:border-pastel-dark-600 dark:text-pastel-light-400 hover:bg-pastel-light-600 dark:hover:bg-pastel-dark-400">
-                                <img :src="'/assets/icons/icons8-google.svg'" class="w-5 h-5 mr-2" alt="Google Logo">
-                                Google
-                            </button>
-                            <button type="button" @click="handleFacebookLogin"
-                                class="flex items-center justify-center w-full px-4 py-2 text-sm font-bold text-pastel-light-400 transition-colors duration-200 bg-[#1877F2] rounded-lg hover:bg-[#0c60d3]">
-                                <img :src="'/assets/icons/icons8-facebook.svg'" class="w-5 h-5 mr-2"
-                                    alt="Facebook Logo">
-                                Facebook
-                            </button>
-                        </div>
-
                         <div class="mt-4 text-center">
-                            <a href="/register"
-                                class="text-sm font-bold text-pastel-blue-600 hover:text-pastel-blue-800 dark:text-pastel-blue-400 dark:hover:text-pastel-blue-500">
-                                Belum Punya Akun? Daftar disini
+                            <a href="/login"
+                                class="text-sm text-pastel-blue-500 hover:text-pastel-blue-400 dark:text-pastel-blue-400 dark:hover:text-pastel-blue-300">
+                                Sudah Punya Akun? Login disini
                             </a>
                         </div>
                     </form>
@@ -124,7 +122,6 @@
 <script>
 import { useAuthStore } from '@/stores/auth';
 import { useThemeStore } from '@/stores/theme';
-import { signInWithGoogle } from '@/utils/firebase'
 import { onMounted } from 'vue';
 
 export default {
@@ -148,54 +145,39 @@ export default {
     },
     data() {
         return {
+            name: '',
             email: '',
             password: '',
+            password_confirmation: '',
             error: null,
             loading: false,
         }
     },
     methods: {
-        async handleLogin() {
+        async handleRegister() {
             this.error = null;
             this.loading = true;
 
+            if (this.password !== this.password_confirmation) {
+                this.error = 'Passwords do not match';
+                this.loading = false;
+                return;
+            }
+
             try {
-                await this.authStore.login({
+                await this.authStore.register({
+                    name: this.name,
                     email: this.email,
-                    password: this.password
+                    password: this.password,
+                    password_confirmation: this.password_confirmation
                 });
                 this.$router.push('/administrator/dashboard');
             } catch (err) {
                 if (err.response) {
-                    this.error = err.response.data.message || 'Invalid credentials';
+                    this.error = err.response.data.message || 'Registration failed';
                 } else {
                     this.error = 'Unable to connect to server';
                 }
-            } finally {
-                this.loading = false;
-            }
-        },
-
-        async handleGoogleLogin() {
-            try {
-                this.loading = true;
-                this.error = null;
-
-                const googleUser = await signInWithGoogle();
-                if (googleUser) {
-                    // Kirim data Google user ke backend untuk diproses
-                    await this.authStore.loginWithGoogle({
-                        name: googleUser.displayName,
-                        email: googleUser.email,
-                        google_id: googleUser.uid,
-                        photo: googleUser.photoURL
-                    });
-
-                    this.$router.push('/administrator/dashboard');
-                }
-            } catch (err) {
-                this.error = err.response?.data?.message || 'Google login failed';
-                console.error('Google login error:', err);
             } finally {
                 this.loading = false;
             }

@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "@/components/Login.vue";
+import Register from "@/components/Register.vue";
+
+import Welcome from "@/components/pages/Welcome.vue";
 
 import DashboardIndex from "@/components/admin/dashboard/Index.vue";
 
@@ -23,14 +26,27 @@ import { storage } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/utils/constants";
 
 const routes = [
+    // {
+    //     path: "/",
+    //     redirect: "/administrator/dashboard",
+    // },
     {
         path: "/",
-        redirect: "/administrator/dashboard",
+        name: "welcome",
+        component: Welcome,
     },
     {
         path: "/login",
         name: "login",
         component: Login,
+        meta: {
+            requiresGuest: true,
+        },
+    },
+    {
+        path: "/register",
+        name: "register",
+        component: Register,
         meta: {
             requiresGuest: true,
         },
