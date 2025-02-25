@@ -1,32 +1,72 @@
 import { initializeApp } from "firebase/app";
 import {
     getAuth,
+    FacebookAuthProvider,
     GoogleAuthProvider,
     signInWithPopup,
     signOut,
+    setPersistence,
+    browserSessionPersistence,
 } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBTeZUQwwwpuLWkHRhHOia7Mt0kFrM0Fk0",
-    authDomain: "caricar-2271c.firebaseapp.com",
-    projectId: "caricar-2271c",
-    storageBucket: "caricar-2271c.firebasestorage.app",
-    messagingSenderId: "88528548623",
-    appId: "1:88528548623:web:29828db12ee6935fd4447a",
-    measurementId: "G-5NHD5LYZ8R",
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
 
 const signInWithGoogle = async () => {
     try {
+        await setPersistence(auth, browserSessionPersistence);
+        const provider = new GoogleAuthProvider();
         const result = await signInWithPopup(auth, provider);
-        return result.user;
+        return {
+            user: result.user,
+            token: GoogleAuthProvider.credentialFromResult(result)?.accessToken,
+        };
     } catch (error) {
-        console.error(error);
-        return null;
+        // console.error("Google sign in error:", error);
+        if (error.code === "auth/popup-blocked") {
+            throw new Error("Please allow popups for this website");
+        }
+        if (error.code === "auth/popup-closed-by-user") {
+            throw new Error("Login cancelled by user");
+        }
+        throw error;
+    }
+};
+const signInWithFacebook = async () => {
+    try {
+        await setPersistence(auth, browserSessionPersistence);
+        const facebookProvider = new FacebookAuthProvider();
+
+        facebookProvider.addScope("email");
+        facebookProvider.addScope("public_profile");
+
+        const result = await signInWithPopup(auth, facebookProvider);
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+
+        return {
+            user: result.user,
+            token: token,
+        };
+    } catch (error) {
+        // console.error("Facebook sign in error:", error);
+        if (error.code === "auth/popup-blocked") {
+            throw new Error("Please allow popups for this website");
+        }
+        if (error.code === "auth/popup-closed-by-user") {
+            throw new Error("Login cancelled by user");
+        }
+        throw error;
     }
 };
 
@@ -38,4 +78,4 @@ const signOutUser = async () => {
     }
 };
 
-export { auth, signInWithGoogle, signOutUser };
+export { auth, signInWithFacebook, signInWithGoogle, signOutUser };

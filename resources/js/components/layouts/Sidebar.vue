@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen transition-all duration-500 bg-pastel-light-100 dark:bg-pastel-dark-600">
+    <div class="min-h-screen transition-all duration-500 bg-pastel-light-600 dark:bg-pastel-dark-600">
         <nav class="navbar">
             <div class="px-3 py-3 lg:px-5 lg:pl-3">
                 <div class="flex items-center justify-between">
@@ -91,11 +91,19 @@
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/administrator/item" class="sidebar-item" :class="[$route.path.includes('/administrator/item')
+                            <router-link to="/administrator/transaksi" class="sidebar-item" :class="[$route.path.includes('/administrator/transaksi')
                                 ? 'active'
                                 : 'inactive']">
                                 <span class="material-icons">receipt_long</span>
                                 <span class="ml-3">Transaksi</span>
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/administrator/report" class="sidebar-item" :class="[$route.path.includes('/administrator/report')
+                                ? 'active'
+                                : 'inactive']">
+                                <span class="material-icons">summarize</span>
+                                <span class="ml-3">Report</span>
                             </router-link>
                         </li>
                     </ul>

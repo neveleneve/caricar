@@ -5,9 +5,9 @@
                 <div class="flex items-center gap-3">
                     <h1
                         class="flex items-center py-1.5 text-xl font-semibold text-pastel-dark-700 dark:text-pastel-light-500">
-                        <span class="material-icons">space_dashboard</span>
+                        <span class="material-icons">summarize</span>
                         <span class="ml-1 text-pastel-dark-700 dark:text-pastel-light-500">
-                            Dashboard
+                            Report
                         </span>
                     </h1>
                 </div>

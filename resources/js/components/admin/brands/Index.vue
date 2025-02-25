@@ -1,7 +1,7 @@
 <template>
     <dashboard-layout>
         <div class="container mx-auto mb-4">
-            <header class="p-4 rounded-lg shadow-sm bg-pastel-light-100 dark:bg-pastel-dark-700">
+            <header class="page-header">
                 <div class="flex items-center gap-3">
                     <h1
                         class="flex items-center py-1.5 text-xl font-semibold text-pastel-dark-700 dark:text-pastel-light-500">
@@ -19,8 +19,7 @@
                             <span class="w-5 h-5 text-gray-400 material-icons">search</span>
                         </span>
                         <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Cari brand..."
-                            class="w-full py-2 pl-10 pr-4 border rounded-lg text-pastel-dark-600 bg-pastel-light-500 dark:bg-pastel-dark-600 dark:border-pastel-dark-500 dark:text-pastel-dark-300 focus:outline-none focus:border-pastel-dark-700"
-                            id="pencarian" name="pencarian" />
+                            class="search-input-full" id="pencarian" name="pencarian">
                     </div>
                 </div>
                 <!-- desktop table -->
@@ -35,9 +34,10 @@
                                             <img v-if="brand.logo !== null"
                                                 :src="`${apiUrl}/public/assets/brands/logo/${brand.logo}`"
                                                 :alt="brand.name" class="object-cover w-8 h-8 rounded-full">
-                                            <img v-else :src="`https://ui-avatars.com/api/?size=128&name=${brand.name}`"
-                                                :alt="brand.name" class="object-cover w-8 h-8 rounded-full">
-
+                                            <span v-else
+                                                class="text-2xl material-icons text-pastel-dark-700 dark:text-pastel-light-500">
+                                                branding_watermark
+                                            </span>
                                         </td>
                                         <td class="td">
                                             {{ brand.name }}
@@ -53,7 +53,7 @@
                                                     <div v-show="activeMenu === brand.id"
                                                         class="absolute z-50 overflow-hidden border rounded-lg shadow-lg dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 -bottom-3 right-14 dark:bg-pastel-dark-800 w-36 menu-container"
                                                         @click.stop>
-                                                        <router-link :to="`/brand/${brand.id}`"
+                                                        <router-link :to="`/administrator/brand/${brand.id}`"
                                                             class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
                                                             Edit
                                                         </router-link>
@@ -71,6 +71,74 @@
                                         </td>
                                     </template>
                                 </data-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <div v-if="loading" class="flex justify-center p-4">
+                        <div
+                            class="w-6 h-6 border-2 border-t-2 rounded-full border-pastel-dark-300 border-t-pastel-dark-700 animate-spin">
+                        </div>
+                    </div>
+
+                    <div v-else-if="error" class="p-4 text-center text-pastel-red-600 dark:text-pastel-red-400">
+                        {{ error }}
+                    </div>
+
+                    <div v-else-if="brands.length === 0"
+                        class="p-4 text-center text-pastel-dark-600 dark:text-pastel-dark-300">
+                        Tidak ada data brand
+                    </div>
+
+                    <div v-else class="space-y-4">
+                        <div v-for="brand in brands" :key="brand.id"
+                            class="p-4 border rounded-lg shadow-sm dark:border-pastel-dark-500 bg-pastel-light-200 dark:bg-pastel-dark-800">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0">
+                                    <img v-if="brand.logo !== null"
+                                        :src="`${apiUrl}/public/assets/brands/logo/${brand.logo}`" :alt="brand.name"
+                                        class="object-cover w-12 h-12 rounded-full">
+                                    <span v-else
+                                        class="flex items-center justify-center w-12 h-12 text-3xl rounded-full bg-pastel-dark-100 dark:bg-pastel-dark-600">
+                                        <span class="material-icons text-pastel-dark-700 dark:text-pastel-light-500">
+                                            branding_watermark
+                                        </span>
+                                    </span>
+                                </div>
+
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-pastel-dark-700 dark:text-pastel-light-200">
+                                        {{ brand.name }}
+                                    </p>
+                                </div>
+
+                                <div class="relative">
+                                    <button @click.stop="toggleMenu(brand.id, $event)"
+                                        class="font-bold btn btn-sm btn-blue btn-rounded">
+                                        Aksi
+                                    </button>
+
+                                    <transition enter-active-class="transition duration-100 ease-out"
+                                        enter-from-class="transform scale-95 opacity-0"
+                                        enter-to-class="transform scale-100 opacity-100"
+                                        leave-active-class="transition duration-75 ease-in"
+                                        leave-from-class="transform scale-100 opacity-100"
+                                        leave-to-class="transform scale-95 opacity-0">
+                                        <div v-show="activeMenu === brand.id"
+                                            class="absolute right-0 z-50 overflow-hidden border rounded-lg shadow-lg top-10 dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 dark:bg-pastel-dark-800 w-36 menu-container"
+                                            @click.stop>
+                                            <router-link :to="`/administrator/brand/${brand.id}`"
+                                                class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
+                                                Edit
+                                            </router-link>
+                                            <button @click.stop="handleDelete(brand.id, brand.name)"
+                                                class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-red-600 hover:bg-gray-100 dark:text-pastel-red-400 dark:hover:bg-pastel-dark-700">
+                                                Hapus
+                                            </button>
+                                        </div>
+                                    </transition>
+                                </div>
                             </div>
                         </div>
                     </div>

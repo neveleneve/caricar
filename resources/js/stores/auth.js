@@ -42,7 +42,6 @@ export const useAuthStore = defineStore("auth", {
                 this.loading = true;
                 this.error = null;
 
-                // Kirim data Google ke endpoint backend
                 const response = await axios.post(
                     "/api/login/google",
                     googleData
@@ -61,6 +60,40 @@ export const useAuthStore = defineStore("auth", {
             } catch (error) {
                 this.error =
                     error.response?.data?.message || "Google login failed";
+                const errors =
+                    error.response?.data?.error ||
+                    "Google login failed fasddfa";
+                console.log(errors);
+
+                throw error;
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async loginWithFacebook(facebookData) {
+            try {
+                this.loading = true;
+                this.error = null;
+
+                const response = await axios.post(
+                    "/api/login/facebook",
+                    facebookData
+                );
+                const { token, user } = response.data;
+
+                this.setAuth(token);
+                this.user = user;
+                storage.setItem(STORAGE_KEYS.AUTH, user);
+
+                axios.defaults.headers.common[
+                    "Authorization"
+                ] = `Bearer ${token}`;
+
+                return response;
+            } catch (error) {
+                this.error =
+                    error.response?.data?.message || "Facebook login failed";
                 throw error;
             } finally {
                 this.loading = false;

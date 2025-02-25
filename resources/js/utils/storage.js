@@ -1,7 +1,7 @@
 import { STORAGE_KEYS } from "./constants";
 import CryptoJS from "crypto-js";
 
-const SECRET_KEY = CryptoJS.SHA256("tokopayment").toString();
+const SECRET_KEY = import.meta.env.VITE_APP_SECRET_KEY;
 
 export const storage = {
     encrypt(data) {

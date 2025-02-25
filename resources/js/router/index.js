@@ -7,29 +7,88 @@ import Welcome from "@/components/pages/Welcome.vue";
 import DashboardIndex from "@/components/admin/dashboard/Index.vue";
 
 import BrandIndex from "@/components/admin/brands/Index.vue";
-// import KategoriCreate from "@/components/auth/Kategori/Create.vue";
-// import KategoriEdit from "@/components/auth/Kategori/Edit.vue";
+import BrandEdit from "@/components/admin/brands/Edit.vue";
 
-// import ItemIndex from "@/components/auth/Item/Index.vue";
-// import ItemCreate from "@/components/auth/Item/Create.vue";
-// import ItemEdit from "@/components/auth/Item/Edit.vue";
+import UserIndex from "@/components/admin/user/Index.vue";
 
-// import PelangganIndex from "@/components/auth/Pelanggan/Index.vue";
-// import PelangganCreate from "@/components/auth/Pelanggan/Create.vue";
-// import PelangganEdit from "@/components/auth/Pelanggan/Edit.vue";
+import ItemIndex from "@/components/admin/item/Index.vue";
 
-// import TransaksiIndex from "@/components/auth/Transaksi/Index.vue";
+import TransaksiIndex from "@/components/admin/transaksi/Index.vue";
 
-// import ReportIndex from "@/components/auth/Report/Index.vue";
+import ReportIndex from "@/components/admin/report/Index.vue";
 
 import { storage } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/utils/constants";
 
+const adminRoutes = [
+    {
+        path: "dashboard",
+        name: "dashboard",
+        component: DashboardIndex,
+    },
+    {
+        path: "brand",
+        name: "brand",
+        children: [
+            {
+                path: "",
+                name: "brand_index",
+                component: BrandIndex,
+            },
+            {
+                path: ":id",
+                name: "brand_edit",
+                component: BrandEdit,
+            },
+        ],
+    },
+    {
+        path: "user",
+        name: "user",
+        children: [
+            {
+                path: "",
+                name: "user_index",
+                component: UserIndex,
+            },
+        ],
+    },
+    {
+        path: "item",
+        name: "item",
+        children: [
+            {
+                path: "",
+                name: "item_index",
+                component: ItemIndex,
+            },
+        ],
+    },
+    {
+        path: "transaksi",
+        name: "transaksi",
+        children: [
+            {
+                path: "",
+                name: "transaksi_index",
+                component: TransaksiIndex,
+            },
+        ],
+    },
+    {
+        path: "report",
+        name: "report",
+        children: [
+            {
+                path: "",
+                name: "report_index",
+                component: ReportIndex,
+            },
+        ],
+    },
+];
+
 const routes = [
-    // {
-    //     path: "/",
-    //     redirect: "/administrator/dashboard",
-    // },
     {
         path: "/",
         name: "welcome",
@@ -52,101 +111,16 @@ const routes = [
         },
     },
     {
-        path: "/administrator/dashboard",
-        name: "dashboard",
-        component: DashboardIndex,
-        meta: {
-            requiresAuth: true,
-        },
-    },
-    {
-        path: "/administrator/brand",
-        name: "brand",
-        meta: {
-            requiresAuth: true,
-        },
-        children: [
-            {
-                path: "",
-                name: "brand_index",
-                component: BrandIndex,
+        path: "/administrator",
+        children: adminRoutes.map((route) => ({
+            ...route,
+            path: route.path,
+            meta: {
+                requiresAuth: true,
+                role: "administrator",
             },
-            // {
-            //     path: "add",
-            //     name: "kategori_create",
-            //     component: KategoriCreate,
-            // },
-            // {
-            //     path: ":id",
-            //     name: "kategori_edit",
-            //     component: KategoriEdit,
-            // },
-        ],
+        })),
     },
-    // {
-    //     path: "/item",
-    //     name: "item",
-    //     meta: {
-    //         requiresAuth: true,
-    //     },
-    //     children: [
-    //         {
-    //             path: "",
-    //             name: "item_index",
-    //             component: ItemIndex,
-    //         },
-    //         {
-    //             path: "add",
-    //             name: "item_create",
-    //             component: ItemCreate,
-    //         },
-    //         {
-    //             path: ":id",
-    //             name: "item_edit",
-    //             component: ItemEdit,
-    //         },
-    //     ],
-    // },
-    // {
-    //     path: "/pelanggan",
-    //     name: "pelanggan",
-    //     meta: {
-    //         requiresAuth: true,
-    //     },
-    //     children: [
-    //         {
-    //             path: "",
-    //             name: "pelanggan_index",
-    //             component: PelangganIndex,
-    //         },
-    //         {
-    //             path: "add",
-    //             name: "pelanggan_create",
-    //             component: PelangganCreate,
-    //         },
-    //         {
-    //             path: ":id",
-    //             name: "pelanggan_edit",
-    //             component: PelangganEdit,
-    //         },
-    //     ],
-    // },
-    // {
-    //     path: "/transaksi",
-    //     name: "transaksi",
-    //     component: TransaksiIndex,
-    //     meta: {
-    //         requiresAuth: true,
-    //     },
-    // },
-    // {
-    //     path: "/report",
-    //     name: "report",
-    //     component: ReportIndex,
-    //     meta: {
-    //         requiresAuth: true,
-    //     },
-    // },
 ];
 
 const router = createRouter({
@@ -156,13 +130,21 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
     const isAuthenticated = storage.getItem(STORAGE_KEYS.TOKEN);
+    const user = storage.getItem(STORAGE_KEYS.AUTH);
 
-    if (to.meta.guest && isAuthenticated) {
+    // Check for guest routes (login/register)
+    if (to.meta.requiresGuest && isAuthenticated) {
         return next({ name: "dashboard" });
     }
 
+    // Check for authenticated routes
     if (to.meta.requiresAuth && !isAuthenticated) {
         return next({ name: "login" });
+    }
+
+    // Check role-based access
+    if (to.meta.role && user?.role !== to.meta.role) {
+        return next({ name: "welcome" }); // or another appropriate fallback route
     }
 
     return next();
