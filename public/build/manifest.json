@@ -1,4 +1,19 @@
 {
+  "_Sidebar-BcOW22Pq.js": {
+    "file": "assets/Sidebar-BcOW22Pq.js",
+    "name": "Sidebar",
+    "imports": [
+      "resources/js/app.js",
+      "_theme-DUdhtcv_.js"
+    ]
+  },
+  "_theme-DUdhtcv_.js": {
+    "file": "assets/theme-DUdhtcv_.js",
+    "name": "theme",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
   "node_modules/@material-design-icons/font/material-icons-outlined.woff2": {
     "file": "assets/material-icons-outlined-DZhiGvEA.woff2",
     "src": "node_modules/@material-design-icons/font/material-icons-outlined.woff2"
@@ -20,17 +35,34 @@
     "src": "node_modules/@material-design-icons/font/material-icons.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Do1TNA0N.css",
+    "file": "assets/app-CzavexhF.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-BDzaCFOz.js",
+    "file": "assets/app-C-qkH5mP.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
+    "dynamicImports": [
+      "resources/js/components/admin/dashboard/Index.vue",
+      "resources/js/components/admin/brands/Index.vue",
+      "resources/js/components/admin/brands/Edit.vue",
+      "resources/js/components/admin/user/Index.vue",
+      "resources/js/components/admin/item/Index.vue",
+      "resources/js/components/admin/transaksi/Index.vue",
+      "resources/js/components/admin/report/Index.vue",
+      "resources/js/components/pages/Welcome.vue",
+      "resources/js/components/pages/MobilBaru.vue",
+      "resources/js/components/pages/MobilBekas.vue",
+      "resources/js/components/pages/MotorBaru.vue",
+      "resources/js/components/pages/MotorBekas.vue",
+      "resources/js/components/pages/JualKendaraanAnda.vue",
+      "resources/js/components/Login.vue",
+      "resources/js/components/Register.vue"
+    ],
     "css": [
-      "assets/app-BmtBwJly.css"
+      "assets/app-DUR4BzjZ.css"
     ],
     "assets": [
       "assets/material-icons-kAwBdRge.woff2",
@@ -38,6 +70,162 @@
       "assets/material-icons-round-DrirKXBx.woff2",
       "assets/material-icons-sharp-gidztirS.woff2",
       "assets/material-icons-two-tone-DuNIpaEj.woff2"
+    ]
+  },
+  "resources/js/components/Login.vue": {
+    "file": "assets/Login-ag8CHBuj.js",
+    "name": "Login",
+    "src": "resources/js/components/Login.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_theme-DUdhtcv_.js"
+    ],
+    "css": [
+      "assets/Login-fomUEUiP.css"
+    ]
+  },
+  "resources/js/components/Register.vue": {
+    "file": "assets/Register-C7Jt63lW.js",
+    "name": "Register",
+    "src": "resources/js/components/Register.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_theme-DUdhtcv_.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/admin/brands/Edit.vue": {
+    "file": "assets/Edit-BbH36t_R.js",
+    "name": "Edit",
+    "src": "resources/js/components/admin/brands/Edit.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/admin/brands/Index.vue": {
+    "file": "assets/Index-D_vh-VGx.js",
+    "name": "Index",
+    "src": "resources/js/components/admin/brands/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_Sidebar-BcOW22Pq.js",
+      "_theme-DUdhtcv_.js"
+    ]
+  },
+  "resources/js/components/admin/dashboard/Index.vue": {
+    "file": "assets/Index-Dw3rvK-E.js",
+    "name": "Index",
+    "src": "resources/js/components/admin/dashboard/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_Sidebar-BcOW22Pq.js",
+      "_theme-DUdhtcv_.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/admin/item/Index.vue": {
+    "file": "assets/Index-mlQaJEYQ.js",
+    "name": "Index",
+    "src": "resources/js/components/admin/item/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_Sidebar-BcOW22Pq.js",
+      "_theme-DUdhtcv_.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/admin/report/Index.vue": {
+    "file": "assets/Index-W4rxQ0ws.js",
+    "name": "Index",
+    "src": "resources/js/components/admin/report/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_Sidebar-BcOW22Pq.js",
+      "_theme-DUdhtcv_.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/admin/transaksi/Index.vue": {
+    "file": "assets/Index-CorLTaV8.js",
+    "name": "Index",
+    "src": "resources/js/components/admin/transaksi/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_Sidebar-BcOW22Pq.js",
+      "_theme-DUdhtcv_.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/admin/user/Index.vue": {
+    "file": "assets/Index-DRTX3hq5.js",
+    "name": "Index",
+    "src": "resources/js/components/admin/user/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_Sidebar-BcOW22Pq.js",
+      "_theme-DUdhtcv_.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/pages/JualKendaraanAnda.vue": {
+    "file": "assets/JualKendaraanAnda-Df9es0nH.js",
+    "name": "JualKendaraanAnda",
+    "src": "resources/js/components/pages/JualKendaraanAnda.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/pages/MobilBaru.vue": {
+    "file": "assets/MobilBaru-OYpvv8gT.js",
+    "name": "MobilBaru",
+    "src": "resources/js/components/pages/MobilBaru.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/pages/MobilBekas.vue": {
+    "file": "assets/MobilBekas-CFV8nS4n.js",
+    "name": "MobilBekas",
+    "src": "resources/js/components/pages/MobilBekas.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/pages/MotorBaru.vue": {
+    "file": "assets/MotorBaru-BK3_xl2y.js",
+    "name": "MotorBaru",
+    "src": "resources/js/components/pages/MotorBaru.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/pages/MotorBekas.vue": {
+    "file": "assets/MotorBekas-hAmlrSK6.js",
+    "name": "MotorBekas",
+    "src": "resources/js/components/pages/MotorBekas.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/components/pages/Welcome.vue": {
+    "file": "assets/Welcome-_g2UFyez.js",
+    "name": "Welcome",
+    "src": "resources/js/components/pages/Welcome.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_theme-DUdhtcv_.js"
+    ],
+    "css": [
+      "assets/Welcome-vcj0LfA8.css"
     ]
   }
 }

@@ -123,93 +123,79 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useThemeStore } from '@/stores/theme';
 import Swal from 'sweetalert2';
+const sidebarOpen = ref(false);
+const isLoggingOut = ref(false);
+const router = useRouter();
+const authStore = useAuthStore();
+const themeStore = useThemeStore();
+const user = computed(() => {
+    return authStore.user;
+});
+const getSwalConfig = (options = {}) => ({
+    background: themeStore.isDark ? '#1F2937' : '#fff',
+    color: themeStore.isDark ? '#fff' : '#000',
+    ...options
+});
 
-export default {
-    setup() {
-        const sidebarOpen = ref(false);
-        const isLoggingOut = ref(false);
-        const router = useRouter();
-        const authStore = useAuthStore();
-        const themeStore = useThemeStore();
-        const user = computed(() => {
-            return authStore.user;
-        });
-        const getSwalConfig = (options = {}) => ({
-            background: themeStore.isDark ? '#1F2937' : '#fff',
-            color: themeStore.isDark ? '#fff' : '#000',
-            ...options
-        });
+themeStore.initTheme()
 
-        themeStore.initTheme()
-
-        onMounted(async () => {
-            const isValid = await authStore.verifyToken();
-            if (!isValid) {
-                router.push('/login');
-            }
-        });
-
-        const toggleTheme = () => {
-            themeStore.toggleTheme();
-        }
-
-        const toggleSidebar = () => {
-            sidebarOpen.value = !sidebarOpen.value;
-        }
-
-        const logout = async () => {
-            try {
-                const result = await Swal.fire(getSwalConfig({
-                    title: 'Konfirmasi Logout',
-                    text: 'Apakah Anda yakin ingin keluar?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, Logout',
-                    cancelButtonText: 'Batal',
-                }));
-
-                if (result.isConfirmed) {
-                    isLoggingOut.value = true;
-                    await authStore.logout();
-                    await Swal.fire(getSwalConfig({
-                        title: 'Berhasil Logout!',
-                        text: 'Anda telah keluar dari sistem',
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                    }));
-                    router.push('/');
-                }
-            } catch (error) {
-                console.error('Logout failed:', error);
-                await Swal.fire(getSwalConfig({
-                    title: 'Error!',
-                    text: error.response?.data?.message || 'Gagal melakukan logout',
-                    icon: 'error'
-                }));
-            } finally {
-                isLoggingOut.value = false;
-            }
-        };
-
-        return {
-            sidebarOpen,
-            toggleSidebar,
-            logout,
-            user,
-            isLoggingOut,
-            themeStore,
-            toggleTheme,
-        }
+onMounted(async () => {
+    const isValid = await authStore.verifyToken();
+    if (!isValid) {
+        router.push('/login');
     }
+});
+
+const toggleTheme = () => {
+    themeStore.toggleTheme();
 }
+
+const toggleSidebar = () => {
+    sidebarOpen.value = !sidebarOpen.value;
+}
+
+const logout = async () => {
+    try {
+        const result = await Swal.fire(getSwalConfig({
+            title: 'Konfirmasi Logout',
+            text: 'Apakah Anda yakin ingin keluar?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Logout',
+            cancelButtonText: 'Batal',
+        }));
+
+        if (result.isConfirmed) {
+            isLoggingOut.value = true;
+            await authStore.logout();
+            await Swal.fire(getSwalConfig({
+                title: 'Berhasil Logout!',
+                text: 'Anda telah keluar dari sistem',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+            }));
+            router.push('/');
+        }
+    } catch (error) {
+        console.error('Logout failed:', error);
+        await Swal.fire(getSwalConfig({
+            title: 'Error!',
+            text: error.response?.data?.message || 'Gagal melakukan logout',
+            icon: 'error'
+        }));
+    } finally {
+        isLoggingOut.value = false;
+    }
+};
+
 </script>
 
 <style scoped>

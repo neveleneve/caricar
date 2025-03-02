@@ -1,0 +1,1 @@
+import{_ as r}from"./app-C-qkH5mP.js";const e={};function c(n,a){return" Halo "}const s=r(e,[["render",c],["__file","C:/laragon/www/caricar/resources/js/components/admin/brands/Edit.vue"]]);export{s as default};

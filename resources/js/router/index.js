@@ -1,15 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "@/components/Login.vue";
-import Register from "@/components/Register.vue";
-
-import Welcome from "@/components/pages/Welcome.vue";
-import MobilBaru from "@/components/pages/MobilBaru.vue";
-import MobilBekas from "@/components/pages/MobilBekas.vue";
-import MotorBaru from "@/components/pages/MotorBaru.vue";
-import MotorBekas from "@/components/pages/MotorBekas.vue";
-import Sell from "@/components/pages/JualKendaraanAnda.vue";
-
-import DashboardIndex from "@/components/admin/dashboard/Index.vue";
 
 import BrandIndex from "@/components/admin/brands/Index.vue";
 import BrandEdit from "@/components/admin/brands/Edit.vue";
@@ -29,7 +18,7 @@ const adminRoutes = [
     {
         path: "dashboard",
         name: "dashboard",
-        component: DashboardIndex,
+        component: () => import("@/components/admin/dashboard/Index.vue"),
     },
     {
         path: "brand",
@@ -38,12 +27,12 @@ const adminRoutes = [
             {
                 path: "",
                 name: "brand_index",
-                component: BrandIndex,
+                component: () => import("@/components/admin/brands/Index.vue"),
             },
             {
                 path: ":id",
                 name: "brand_edit",
-                component: BrandEdit,
+                component: () => import("@/components/admin/brands/Edit.vue"),
             },
         ],
     },
@@ -54,7 +43,7 @@ const adminRoutes = [
             {
                 path: "",
                 name: "user_index",
-                component: UserIndex,
+                component: () => import("@/components/admin/user/Index.vue"),
             },
         ],
     },
@@ -65,7 +54,7 @@ const adminRoutes = [
             {
                 path: "",
                 name: "item_index",
-                component: ItemIndex,
+                component: () => import("@/components/admin/item/Index.vue"),
             },
         ],
     },
@@ -76,7 +65,8 @@ const adminRoutes = [
             {
                 path: "",
                 name: "transaksi_index",
-                component: TransaksiIndex,
+                component: () =>
+                    import("@/components/admin/transaksi/Index.vue"),
             },
         ],
     },
@@ -87,7 +77,7 @@ const adminRoutes = [
             {
                 path: "",
                 name: "report_index",
-                component: ReportIndex,
+                component: () => import("@/components/admin/report/Index.vue"),
             },
         ],
     },
@@ -97,37 +87,37 @@ const routes = [
     {
         path: "/",
         name: "welcome",
-        component: Welcome,
+        component: () => import("@/components/pages/Welcome.vue"),
     },
     {
         path: "/mobil-baru",
         name: "mobilbaru",
-        component: MobilBaru,
+        component: () => import("@/components/pages/MobilBaru.vue"),
     },
     {
         path: "/mobil-bekas",
         name: "mobilbekas",
-        component: MobilBekas,
+        component: () => import("@/components/pages/MobilBekas.vue"),
     },
     {
         path: "/motor-baru",
         name: "motorbaru",
-        component: MotorBaru,
+        component: () => import("@/components/pages/MotorBaru.vue"),
     },
     {
         path: "/motor-bekas",
         name: "motorbekas",
-        component: MotorBekas,
+        component: () => import("@/components/pages/MotorBekas.vue"),
     },
     {
         path: "/sell",
         name: "sell",
-        component: Sell,
+        component: () => import("@/components/pages/JualKendaraanAnda.vue"),
     },
     {
         path: "/login",
         name: "login",
-        component: Login,
+        component: () => import("@/components/Login.vue"),
         meta: {
             requiresGuest: true,
         },
@@ -135,7 +125,7 @@ const routes = [
     {
         path: "/register",
         name: "register",
-        component: Register,
+        component: () => import("@/components/Register.vue"),
         meta: {
             requiresGuest: true,
         },

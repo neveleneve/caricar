@@ -1,6 +1,5 @@
 <template>
-    <nav
-        class="transition-colors duration-300 text-pastel-dark-700 bg-pastel-light-100 dark:text-pastel-light-100 dark:bg-pastel-dark-600">
+    <nav class="transition-colors duration-300 bg-pastel-light-100 dark:bg-pastel-dark-600">
         <div class="container flex items-center justify-between px-2 py-3 mx-auto">
             <div class="flex items-center">
                 <router-link to="/" class="flex">
@@ -22,28 +21,50 @@
                         <span class="text-xl material-icons">person_add</span>
                         <span class="text-sm font-medium">Daftar</span>
                     </router-link>
+                    <router-link to="/sell"
+                        class="items-center hidden px-4 py-2 font-semibold transition-colors rounded md:flex text-pastel-light-100 bg-pastel-red-600 hover:bg-pastel-red-700 dark:bg-pastel-red-700 dark:hover:bg-pastel-red-800">
+                        Jual Kendaraan Anda
+                    </router-link>
+                    <button @click="toggleTheme"
+                        class="flex items-center px-2 py-2 font-semibold transition-colors rounded-full text-pastel-dark-500 dark:text-pastel-light-300 bg-pastel-light-100 hover:bg-pastel-light-600 dark:bg-pastel-dark-600 dark:hover:bg-pastel-dark-400">
+                        <i class="material-icons theme-icon" :class="[
+                            themeStore.isDark ? 'dark-to-light' : 'light-to-dark',
+                            { 'animate-theme': themeStore.isTransitioning }
+                        ]">
+                            {{ themeStore.isDark ? 'light_mode' : 'dark_mode' }}
+                        </i>
+                    </button>
                 </nav>
                 <nav v-else class="flex items-center space-x-4">
                     <router-link to="/administrator/dashboard"
                         class="items-center hidden space-x-1 transition-colors md:flex text-pastel-dark-500 dark:text-pastel-light-300 hover:text-pastel-blue-500 dark:hover:text-pastel-blue-300">
                         <span class="text-xl material-icons">home</span>
-                        <span class="text-sm font-medium">Dashboard</span>
+                        <span class="text-sm font-bold">Dashboard</span>
                     </router-link>
+                    <router-link to="/sell"
+                        class="items-center hidden px-4 py-2 font-semibold transition-colors rounded md:flex text-pastel-light-100 bg-pastel-blue-700 hover:bg-pastel-blue-800">
+                        Jual Kendaraan Anda
+                    </router-link>
+                    <button @click="logout" :disabled="isLoggingOut"
+                        :class="{ 'opacity-75 cursor-not-allowed': isLoggingOut }"
+                        class="items-center hidden px-4 py-2 font-semibold transition-colors rounded md:flex text-pastel-light-100 bg-pastel-red-700 hover:bg-pastel-red-800">
+                        <span v-if="isLoggingOut" class="material-icons animate-spin">
+                            sync
+                        </span>
+                        <span v-else class="material-icons">
+                            power_settings_new
+                        </span>
+                    </button>
+                    <button @click="toggleTheme"
+                        class="flex items-center px-2 py-2 font-semibold transition-colors rounded-full text-pastel-dark-500 dark:text-pastel-light-300 bg-pastel-light-100 hover:bg-pastel-light-600 dark:bg-pastel-dark-600 dark:hover:bg-pastel-dark-400">
+                        <i class="material-icons theme-icon" :class="[
+                            themeStore.isDark ? 'dark-to-light' : 'light-to-dark',
+                            { 'animate-theme': themeStore.isTransitioning }
+                        ]">
+                            {{ themeStore.isDark ? 'light_mode' : 'dark_mode' }}
+                        </i>
+                    </button>
                 </nav>
-                <router-link to="/sell"
-                    class="items-center hidden px-4 py-2 font-semibold transition-colors rounded md:flex text-pastel-light-100 bg-pastel-red-600 hover:bg-pastel-red-700 dark:bg-pastel-red-700 dark:hover:bg-pastel-red-800">
-                    Jual Kendaraan Anda
-                </router-link>
-                <button @click="toggleTheme"
-                    class="p-2 transition-colors rounded-lg text-pastel-dark-400 dark:text-pastel-light-400 hover:bg-pastel-dark-200/20 dark:hover:bg-pastel-light-200/20"
-                    :aria-label="themeButtonLabel">
-                    <i class="material-icons theme-icon" :class="[
-                        themeStore.isDark ? 'dark-to-light' : 'light-to-dark',
-                        { 'animate-theme': themeStore.isTransitioning }
-                    ]">
-                        {{ themeStore.isDark ? 'light_mode' : 'dark_mode' }}
-                    </i>
-                </button>
             </div>
         </div>
         <div class="transition-colors duration-300 bg-pastel-blue-600 dark:bg-pastel-blue-700 text-pastel-light-100">
@@ -75,32 +96,48 @@
                             {{ link.text }}
                         </router-link>
                     </li>
-                    <li v-if="!loggedIn">
-                        <router-link to="/login"
-                            class="flex items-center px-4 py-3 font-bold transition-colors gap-x-2 text-pastel-dark-700 hover:text-pastel-blue-600 dark:text-pastel-light-100 dark:hover:text-pastel-blue-300"
-                            @click="closeMobileMenu">
-                            <span class="text-xl material-icons">login</span>
-                            <span>Masuk</span>
-                        </router-link>
-                    </li>
-                    <li v-if="!loggedIn">
-                        <router-link to="/register"
-                            class="flex items-center px-4 py-3 font-bold transition-colors gap-x-2 text-pastel-dark-700 hover:text-pastel-blue-600 dark:text-pastel-light-100 dark:hover:text-pastel-blue-300"
-                            @click="closeMobileMenu">
-                            <span class="text-xl material-icons">person_add</span>
-                            <span>Daftar</span>
-                        </router-link>
-                    </li>
-                    <li v-else>
-                        <router-link to="/administrator/dashboard"
-                            class="flex items-center px-4 py-3 font-bold transition-colors gap-x-2 text-pastel-dark-700 hover:text-pastel-blue-600 dark:text-pastel-light-100 dark:hover:text-pastel-blue-300">
-                            <span class="text-xl material-icons">home</span>
-                            <span>Dashboard</span>
-                        </router-link>
-                    </li>
+                    <div v-if="!loggedIn">
+                        <li>
+                            <router-link to="/login"
+                                class="flex items-center px-4 py-3 font-bold transition-colors gap-x-2 text-pastel-dark-700 hover:text-pastel-blue-600 dark:text-pastel-light-100 dark:hover:text-pastel-blue-300"
+                                @click="closeMobileMenu">
+                                <span class="text-xl material-icons">login</span>
+                                <span>Masuk</span>
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/register"
+                                class="flex items-center px-4 py-3 font-bold transition-colors gap-x-2 text-pastel-dark-700 hover:text-pastel-blue-600 dark:text-pastel-light-100 dark:hover:text-pastel-blue-300"
+                                @click="closeMobileMenu">
+                                <span class="text-xl material-icons">person_add</span>
+                                <span>Daftar</span>
+                            </router-link>
+                        </li>
+                    </div>
+                    <div v-else>
+                        <li>
+                            <router-link to="/administrator/dashboard"
+                                class="flex items-center px-4 py-3 font-bold transition-colors gap-x-2 text-pastel-dark-700 hover:text-pastel-blue-600 dark:text-pastel-light-100 dark:hover:text-pastel-blue-300">
+                                <span class="text-xl material-icons">home</span>
+                                <span>Dashboard</span>
+                            </router-link>
+                        </li>
+                        <li>
+                            <button @click="logout"
+                                class="flex items-center px-4 py-3 font-bold transition-colors gap-x-2 text-pastel-dark-700 hover:text-pastel-blue-600 dark:text-pastel-light-100 dark:hover:text-pastel-blue-300">
+                                <span v-if="isLoggingOut" class="material-icons animate-spin">
+                                    sync
+                                </span>
+                                <span v-else class="material-icons">
+                                    power_settings_new
+                                </span>
+                                <span>Logout</span>
+                            </button>
+                        </li>
+                    </div>
                     <li class="p-4">
                         <router-link to="/sell"
-                            class="flex items-center justify-center w-full px-4 py-2 font-semibold transition-colors rounded text-pastel-light-100 bg-pastel-red-600 hover:bg-pastel-red-700 dark:bg-pastel-red-700 dark:hover:bg-pastel-red-800"
+                            class="flex items-center justify-center w-full px-4 py-2 font-semibold transition-colors rounded text-pastel-light-100 bg-pastel-blue-600 hover:bg-pastel-blue-700"
                             @click="closeMobileMenu">
                             Jual Kendaraan Anda
                         </router-link>
@@ -121,17 +158,17 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth'
 import { storage } from '@/utils/storage'
 import { STORAGE_KEYS } from '@/utils/constants'
+import Swal from 'sweetalert2';
 
+const isLoggingOut = ref(false);
 const isMobileMenuOpen = ref(false);
 const themeStore = useThemeStore();
 const router = useRouter();
 const authStore = useAuthStore()
 
-const loggedIn = authStore.isAuthenticated
+const loggedIn = computed(() => authStore.isAuthenticated);
 
-let user = computed(() => {
-    return []
-})
+let user
 
 if (loggedIn) {
     user = computed(() => {
@@ -147,7 +184,6 @@ const menuLinks = [
 ];
 
 const logoAltText = computed(() => `Logo Caricar.id ${themeStore.isDark ? 'Dark' : 'Light'}`);
-const themeButtonLabel = computed(() => `Switch to ${themeStore.isDark ? 'light' : 'dark'} mode`);
 
 const toggleMobileMenu = () => {
     isMobileMenuOpen.value = !isMobileMenuOpen.value;
@@ -163,6 +199,47 @@ const toggleTheme = () => {
 
 const routeChangeHandler = () => {
     closeMobileMenu();
+};
+const getSwalConfig = (options = {}) => ({
+    background: themeStore.isDark ? '#1F2937' : '#fff',
+    color: themeStore.isDark ? '#fff' : '#000',
+    ...options
+});
+
+const logout = async () => {
+    try {
+        const result = await Swal.fire(getSwalConfig({
+            title: 'Konfirmasi Logout',
+            text: 'Apakah Anda yakin ingin keluar?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Logout',
+            cancelButtonText: 'Batal',
+        }));
+
+        if (result.isConfirmed) {
+            isLoggingOut.value = true;
+            await authStore.logout();
+            await Swal.fire(getSwalConfig({
+                title: 'Berhasil Logout!',
+                text: 'Anda telah keluar dari sistem',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+            }));
+            router.push('/');
+        }
+    } catch (error) {
+        console.error('Logout failed:', error);
+        await Swal.fire(getSwalConfig({
+            title: 'Error!',
+            text: error.response?.data?.message || 'Gagal melakukan logout',
+            icon: 'error'
+        }));
+    } finally {
+        isLoggingOut.value = false;
+    }
 };
 
 onMounted(() => {
@@ -186,7 +263,6 @@ onBeforeUnmount(() => {
     animation-fill-mode: forwards;
     animation-timing-function: ease-in-out;
 }
-
 
 .dark-to-light.animate-theme {
     animation-name: spinToSun;
