@@ -75,7 +75,7 @@
                             {{ link.text }}
                         </router-link>
                     </li>
-                    <li>
+                    <li v-if="!loggedIn">
                         <router-link to="/login"
                             class="flex items-center px-4 py-3 font-bold transition-colors gap-x-2 text-pastel-dark-700 hover:text-pastel-blue-600 dark:text-pastel-light-100 dark:hover:text-pastel-blue-300"
                             @click="closeMobileMenu">
@@ -83,12 +83,19 @@
                             <span>Masuk</span>
                         </router-link>
                     </li>
-                    <li>
+                    <li v-if="!loggedIn">
                         <router-link to="/register"
                             class="flex items-center px-4 py-3 font-bold transition-colors gap-x-2 text-pastel-dark-700 hover:text-pastel-blue-600 dark:text-pastel-light-100 dark:hover:text-pastel-blue-300"
                             @click="closeMobileMenu">
                             <span class="text-xl material-icons">person_add</span>
                             <span>Daftar</span>
+                        </router-link>
+                    </li>
+                    <li v-else>
+                        <router-link to="/administrator/dashboard"
+                            class="flex items-center px-4 py-3 font-bold transition-colors gap-x-2 text-pastel-dark-700 hover:text-pastel-blue-600 dark:text-pastel-light-100 dark:hover:text-pastel-blue-300">
+                            <span class="text-xl material-icons">home</span>
+                            <span>Dashboard</span>
                         </router-link>
                     </li>
                     <li class="p-4">
@@ -132,12 +139,6 @@ if (loggedIn) {
     });
 }
 
-console.log([
-    authStore.isAuthenticated,
-    storage.getItem(STORAGE_KEYS.AUTH),
-    user.name,
-]);
-
 const menuLinks = [
     { to: '/mobil-baru', text: 'Mobil Baru' },
     { to: '/mobil-bekas', text: 'Mobil Bekas' },
@@ -166,7 +167,6 @@ const routeChangeHandler = () => {
 
 onMounted(() => {
     themeStore.initTheme();
-    // console.log(user);
     router.afterEach(routeChangeHandler);
 });
 
