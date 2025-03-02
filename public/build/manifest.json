@@ -1,0 +1,43 @@
+{
+  "node_modules/@material-design-icons/font/material-icons-outlined.woff2": {
+    "file": "assets/material-icons-outlined-DZhiGvEA.woff2",
+    "src": "node_modules/@material-design-icons/font/material-icons-outlined.woff2"
+  },
+  "node_modules/@material-design-icons/font/material-icons-round.woff2": {
+    "file": "assets/material-icons-round-DrirKXBx.woff2",
+    "src": "node_modules/@material-design-icons/font/material-icons-round.woff2"
+  },
+  "node_modules/@material-design-icons/font/material-icons-sharp.woff2": {
+    "file": "assets/material-icons-sharp-gidztirS.woff2",
+    "src": "node_modules/@material-design-icons/font/material-icons-sharp.woff2"
+  },
+  "node_modules/@material-design-icons/font/material-icons-two-tone.woff2": {
+    "file": "assets/material-icons-two-tone-DuNIpaEj.woff2",
+    "src": "node_modules/@material-design-icons/font/material-icons-two-tone.woff2"
+  },
+  "node_modules/@material-design-icons/font/material-icons.woff2": {
+    "file": "assets/material-icons-kAwBdRge.woff2",
+    "src": "node_modules/@material-design-icons/font/material-icons.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-Do1TNA0N.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-BFFV32w2.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "assets/app-BmtBwJly.css"
+    ],
+    "assets": [
+      "assets/material-icons-kAwBdRge.woff2",
+      "assets/material-icons-outlined-DZhiGvEA.woff2",
+      "assets/material-icons-round-DrirKXBx.woff2",
+      "assets/material-icons-sharp-gidztirS.woff2",
+      "assets/material-icons-two-tone-DuNIpaEj.woff2"
+    ]
+  }
+}
