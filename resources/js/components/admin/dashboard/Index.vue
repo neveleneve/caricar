@@ -27,15 +27,10 @@ import { STORAGE_KEYS } from '@/utils/constants'
 const router = useRouter()
 const authStore = useAuthStore()
 
-const userRole = computed(() => {
-    const auth = storage.getItem(STORAGE_KEYS.AUTH)
-    return auth?.role || 'User'
-})
-
 onMounted(() => {
     if (!authStore.isAuthenticated || !storage.getItem(STORAGE_KEYS.AUTH)) {
         authStore.clearAuth()
-        router.push('/login')
+        router.push('/')
     }
 })
 </script>

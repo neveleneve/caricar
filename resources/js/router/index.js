@@ -3,6 +3,11 @@ import Login from "@/components/Login.vue";
 import Register from "@/components/Register.vue";
 
 import Welcome from "@/components/pages/Welcome.vue";
+import MobilBaru from "@/components/pages/MobilBaru.vue";
+import MobilBekas from "@/components/pages/MobilBekas.vue";
+import MotorBaru from "@/components/pages/MotorBaru.vue";
+import MotorBekas from "@/components/pages/MotorBekas.vue";
+import Sell from "@/components/pages/JualKendaraanAnda.vue";
 
 import DashboardIndex from "@/components/admin/dashboard/Index.vue";
 
@@ -95,6 +100,31 @@ const routes = [
         component: Welcome,
     },
     {
+        path: "/mobil-baru",
+        name: "mobilbaru",
+        component: MobilBaru,
+    },
+    {
+        path: "/mobil-bekas",
+        name: "mobilbekas",
+        component: MobilBekas,
+    },
+    {
+        path: "/motor-baru",
+        name: "motorbaru",
+        component: MotorBaru,
+    },
+    {
+        path: "/motor-bekas",
+        name: "motorbekas",
+        component: MotorBekas,
+    },
+    {
+        path: "/sell",
+        name: "sell",
+        component: Sell,
+    },
+    {
         path: "/login",
         name: "login",
         component: Login,
@@ -132,19 +162,16 @@ router.beforeEach(async (to, from, next) => {
     const isAuthenticated = storage.getItem(STORAGE_KEYS.TOKEN);
     const user = storage.getItem(STORAGE_KEYS.AUTH);
 
-    // Check for guest routes (login/register)
     if (to.meta.requiresGuest && isAuthenticated) {
         return next({ name: "dashboard" });
     }
 
-    // Check for authenticated routes
     if (to.meta.requiresAuth && !isAuthenticated) {
         return next({ name: "login" });
     }
 
-    // Check role-based access
     if (to.meta.role && user?.role !== to.meta.role) {
-        return next({ name: "welcome" }); // or another appropriate fallback route
+        return next({ name: "welcome" });
     }
 
     return next();

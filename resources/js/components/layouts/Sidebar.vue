@@ -11,12 +11,12 @@
                                 {{ sidebarOpen ? 'close' : 'menu' }}
                             </span>
                         </button>
-                        <div class="flex ml-2 md:mr-24">
+                        <router-link to="/" class="flex ml-2 md:mr-24">
                             <img v-if="themeStore.isDark" :src="'/assets/logo/caricar-dark.png'" class="h-6"
                                 alt="Logo Caricar.id Dark" />
                             <img v-else :src="'/assets/logo/caricar-light.png'" class="h-6"
                                 alt="Logo Caricar.id Light" />
-                        </div>
+                        </router-link>
                     </div>
                     <div class="flex items-center">
                         <button @click="toggleTheme" :disabled="themeStore.isTransitioning"
@@ -185,7 +185,7 @@ export default {
                         showConfirmButton: false,
                         allowOutsideClick: false,
                     }));
-                    router.push('/login');
+                    router.push('/');
                 }
             } catch (error) {
                 console.error('Logout failed:', error);

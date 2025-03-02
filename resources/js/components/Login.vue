@@ -11,7 +11,12 @@
                 {{ themeStore.isDark ? 'light_mode' : 'dark_mode' }}
             </span>
         </button>
-
+        <router-link to="/"
+            class="absolute p-2 rounded-lg text-pastel-dark-600 bg-pastel-light-500 dark:bg-pastel-dark-700 top-4 right-16 dark:text-pastel-light-500 hover:bg-pastel-light-700 dark:hover:bg-pastel-dark-600">
+            <span class="material-icons">
+                home
+            </span>
+        </router-link>
         <div
             class="hidden w-1/2 transition-colors duration-200 bg-pastel-blue-600 dark:bg-pastel-blue-800 lg:flex lg:flex-col lg:justify-center lg:items-center">
             <div class="px-12 text-center">
@@ -119,10 +124,10 @@
                         </div>
 
                         <div class="mt-4 text-center">
-                            <a href="/register"
+                            <router-link to="/register"
                                 class="text-sm font-bold text-pastel-blue-600 hover:text-pastel-blue-800 dark:text-pastel-blue-400 dark:hover:text-pastel-blue-500">
                                 Belum Punya Akun? Daftar disini
-                            </a>
+                            </router-link>
                         </div>
                     </form>
                 </div>
@@ -237,6 +242,7 @@ const toggleTheme = () => {
 onMounted(() => {
     themeStore.initTheme();
 });
+
 </script>
 
 <style scoped>

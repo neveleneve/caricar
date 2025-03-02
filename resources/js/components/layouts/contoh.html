@@ -1,0 +1,90 @@
+<!-- <nav
+        class="fixed top-0 z-30 w-full transition-all duration-500 border-b bg-pastel-light-100 dark:bg-pastel-dark-700 border-pastel-light-300 dark:border-pastel-dark-600">
+        <div class="px-3 py-3 lg:px-5 lg:pl-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center justify-start">
+                    <router-link to="/" class="flex ml-2 lg:mr-24">
+                        <img v-if="themeStore.isDark" :src="'/assets/logo/caricar-dark.png'" class="h-6"
+                            alt="Logo Caricar.id Dark" />
+                        <img v-else :src="'/assets/logo/caricar-light.png'" class="h-6" alt="Logo Caricar.id Light" />
+                    </router-link>
+                </div>
+                <div class="items-center hidden space-x-4 lg:flex">
+                    <router-link v-for="(link, index) in navLinks" :key="index" :to="link.to"
+                        class="flex items-center px-3 py-2 transition-colors duration-300 rounded-md text-pastel-dark-300 dark:text-pastel-dark-200 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600">
+                        <span class="mr-2 material-icons">{{ link.icon }}</span>
+                        {{ link.text }}
+                    </router-link>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button @click="toggleTheme" :disabled="themeStore.isTransitioning"
+                        class="items-center hidden p-2 transition-all rounded-lg text-pastel-dark-300 lg:flex focus:outline-none focus:ring-2 focus:ring-pastel-dark-500 dark:text-pastel-dark-200 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600"
+                        :class="{ 'opacity-50 cursor-wait': themeStore.isTransitioning }">
+                        <span class="material-icons theme-icon" :class="[
+                            themeStore.isDark ? 'dark-to-light' : 'light-to-dark',
+                            { 'animate-theme': themeStore.isTransitioning }
+                        ]">
+                            {{ themeStore.isDark ? 'light_mode' : 'dark_mode' }}
+                        </span>
+                    </button>
+                    <button @click="register"
+                        class="items-center hidden p-2 rounded-lg text-pastel-dark-300 lg:flex focus:outline-none focus:ring-2 focus:ring-pastel-dark-500 dark:text-pastel-dark-200 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600">
+                        <span class="material-icons">
+                            person_add
+                        </span>
+                    </button>
+                    <button @click="login"
+                        class="items-center hidden p-2 rounded-lg text-pastel-light-400 bg-pastel-green-500 lg:flex focus:outline-none focus:ring-2 focus:ring-pastel-dark-500 dark:bg-pastel-green-700 dark:text-pastel-light-900 hover:bg-pastel-green-600 dark:hover:bg-pastel-green-800">
+                        <span class="material-icons">
+                            login
+                        </span>
+                    </button>
+                    <div class="flex items-center space-x-3 lg:hidden">
+                        <button @click="toggleTheme" :disabled="themeStore.isTransitioning"
+                            class="flex items-center p-2 transition-all rounded-lg text-pastel-dark-300 focus:outline-none focus:ring-2 focus:ring-pastel-dark-500 dark:text-pastel-dark-200 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600"
+                            :class="{ 'opacity-50 cursor-wait': themeStore.isTransitioning }">
+                            <span class="material-icons theme-icon" :class="[
+                                themeStore.isDark ? 'dark-to-light' : 'light-to-dark',
+                                { 'animate-theme': themeStore.isTransitioning }
+                            ]">
+                                {{ themeStore.isDark ? 'light_mode' : 'dark_mode' }}
+                            </span>
+                        </button>
+                        <button @click="toggleMobileMenu"
+                            class="flex items-center p-2 transition-all rounded-lg text-pastel-dark-300 focus:outline-none focus:ring-2 focus:ring-pastel-dark-500 dark:text-pastel-dark-200 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600">
+                            <span class="material-icons">
+                                {{ isMobileMenuOpen ? 'close' : 'menu' }}
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <Transition enter-active-class="transition-all duration-500 ease-in-out"
+            enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
+            leave-active-class="transition-all duration-300 ease-in-out"
+            leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
+            <div v-show="isMobileMenuOpen"
+                class="overflow-hidden origin-top bg-pastel-light-100 dark:bg-pastel-dark-700 lg:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <router-link v-for="(link, index) in navLinks" :key="index" :to="link.to"
+                        class="flex items-center px-3 py-2 text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600">
+                        <span class="mr-2 material-icons">{{ link.icon }}</span>
+                        {{ link.text }}
+                    </router-link>
+                    <div class="pt-2 border-t border-pastel-light-300 dark:border-pastel-dark-600">
+                        <button @click="login"
+                            class="flex items-center w-full px-3 py-2 text-left text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600">
+                            <span class="mr-2 material-icons">login</span>
+                            Login
+                        </button>
+                        <button @click="register"
+                            class="flex items-center w-full px-3 py-2 text-left text-gray-700 transition-colors duration-300 dark:text-gray-300 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600">
+                            <span class="mr-2 material-icons">person_add</span>
+                            Register
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </Transition>
+    </nav> -->

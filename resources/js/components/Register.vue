@@ -11,7 +11,12 @@
                 {{ themeStore.isDark ? 'light_mode' : 'dark_mode' }}
             </span>
         </button>
-
+        <router-link to="/"
+            class="absolute p-2 rounded-lg text-pastel-dark-600 bg-pastel-light-500 dark:bg-pastel-dark-700 top-4 right-16 dark:text-pastel-light-500 hover:bg-pastel-light-700 dark:hover:bg-pastel-dark-600">
+            <span class="material-icons">
+                home
+            </span>
+        </router-link>
         <div
             class="hidden w-1/2 transition-colors duration-200 bg-pastel-blue-600 dark:bg-pastel-blue-800 lg:flex lg:flex-col lg:justify-center lg:items-center">
             <div class="px-12 text-center">
@@ -107,10 +112,10 @@
                             </div>
                         </button>
                         <div class="mt-4 text-center">
-                            <a href="/login"
+                            <router-link to="/login"
                                 class="text-sm text-pastel-blue-500 hover:text-pastel-blue-400 dark:text-pastel-blue-400 dark:hover:text-pastel-blue-300">
                                 Sudah Punya Akun? Login disini
-                            </a>
+                            </router-link>
                         </div>
                     </form>
                 </div>
@@ -119,69 +124,58 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { useAuthStore } from '@/stores/auth';
 import { useThemeStore } from '@/stores/theme';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-export default {
-    setup() {
-        const authStore = useAuthStore();
-        const themeStore = useThemeStore();
+const router = useRouter();
+const authStore = useAuthStore();
+const themeStore = useThemeStore();
 
-        onMounted(() => {
-            themeStore.initTheme();
-        });
+// State management with ref
+const name = ref('');
+const email = ref('');
+const password = ref('');
+const password_confirmation = ref('');
+const error = ref(null);
+const loading = ref(false);
 
-        const toggleTheme = () => {
-            themeStore.toggleTheme();
-        };
+onMounted(() => {
+    themeStore.initTheme();
+});
 
-        return {
-            authStore,
-            themeStore,
-            toggleTheme
-        };
-    },
-    data() {
-        return {
-            name: '',
-            email: '',
-            password: '',
-            password_confirmation: '',
-            error: null,
-            loading: false,
-        }
-    },
-    methods: {
-        async handleRegister() {
-            this.error = null;
-            this.loading = true;
+const toggleTheme = () => {
+    themeStore.toggleTheme();
+};
 
-            if (this.password !== this.password_confirmation) {
-                this.error = 'Passwords do not match';
-                this.loading = false;
-                return;
-            }
+const handleRegister = async () => {
+    error.value = null;
+    loading.value = true;
 
-            try {
-                await this.authStore.register({
-                    name: this.name,
-                    email: this.email,
-                    password: this.password,
-                    password_confirmation: this.password_confirmation
-                });
-                this.$router.push('/administrator/dashboard');
-            } catch (err) {
-                if (err.response) {
-                    this.error = err.response.data.message || 'Registration failed';
-                } else {
-                    this.error = 'Unable to connect to server';
-                }
-            } finally {
-                this.loading = false;
-            }
-        }
+    if (password.value !== password_confirmation.value) {
+        error.value = 'Passwords do not match';
+        loading.value = false;
+        return;
     }
-}
+
+    try {
+        await authStore.register({
+            name: name.value,
+            email: email.value,
+            password: password.value,
+            password_confirmation: password_confirmation.value
+        });
+        router.push('/administrator/dashboard');
+    } catch (err) {
+        if (err.response) {
+            error.value = err.response.data.message || 'Registration failed';
+        } else {
+            error.value = 'Unable to connect to server';
+        }
+    } finally {
+        loading.value = false;
+    }
+};
 </script>
