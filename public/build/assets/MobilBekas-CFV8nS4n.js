@@ -1,1 +1,0 @@
-import{_ as e}from"./app-C-qkH5mP.js";const r={};function s(c,o){return null}const n=e(r,[["render",s],["__file","C:/laragon/www/caricar/resources/js/components/pages/MobilBekas.vue"]]);export{n as default};

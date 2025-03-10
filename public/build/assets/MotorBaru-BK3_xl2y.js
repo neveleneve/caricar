@@ -1,1 +1,0 @@
-import{_ as r}from"./app-C-qkH5mP.js";const e={};function o(c,a){return null}const s=r(e,[["render",o],["__file","C:/laragon/www/caricar/resources/js/components/pages/MotorBaru.vue"]]);export{s as default};

@@ -11,8 +11,17 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller {
+
+    /* 
+        Handles user login using email and password.
+        @param Request $request The incoming request containing the user's email and password.
+        @return \Illuminate\Http\JsonResponse The response containing the user's data and token upon successful login.
+        @throws ValidationException If the provided credentials are incorrect.
+        @throws Exception If an unexpected error occurs during the login process.
+    */
     public function login(Request $request) {
         try {
+            
             $validated = $request->validate([
                 'email' => 'required|email',
                 'password' => 'required'

@@ -51,6 +51,26 @@
     @apply bg-pastel-light-100 dark:bg-pastel-dark-700 !important;
 }
 
+.nav-link {
+    @apply text-pastel-dark-500 dark:text-pastel-light-300 hover:text-pastel-blue-500 dark:hover:text-pastel-blue-300 !important;
+    @apply items-center hidden space-x-1 transition-colors md:flex !important;
+}
+
+.sell-link {
+    @apply text-pastel-light-100 bg-pastel-red-600 hover:bg-pastel-red-700 dark:bg-pastel-red-700 dark:hover:bg-pastel-red-800 !important;
+    @apply items-center hidden px-4 py-2 font-semibold transition-colors rounded md:flex !important;
+}
+
+.theme-button {
+    @apply text-pastel-dark-500 dark:text-pastel-light-300 bg-pastel-light-100 hover:bg-pastel-light-600 dark:bg-pastel-dark-600 dark:hover:bg-pastel-dark-400 !important;
+    @apply flex items-center px-2 py-2 font-semibold transition-colors rounded-full !important;
+}
+
+.logout-button {
+    @apply text-pastel-light-100 bg-pastel-red-700 hover:bg-pastel-red-800 !important;
+    @apply items-center hidden px-4 py-2 font-semibold transition-colors rounded md:flex !important;
+}
+
 .page-header {
     @apply p-4 rounded-lg shadow-sm bg-pastel-light-100 dark:bg-pastel-dark-700 !important;
 }
@@ -234,6 +254,22 @@
 .search-input-full {
     @apply w-full py-2 pl-10 pr-4 border rounded-lg text-pastel-dark-600 bg-pastel-light-500 dark:bg-pastel-dark-600 dark:border-pastel-dark-500 dark:text-pastel-light-300 focus:outline-none focus:border-pastel-dark-700 !important;
 }
+
+.input-login {
+    @apply w-full px-4 py-3 !important;
+    @apply border rounded-lg focus:ring-2 !important;
+    @apply  dark:bg-pastel-dark-500 dark:border-gray-600 dark:text-gray-200 focus:border-transparent !important;
+}
+
+.button-login {
+    @apply w-full py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 !important;
+    @apply text-pastel-light-500 bg-pastel-blue-600 hover:bg-pastel-blue-800 focus:ring-pastel-blue-400 !important;
+}
+
+.button-login.loading {
+    @apply opacity-75 cursor-not-allowed !important;
+}
+
 .class {
     @apply !important;
 }

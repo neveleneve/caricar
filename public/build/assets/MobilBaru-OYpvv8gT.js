@@ -1,1 +1,0 @@
-import{_ as r}from"./app-C-qkH5mP.js";const e={};function c(o,a){return null}const s=r(e,[["render",c],["__file","C:/laragon/www/caricar/resources/js/components/pages/MobilBaru.vue"]]);export{s as default};

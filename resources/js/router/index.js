@@ -1,24 +1,38 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+// admin pages
+import DashboardIndex from "@/components/admin/dashboard/Index.vue";
 import BrandIndex from "@/components/admin/brands/Index.vue";
 import BrandEdit from "@/components/admin/brands/Edit.vue";
-
 import UserIndex from "@/components/admin/user/Index.vue";
-
 import ItemIndex from "@/components/admin/item/Index.vue";
-
 import TransaksiIndex from "@/components/admin/transaksi/Index.vue";
-
 import ReportIndex from "@/components/admin/report/Index.vue";
-
 import { storage } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/utils/constants";
+
+// user pages
+import Welcome from "@/components/pages/Welcome.vue";
+import MobilBaru from "@/components/pages/MobilBaru.vue";
+import MobilBekas from "@/components/pages/MobilBekas.vue";
+import MotorBaru from "@/components/pages/MotorBaru.vue";
+import MotorBekas from "@/components/pages/MotorBekas.vue";
+import Sell from "@/components/pages/JualKendaraanAnda.vue";
+
+// Auth pages
+import Login from "@/components/Login.vue";
+import Register from "@/components/Register.vue";
+
+// Error pages
+import NotFound from "@/components/errors/404.vue";
+import Forbidden from "@/components/errors/403.vue";
+import InternalServerError from "@/components/errors/500.vue";
 
 const adminRoutes = [
     {
         path: "dashboard",
         name: "dashboard",
-        component: () => import("@/components/admin/dashboard/Index.vue"),
+        component: DashboardIndex,
     },
     {
         path: "brand",
@@ -27,12 +41,12 @@ const adminRoutes = [
             {
                 path: "",
                 name: "brand_index",
-                component: () => import("@/components/admin/brands/Index.vue"),
+                component: BrandIndex,
             },
             {
                 path: ":id",
                 name: "brand_edit",
-                component: () => import("@/components/admin/brands/Edit.vue"),
+                component: BrandEdit,
             },
         ],
     },
@@ -43,7 +57,7 @@ const adminRoutes = [
             {
                 path: "",
                 name: "user_index",
-                component: () => import("@/components/admin/user/Index.vue"),
+                component: UserIndex,
             },
         ],
     },
@@ -54,7 +68,7 @@ const adminRoutes = [
             {
                 path: "",
                 name: "item_index",
-                component: () => import("@/components/admin/item/Index.vue"),
+                component: ItemIndex,
             },
         ],
     },
@@ -65,8 +79,7 @@ const adminRoutes = [
             {
                 path: "",
                 name: "transaksi_index",
-                component: () =>
-                    import("@/components/admin/transaksi/Index.vue"),
+                component: TransaksiIndex,
             },
         ],
     },
@@ -77,7 +90,7 @@ const adminRoutes = [
             {
                 path: "",
                 name: "report_index",
-                component: () => import("@/components/admin/report/Index.vue"),
+                component: ReportIndex,
             },
         ],
     },
@@ -87,37 +100,37 @@ const routes = [
     {
         path: "/",
         name: "welcome",
-        component: () => import("@/components/pages/Welcome.vue"),
+        component: Welcome,
     },
     {
         path: "/mobil-baru",
         name: "mobilbaru",
-        component: () => import("@/components/pages/MobilBaru.vue"),
+        component: MobilBaru,
     },
     {
         path: "/mobil-bekas",
         name: "mobilbekas",
-        component: () => import("@/components/pages/MobilBekas.vue"),
+        component: MobilBekas,
     },
     {
         path: "/motor-baru",
         name: "motorbaru",
-        component: () => import("@/components/pages/MotorBaru.vue"),
+        component: MotorBaru,
     },
     {
         path: "/motor-bekas",
         name: "motorbekas",
-        component: () => import("@/components/pages/MotorBekas.vue"),
+        component: MotorBekas,
     },
     {
         path: "/sell",
         name: "sell",
-        component: () => import("@/components/pages/JualKendaraanAnda.vue"),
+        component: Sell,
     },
     {
         path: "/login",
         name: "login",
-        component: () => import("@/components/Login.vue"),
+        component: Login,
         meta: {
             requiresGuest: true,
         },
@@ -125,7 +138,7 @@ const routes = [
     {
         path: "/register",
         name: "register",
-        component: () => import("@/components/Register.vue"),
+        component: Register,
         meta: {
             requiresGuest: true,
         },
@@ -140,6 +153,21 @@ const routes = [
                 role: "administrator",
             },
         })),
+    },
+    {
+        path: "/403",
+        name: "forbidden",
+        component: Forbidden,
+    },
+    {
+        path: "/500",
+        name: "internalServerError",
+        component: InternalServerError,
+    },
+    {
+        path: "/:pathMatch(.*)*",
+        name: "notFound",
+        component: NotFound,
     },
 ];
 
@@ -161,7 +189,7 @@ router.beforeEach(async (to, from, next) => {
     }
 
     if (to.meta.role && user?.role !== to.meta.role) {
-        return next({ name: "welcome" });
+        return next({ name: "forbidden" });
     }
 
     return next();

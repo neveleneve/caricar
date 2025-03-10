@@ -1,1 +1,0 @@
-import{_ as a}from"./app-C-qkH5mP.js";const n={};function e(r,c){return null}const o=a(n,[["render",e],["__file","C:/laragon/www/caricar/resources/js/components/pages/JualKendaraanAnda.vue"]]);export{o as default};

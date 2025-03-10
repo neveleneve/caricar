@@ -3,7 +3,6 @@
         <Navbar>
             <div class="container px-4 mx-auto">
                 <div class="py-12">
-                    <!-- Hero Section -->
                     <div class="text-center">
                         <h1 class="mb-4 text-4xl font-bold text-pastel-dark-800 dark:text-pastel-light-100">
                             Welcome to Caricar
@@ -22,7 +21,6 @@
                             </button>
                         </div>
                     </div>
-
                     <div class="grid gap-8 mt-16 md:grid-cols-3">
                         <div v-for="(feature, index) in features" :key="index"
                             class="p-6 transition-all rounded-lg bg-pastel-light-200 dark:bg-pastel-dark-500 hover:shadow-lg">
