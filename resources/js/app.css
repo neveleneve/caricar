@@ -24,6 +24,7 @@
 .sidebar {
     @apply fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-full h-full pt-16 border-r-0 border-pastel-light-700 sm:border-r sm:w-64 bg-pastel-light-700 dark:bg-pastel-dark-700 dark:border-pastel-dark-400 lg:translate-x-0 !important;
 }
+
 .sidebar.open {
     @apply translate-x-0 !important;
 }
@@ -39,6 +40,7 @@
     @apply hover:bg-pastel-light-900 dark:hover:bg-pastel-dark-600 !important;
     @apply text-pastel-dark-800 dark:text-pastel-light-300 !important;
 }
+
 .sidebar-item.active {
     @apply bg-pastel-red-600 hover:bg-pastel-red-700 !important;
     @apply text-white !important;

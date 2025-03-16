@@ -132,7 +132,7 @@
                             :disabled="loading"
                             class="button-login"
                             :class="{
-                                'loading': loading,
+                                loading: loading,
                             }"
                         >
                             <div
@@ -290,7 +290,7 @@ const handleGoogleLogin = async () => {
                 photo: user.photoURL,
             });
 
-            router.push("/administrator/dashboard");
+            router.push("/");
         }
     } catch (err) {
         error.value = err.message || "Google login failed";
@@ -319,7 +319,7 @@ const handleFacebookLogin = async () => {
             access_token: token,
         });
 
-        router.push("/administrator/dashboard");
+        router.push("/");
     } catch (err) {
         error.value = err.message || "Facebook login failed";
     } finally {

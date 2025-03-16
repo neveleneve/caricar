@@ -20,17 +20,17 @@
     "src": "node_modules/@material-design-icons/font/material-icons.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-D7_7RutI.css",
+    "file": "assets/app-BPk3KLhG.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-CpOKHmNi.js",
+    "file": "assets/app-BgoAnPyX.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-DyF5VN3p.css"
+      "assets/app-m1MyUe4d.css"
     ],
     "assets": [
       "assets/material-icons-kAwBdRge.woff2",

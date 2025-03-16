@@ -32,7 +32,6 @@ const signInWithGoogle = async () => {
             token: GoogleAuthProvider.credentialFromResult(result)?.accessToken,
         };
     } catch (error) {
-        // console.error("Google sign in error:", error);
         if (error.code === "auth/popup-blocked") {
             throw new Error("Please allow popups for this website");
         }
@@ -59,7 +58,6 @@ const signInWithFacebook = async () => {
             token: token,
         };
     } catch (error) {
-        // console.error("Facebook sign in error:", error);
         if (error.code === "auth/popup-blocked") {
             throw new Error("Please allow popups for this website");
         }
