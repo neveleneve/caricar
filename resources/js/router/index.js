@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import DashboardIndex from "@/components/admin/dashboard/Index.vue";
 import BrandIndex from "@/components/admin/brands/Index.vue";
 import BrandEdit from "@/components/admin/brands/Edit.vue";
+import BrandCreate from "@/components/admin/brands/Create.vue";
 import UserIndex from "@/components/admin/user/Index.vue";
 import ItemIndex from "@/components/admin/item/Index.vue";
 import TransaksiIndex from "@/components/admin/transaksi/Index.vue";
@@ -47,6 +48,11 @@ const adminRoutes = [
                 path: ":id",
                 name: "brand_edit",
                 component: BrandEdit,
+            },
+            {
+                path: "create",
+                name: "brand_create",
+                component: BrandCreate,
             },
         ],
     },

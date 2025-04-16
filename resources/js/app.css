@@ -1,3 +1,4 @@
+@import 'car-makes-icons/dist/style.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -255,6 +256,10 @@
 
 .search-input-full {
     @apply w-full py-2 pl-10 pr-4 border rounded-lg text-pastel-dark-600 bg-pastel-light-500 dark:bg-pastel-dark-600 dark:border-pastel-dark-500 dark:text-pastel-light-300 focus:outline-none focus:border-pastel-dark-700 !important;
+}
+
+.general-input {
+    @apply w-full py-2 px-3 border rounded-lg text-pastel-dark-600 bg-pastel-light-500 dark:bg-pastel-dark-600 dark:border-pastel-dark-500 dark:text-pastel-light-300 focus:outline-none focus:border-pastel-dark-700 !important;
 }
 
 .input-login {

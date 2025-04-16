@@ -2,8 +2,14 @@
     <table class="table">
         <thead class="thead">
             <tr>
-                <th v-for="column in columns" :key="column.key"
-                    :class="[column.align === 'right' ? 'text-right' : 'text-left', 'th']">
+                <th
+                    v-for="column in columns"
+                    :key="column.key"
+                    :class="[
+                        column.align ? 'text-' + column.align : 'text-left',
+                        'th',
+                    ]"
+                >
                     {{ column.label }}
                 </th>
             </tr>
@@ -12,18 +18,33 @@
             <tr v-if="loading" class="animate-pulse">
                 <td :colspan="columns.length" class="px-6 py-4 text-center">
                     <div class="flex items-center justify-center">
-                        <span class="w-6 h-6 text-gray-400 material-icons animate-spin dark:text-gray-300">sync</span>
-                        <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">Loading data...</span>
+                        <span
+                            class="w-6 h-6 text-gray-400 material-icons animate-spin dark:text-gray-300"
+                            >sync</span
+                        >
+                        <span
+                            class="ml-2 text-sm text-gray-500 dark:text-gray-400"
+                            >Loading data...</span
+                        >
                     </div>
                 </td>
             </tr>
-            <tr v-else-if="error" class="bg-pastel-red-400 dark:bg-pastel-red-800">
-                <td :colspan="columns.length" class="px-6 py-4 text-sm text-center text-red-500 dark:text-red-400">
+            <tr
+                v-else-if="error"
+                class="bg-pastel-red-400 dark:bg-pastel-red-800"
+            >
+                <td
+                    :colspan="columns.length"
+                    class="px-6 py-4 text-sm text-center text-red-500 dark:text-red-400"
+                >
                     {{ error }}
                 </td>
             </tr>
             <tr v-else-if="items.length === 0">
-                <td :colspan="columns.length" class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400">
+                <td
+                    :colspan="columns.length"
+                    class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400"
+                >
                     {{ emptyMessage }}
                 </td>
             </tr>
@@ -36,28 +57,28 @@
 
 <script>
 export default {
-    name: 'DataTable',
+    name: "DataTable",
     props: {
         columns: {
             type: Array,
-            required: true
+            required: true,
         },
         items: {
             type: Array,
-            required: true
+            required: true,
         },
         loading: {
             type: Boolean,
-            default: false
+            default: false,
         },
         error: {
             type: String,
-            default: null
+            default: null,
         },
         emptyMessage: {
             type: String,
-            default: 'Tidak ada data'
-        }
-    }
-}
+            default: "Tidak ada data",
+        },
+    },
+};
 </script>

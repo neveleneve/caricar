@@ -12,7 +12,7 @@
                             <span class="material-icons">verified</span>
                             <span
                                 class="ml-1 text-pastel-dark-700 dark:text-pastel-light-500"
-                                >Ubah Data Brand</span
+                                >Tambah Data Brand</span
                             >
                         </h1>
                     </div>
@@ -34,21 +34,7 @@
                     </router-link>
                 </div>
 
-                <div v-if="loading" class="text-center">
-                    <span
-                        class="material-icons text-3xl animate-spin text-gray-700 dark:text-gray-300"
-                    >
-                        autorenew
-                    </span>
-                    <p class="text-gray-600 dark:text-gray-400">Loading...</p>
-                </div>
-                <div v-if="error" class="text-red-500">Error: {{ error }}</div>
-
-                <form
-                    @submit.prevent="updateBrand"
-                    v-if="brand && !loading && !error"
-                    class="space-y-4"
-                >
+                <form @submit.prevent="addBrand" class="space-y-4">
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label
@@ -69,7 +55,7 @@
                             type="submit"
                             class="px-4 py-2 text-sm font-semibold text-white bg-pastel-blue-800 rounded-lg hover:bg-pastel-blue-700 focus:outline-none focus:ring-2 focus:ring-pastel-dark-500"
                         >
-                            Update
+                            Simpan
                         </button>
                     </div>
                 </form>
@@ -85,43 +71,30 @@ import { onMounted, ref, onUnmounted } from "vue";
 import { storage } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/utils/constants";
 
-const brandId = ref(null);
-const brand = ref({});
-const error = ref(null);
-const loading = ref(true);
+const brand = ref({ name: "" });
 import Swal from "sweetalert2";
 import router from "@/router";
 
-const fetchBrand = async () => {
-    loading.value = true;
-    error.value = null;
+onMounted(async () => {
     try {
-        const response = await axios.get(`/api/brand/${brandId.value}`, {
+        const response = await axios.get("/api/brand/create", {
             headers: {
                 Authorization: `Bearer ${storage.getItem(STORAGE_KEYS.TOKEN)}`,
             },
         });
-        if (!response.data || !response.data.data) {
-            throw new Error("Brand tidak ditemukan");
+        if (response.data && response.data.data) {
+            brand.value = response.data.data;
         }
-        brand.value = response.data.data;
     } catch (err) {
-        if (err.response && err.response.status === 404) {
-            router.push("/404");
-            return;
-        } else {
-            error.value = err.response?.data?.message || err.message;
-        }
-        brand.value = null;
-    } finally {
-        loading.value = false;
+        // fallback to empty brand if error
+        brand.value = { name: "" };
     }
-};
+});
 
-const updateBrand = async () => {
+const addBrand = async () => {
     try {
-        const response = await axios.put(
-            `/api/brand/${brandId.value}`,
+        const response = await axios.post(
+            `/api/brand`,
             {
                 name: brand.value.name,
             },
@@ -164,9 +137,4 @@ const updateBrand = async () => {
         });
     }
 };
-
-onMounted(() => {
-    brandId.value = window.location.pathname.split("/").pop();
-    fetchBrand();
-});
 </script>

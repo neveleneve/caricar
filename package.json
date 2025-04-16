@@ -9,6 +9,7 @@
         "@material-design-icons/font": "^0.14.15",
         "@vitejs/plugin-vue": "^5.2.1",
         "apexcharts": "^4.5.0",
+        "car-makes-icons": "github:dangnelson/car-makes-icons",
         "crypto-js": "^4.2.0",
         "firebase": "^11.3.1",
         "pinia": "^3.0.1",
