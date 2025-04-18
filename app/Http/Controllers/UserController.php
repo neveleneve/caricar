@@ -14,12 +14,14 @@ class UserController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $searchTerm = '%' . $search . '%';
-                $q->where('name', 'LIKE', $searchTerm);
+                $q
+                    ->where('name', 'LIKE', $searchTerm)
+                    ->orWhere('email', 'LIKE', $searchTerm)
+                ;
             });
         }
         $data = $query
-            ->withTrashed()
-            ->orderBy('deleted_at')
+            ->with('roles')
             ->paginate(10);
 
         return response()->json([

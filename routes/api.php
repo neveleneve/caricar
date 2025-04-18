@@ -17,7 +17,9 @@ Route::middleware('api')->group(function () {
             return $request->user();
         });
         Route::post('/logout', [AuthController::class, 'logout']);
-        Route::apiResource('brand', BrandController::class);
-        Route::apiResource('pengguna', UserController::class);
+        Route::apiResource('brand', BrandController::class)
+            ->except(['create', 'edit']);
+        Route::apiResource('pengguna', UserController::class)
+            ->except(['create', 'store', 'edit']);
     });
 });

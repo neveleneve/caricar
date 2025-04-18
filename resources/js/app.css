@@ -1,4 +1,4 @@
-@import 'car-makes-icons/dist/style.css';
+@import "car-makes-icons/dist/style.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -80,7 +80,7 @@
 
 .table {
     @apply min-w-full divide-y rounded-t-lg !important;
-    @apply divide-pastel-dark-500 dark:divide-pastel-light-400 !important;
+    @apply divide-pastel-dark-500 dark:divide-pastel-dark-500 !important;
 }
 
 .thead {
@@ -94,7 +94,7 @@
 
 .tbody {
     @apply divide-y text-nowrap !important;
-    @apply bg-pastel-light-500 divide-pastel-dark-500 dark:bg-pastel-dark-700 dark:divide-pastel-light-400 !important;
+    @apply bg-pastel-light-500 divide-pastel-dark-500 dark:bg-pastel-dark-700 dark:divide-pastel-dark-400 !important;
 }
 
 .tbody .tr {
@@ -208,7 +208,7 @@
     .pagination-nav
     .pagination-item.active {
     @apply ring-1 ring-inset !important;
-    @apply bg-pastel-red-600 text-pastel-light-100 ring-pastel-dark-200 dark:ring-gray-700 !important;
+    @apply bg-pastel-red-600 hover:bg-pastel-red-700 text-pastel-light-100 ring-pastel-dark-200 dark:ring-gray-500 !important;
 }
 
 .pagination
@@ -265,7 +265,7 @@
 .input-login {
     @apply w-full px-4 py-3 !important;
     @apply border rounded-lg focus:ring-2 !important;
-    @apply  dark:bg-pastel-dark-500 dark:border-gray-600 dark:text-gray-200 focus:border-transparent !important;
+    @apply dark:bg-pastel-dark-500 dark:border-gray-600 dark:text-gray-200 focus:border-transparent !important;
 }
 
 .button-login {

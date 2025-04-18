@@ -1,92 +1,58 @@
 <template>
     <dashboard-layout>
-        <div class="container mx-auto mb-4">
+        <div class="mx-auto mb-4 container-lg">
             <header class="page-header">
                 <div class="flex items-center justify-between gap-3">
-                    <div
-                        class="flex items-center text-2xl font-bold text-gray-800 dark:text-gray-200"
-                    >
+                    <div class="flex items-center text-2xl font-bold text-gray-800 dark:text-gray-200">
                         <h1
-                            class="flex items-center py-1.5 text-xl font-semibold text-pastel-dark-700 dark:text-pastel-light-500"
-                        >
+                            class="flex items-center py-1.5 text-xl font-semibold text-pastel-dark-700 dark:text-pastel-light-500">
                             <span class="material-icons">verified</span>
-                            <span
-                                class="ml-1 text-pastel-dark-700 dark:text-pastel-light-500"
-                                >Data Brand</span
-                            >
+                            <span class="ml-1 text-pastel-dark-700 dark:text-pastel-light-500">Data Brand</span>
                         </h1>
                     </div>
-                    <router-link
-                        :to="'/administrator/brand/create'"
-                        class="flex items-center px-3 py-1 text-white bg-red-600 rounded-lg hover:bg-red-500"
-                    >
+                    <router-link :to="'/administrator/brand/create'"
+                        class="flex items-center px-3 py-1 text-white rounded-lg bg-pastel-red-600 hover:bg-pastel-red-700">
                         <span class="material-icons">add</span>
-                        <span class="ml-1">Tambah Brand</span>
+                        <span class="ml-1 font-bold">Tambah</span>
                     </router-link>
                 </div>
             </header>
         </div>
-        <div class="container mx-auto rounded-lg">
-            <div
-                class="p-4 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700"
-            >
+        <div class="pb-3 mx-auto rounded-lg container-lg">
+            <div class="p-4 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700">
                 <div class="flex mb-6">
                     <div class="relative flex-1">
-                        <span
-                            class="absolute inset-y-0 left-0 flex items-center pl-3"
-                        >
-                            <span class="w-5 h-5 text-gray-400 material-icons"
-                                >search</span
-                            >
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <span class="w-5 h-5 text-gray-400 material-icons">search</span>
                         </span>
-                        <input
-                            type="text"
-                            v-model="searchQuery"
-                            @input="handleSearch"
-                            placeholder="Cari brand..."
-                            class="search-input-full"
-                            id="pencarian"
-                            name="pencarian"
-                        />
+                        <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Cari brand..."
+                            class="search-input-full" id="pencarian" name="pencarian" />
                     </div>
                 </div>
                 <!-- desktop table -->
-                <div class="hidden md:block">
+                <div class="hidden lg:block">
                     <div class="overflow-x-auto">
                         <div class="inline-block min-w-full align-middle">
                             <div class="overflow-hidden shadow">
-                                <data-table
-                                    :columns="columns"
-                                    :items="brands"
-                                    :loading="loading"
-                                    :error="error"
-                                    empty-message="Tidak ada data brand"
-                                >
+                                <data-table :columns="columns" :items="brands" :loading="loading" :error="error"
+                                    empty-message="Tidak ada data brand">
                                     <template #row="{ item: brand }">
                                         <td class="td">
-                                            <img
-                                                :src="`https://vl.imgix.net/img/${formatBrandName(
-                                                    brand.name
-                                                )}-logo.png`"
-                                                class="object-cover max-w-16 h-10"
-                                            />
-                                            <!-- <i
-                                                v-else
-                                                class="text-2xl car-default"
-                                            ></i> -->
+                                            <img :src="`https://vl.imgix.net/img/${formatBrandName(
+                                                brand.name
+                                            )}-logo.png`"
+                                                class="flex-shrink-0 object-contain p-1 rounded-lg bg-pastel-light-500 dark:bg-pastel-dark-700 h-14 w-14" />
                                         </td>
                                         <td class="td">
                                             {{ brand.name }}
                                         </td>
-                                        <td class="td text-center">
+                                        <td class="text-center td">
                                             <span
-                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                                                :class="
-                                                    brand.deleted_at
-                                                        ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                                                        : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-                                                "
-                                            >
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold"
+                                                :class="brand.deleted_at
+                                                    ? 'bg-pastel-red-300 text-pastel-red-800 dark:bg-pastel-red-900 dark:text-pastel-red-300'
+                                                    : 'bg-pastel-green-300 text-pastel-green-800 dark:bg-pastel-green-900 dark:text-pastel-green-300'
+                                                    ">
                                                 {{
                                                     brand.deleted_at
                                                         ? "Tidak Aktif"
@@ -95,44 +61,31 @@
                                             </span>
                                         </td>
                                         <td class="text-right td">
-                                            <div
-                                                class="relative inline-flex items-center justify-end gap-2"
-                                            >
-                                                <transition
-                                                    enter-active-class="transition duration-100 ease-out"
+                                            <div class="relative inline-flex items-center justify-end gap-2">
+                                                <transition enter-active-class="transition duration-100 ease-out"
                                                     enter-from-class="transform scale-95 opacity-0"
                                                     enter-to-class="transform scale-100 opacity-100"
                                                     leave-active-class="transition duration-75 ease-in"
                                                     leave-from-class="transform scale-100 opacity-100"
-                                                    leave-to-class="transform scale-95 opacity-0"
-                                                >
-                                                    <div
-                                                        v-show="
-                                                            activeMenu ===
-                                                            brand.id
+                                                    leave-to-class="transform scale-95 opacity-0">
+                                                    <div v-show="activeMenu ===
+                                                        brand.id
                                                         "
                                                         class="absolute z-50 overflow-hidden border rounded-lg shadow-lg dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 -bottom-3 right-14 dark:bg-pastel-dark-800 w-36 menu-container"
-                                                        @click.stop
-                                                    >
-                                                        <router-link
-                                                            :to="`/administrator/brand/${brand.id}`"
-                                                            class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700"
-                                                        >
+                                                        @click.stop>
+                                                        <router-link :to="`/administrator/brand/${brand.id}`"
+                                                            class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
                                                             Ubah
                                                         </router-link>
-                                                        <button
-                                                            @click.stop="
-                                                                handleDelete(
-                                                                    brand.id,
-                                                                    brand.name
-                                                                )
-                                                            "
-                                                            :class="
-                                                                brand.deleted_at
-                                                                    ? 'block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-green-600 hover:bg-gray-100 dark:text-green-red-400 dark:hover:bg-pastel-dark-700'
-                                                                    : 'block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-red-600 hover:bg-gray-100 dark:text-pastel-red-400 dark:hover:bg-pastel-dark-700'
-                                                            "
-                                                        >
+                                                        <button @click.stop="
+                                                            handleDelete(
+                                                                brand.id,
+                                                                brand.name
+                                                            )
+                                                            " :class="brand.deleted_at
+                                                                ? 'block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-green-600 hover:bg-gray-100 dark:text-green-red-400 dark:hover:bg-pastel-dark-700'
+                                                                : 'block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-red-600 hover:bg-gray-100 dark:text-pastel-red-400 dark:hover:bg-pastel-dark-700'
+                                                                ">
                                                             {{
                                                                 brand.deleted_at
                                                                     ? "Pulihkan"
@@ -141,15 +94,12 @@
                                                         </button>
                                                     </div>
                                                 </transition>
-                                                <button
-                                                    @click.stop="
-                                                        toggleMenu(
-                                                            brand.id,
-                                                            $event
-                                                        )
-                                                    "
-                                                    class="font-bold btn btn-sm btn-blue btn-rounded"
-                                                >
+                                                <button @click.stop="
+                                                    toggleMenu(
+                                                        brand.id,
+                                                        $event
+                                                    )
+                                                    " class="font-bold btn btn-sm btn-blue btn-rounded">
                                                     Aksi
                                                 </button>
                                             </div>
@@ -160,98 +110,81 @@
                         </div>
                     </div>
                 </div>
-                <div class="md:hidden">
+                <div class="lg:hidden">
                     <div v-if="loading" class="flex justify-center p-4">
                         <div
-                            class="w-6 h-6 border-2 border-t-2 rounded-full border-pastel-dark-300 border-t-pastel-dark-700 animate-spin"
-                        ></div>
+                            class="w-6 h-6 border-2 border-t-2 rounded-full border-pastel-dark-300 border-t-pastel-dark-700 animate-spin">
+                        </div>
                     </div>
 
-                    <div
-                        v-else-if="error"
-                        class="p-4 text-center text-pastel-red-600 dark:text-pastel-red-400"
-                    >
+                    <div v-else-if="error" class="p-4 text-center text-pastel-red-600 dark:text-pastel-red-400">
                         {{ error }}
                     </div>
-
-                    <div
-                        v-else-if="brands.length === 0"
-                        class="p-4 text-center text-pastel-dark-600 dark:text-pastel-dark-300"
-                    >
-                        Tidak ada data brand
+                    <div v-else-if="brands.length === 0"
+                        class="p-4 text-center text-pastel-dark-600 dark:text-pastel-dark-300">
+                        <span class="material-icons" style="font-size: 50px;">sentiment_dissatisfied</span>
+                        <p class="mt-2">
+                            Tidak ada data brand
+                        </p>
                     </div>
 
                     <div v-else class="space-y-4">
-                        <div
-                            v-for="brand in brands"
-                            :key="brand.id"
-                            class="p-4 border rounded-lg shadow-sm dark:border-pastel-dark-500 bg-pastel-light-200 dark:bg-pastel-dark-800"
-                        >
-                            <div class="flex items-center space-x-4">
-                                <div class="flex-shrink-0">
-                                    <img
-                                        :src="`https://vl.imgix.net/img/${formatBrandName(
-                                            brand.name
-                                        )}-logo.png`"
-                                        class="object-cover max-w-72 h-16"
-                                    />
+                        <!-- bg-pastel-light-500 divide-pastel-dark-500 dark:bg-pastel-dark-700 dark:divide-pastel-light-400 -->
+                        <div v-for="brand in brands" :key="brand.id"
+                            class="p-4 border rounded-lg shadow-sm dark:border-pastel-dark-500 bg-pastel-light-500 dark:bg-pastel-dark-700">
+                            <div class="flex items-center justify-between p-1">
+                                <div class="flex items-center flex-1 space-x-4">
+                                    <div
+                                        class="flex-shrink-0 p-2 rounded-lg shadow-sm bg-pastel-light-500 dark:bg-pastel-dark-700">
+                                        <img :src="`https://vl.imgix.net/img/${formatBrandName(brand.name)}-logo.png`"
+                                            class="object-contain w-20 h-16" :alt="brand.name" />
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h3
+                                            class="text-base font-semibold truncate text-pastel-dark-700 dark:text-pastel-light-200">
+                                            {{ brand.name }}
+                                        </h3>
+                                        <div class="mt-1">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium"
+                                                :class="brand.deleted_at
+                                                    ? 'bg-pastel-red-300 text-pastel-red-800 dark:bg-pastel-red-900 dark:text-pastel-red-300'
+                                                    : 'bg-pastel-green-300 text-pastel-green-800 dark:bg-pastel-green-900 dark:text-pastel-green-300'">
+                                                <span class="w-2 h-2 rounded-full mr-1.5"
+                                                    :class="brand.deleted_at ? 'bg-pastel-red-800 dark:text-pastel-red-300' : 'bg-pastel-green-800 dark:text-pastel-green-300'"></span>
+                                                {{ brand.deleted_at ? "Tidak Aktif" : "Aktif" }}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="flex-1 min-w-0">
-                                    <p
-                                        class="text-sm font-medium text-pastel-dark-700 dark:text-pastel-light-200"
-                                    >
-                                        {{ brand.name }}
-                                    </p>
-                                </div>
-
-                                <div class="relative">
-                                    <button
-                                        @click.stop="
-                                            toggleMenu(brand.id, $event)
-                                        "
-                                        class="font-bold btn btn-sm btn-blue btn-rounded"
-                                    >
-                                        Aksi
+                                <div class="relative ml-4">
+                                    <button @click.stop="toggleMenu(brand.id, $event)"
+                                        class="p-2 text-gray-600 transition-colors rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-pastel-dark-600">
+                                        <span class="text-xl material-icons">more_vert</span>
                                     </button>
 
-                                    <transition
-                                        enter-active-class="transition duration-100 ease-out"
+                                    <transition enter-active-class="transition duration-100 ease-out"
                                         enter-from-class="transform scale-95 opacity-0"
                                         enter-to-class="transform scale-100 opacity-100"
                                         leave-active-class="transition duration-75 ease-in"
                                         leave-from-class="transform scale-100 opacity-100"
-                                        leave-to-class="transform scale-95 opacity-0"
-                                    >
-                                        <div
-                                            v-show="activeMenu === brand.id"
-                                            class="absolute right-0 z-50 overflow-hidden border rounded-lg shadow-lg top-10 dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 dark:bg-pastel-dark-800 w-36 menu-container"
-                                            @click.stop
-                                        >
-                                            <router-link
-                                                :to="`/administrator/brand/${brand.id}`"
-                                                class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700"
-                                            >
+                                        leave-to-class="transform scale-95 opacity-0">
+                                        <div v-show="activeMenu === brand.id"
+                                            class="absolute right-0 z-50 w-40 mt-2 overflow-hidden border rounded-lg shadow-lg dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 dark:bg-pastel-dark-800 menu-container">
+                                            <router-link :to="`/administrator/brand/${brand.id}`"
+                                                class="flex items-center w-full px-4 py-2.5 font-medium text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
+                                                <span class="mr-2 text-sm material-icons">edit</span>
                                                 Ubah
                                             </router-link>
-                                            <button
-                                                @click.stop="
-                                                    handleDelete(
-                                                        brand.id,
-                                                        brand.name
-                                                    )
-                                                "
-                                                :class="
-                                                    brand.deleted_at
-                                                        ? 'block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-green-600 hover:bg-gray-100 dark:text-green-red-400 dark:hover:bg-pastel-dark-700'
-                                                        : 'block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-red-600 hover:bg-gray-100 dark:text-pastel-red-400 dark:hover:bg-pastel-dark-700'
-                                                "
-                                            >
-                                                {{
-                                                    brand.deleted_at
-                                                        ? "Pulihkan"
-                                                        : "Hapus"
-                                                }}
+                                            <button @click.stop="handleDelete(brand.id, brand.name)"
+                                                :class="brand.deleted_at
+                                                    ? 'flex items-center w-full px-4 py-2.5 font-medium text-left transition-colors text-pastel-green-600 hover:bg-gray-100 dark:text-green-400 dark:hover:bg-pastel-dark-700'
+                                                    : 'flex items-center w-full px-4 py-2.5 font-medium text-left transition-colors text-pastel-red-600 hover:bg-gray-100 dark:text-pastel-red-400 dark:hover:bg-pastel-dark-700'">
+                                                <span class="mr-2 text-sm material-icons">
+                                                    {{ brand.deleted_at ? 'restore' : 'delete' }}
+                                                </span>
+                                                {{ brand.deleted_at ? "Pulihkan" : "Hapus" }}
                                             </button>
                                         </div>
                                     </transition>
@@ -260,15 +193,9 @@
                         </div>
                     </div>
                 </div>
-                <Pagination
-                    v-if="!loading && brands.length > 0"
-                    :current-page="pagination.current_page"
-                    :last-page="pagination.last_page"
-                    :from="pagination.from"
-                    :to="pagination.to"
-                    :total="pagination.total"
-                    @change-page="changePage"
-                />
+                <Pagination v-if="!loading && brands.length > 0" :current-page="pagination.current_page"
+                    :last-page="pagination.last_page" :from="pagination.from" :to="pagination.to"
+                    :total="pagination.total" @change-page="changePage" />
             </div>
         </div>
     </dashboard-layout>

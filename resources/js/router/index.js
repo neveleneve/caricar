@@ -6,6 +6,7 @@ import BrandIndex from "@/components/admin/brands/Index.vue";
 import BrandEdit from "@/components/admin/brands/Edit.vue";
 import BrandCreate from "@/components/admin/brands/Create.vue";
 import UserIndex from "@/components/admin/user/Index.vue";
+import UserEdit from "@/components/admin/user/Edit.vue";
 import ItemIndex from "@/components/admin/item/Index.vue";
 import TransaksiIndex from "@/components/admin/transaksi/Index.vue";
 import ReportIndex from "@/components/admin/report/Index.vue";
@@ -64,6 +65,11 @@ const adminRoutes = [
                 path: "",
                 name: "user_index",
                 component: UserIndex,
+            },
+            {
+                path: ":id",
+                name: "user_edit",
+                component: UserEdit,
             },
         ],
     },
