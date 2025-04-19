@@ -5,12 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class BrandController extends Controller
-{
-    public function index(Request $request)
-    {
+class BrandController extends Controller {
+    public function index(Request $request) {
         $search = $request->get('search', '');
         $query = Brand::query();
         if ($search) {
@@ -23,7 +20,6 @@ class BrandController extends Controller
             ->withTrashed()
             ->orderBy('deleted_at')
             ->paginate(10);
-
         return response()->json([
             'success' => true,
             'message' => 'Brand list',
@@ -31,20 +27,16 @@ class BrandController extends Controller
         ], 200);
     }
 
-    public function create()
-    {
-        // 
+    public function create() {
+        //
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
             ]);
-
             $brand = Brand::create($validated);
-
             return response()->json([
                 'success' => true,
                 'message' => 'Data Brand berhasil dibuat',
@@ -59,8 +51,7 @@ class BrandController extends Controller
         }
     }
 
-    public function show(Brand $brand)
-    {
+    public function show(Brand $brand) {
         return response()->json([
             'success' => true,
             'message' => 'Brand detail',
@@ -68,20 +59,15 @@ class BrandController extends Controller
         ], 200);
     }
 
-    public function edit(Brand $brand)
-    {
+    public function edit(Brand $brand) {
         //
     }
 
-    public function update(Request $request, Brand $brand)
-    {
+    public function update(Request $request, Brand $brand) {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            // tambahkan validasi lain jika perlu
         ]);
-
         $brand->update($validated);
-
         return response()->json([
             'success' => true,
             'message' => 'Brand updated successfully',
@@ -89,8 +75,7 @@ class BrandController extends Controller
         ], 200);
     }
 
-    public function destroy($brand)
-    {
+    public function destroy($brand) {
         $data = Brand::withTrashed()->find($brand);
         if ($data->trashed()) {
             $data->restore();

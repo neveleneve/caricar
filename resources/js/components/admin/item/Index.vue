@@ -1,6 +1,6 @@
 <template>
     <dashboard-layout>
-        <div class="container mx-auto mb-4">
+        <div class="mx-auto mb-4">
             <header class="page-header">
                 <div class="flex items-center gap-3">
                     <h1

@@ -1,6 +1,6 @@
 <template>
     <dashboard-layout>
-        <div class="mx-auto mb-4 container-lg">
+        <div class="mx-auto mb-4">
             <header class="page-header">
                 <div class="flex items-center justify-between gap-3">
                     <div class="flex items-center text-2xl font-bold text-gray-800 dark:text-gray-200">
@@ -18,7 +18,7 @@
                 </div>
             </header>
         </div>
-        <div class="pb-3 mx-auto rounded-lg container-lg">
+        <div class="pb-3 mx-auto rounded-lg">
             <div class="p-4 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700">
                 <div class="flex mb-6">
                     <div class="relative flex-1">
@@ -29,7 +29,6 @@
                             class="search-input-full" id="pencarian" name="pencarian" />
                     </div>
                 </div>
-                <!-- desktop table -->
                 <div class="hidden lg:block">
                     <div class="overflow-x-auto">
                         <div class="inline-block min-w-full align-middle">
@@ -41,14 +40,14 @@
                                             <img :src="`https://vl.imgix.net/img/${formatBrandName(
                                                 brand.name
                                             )}-logo.png`"
-                                                class="flex-shrink-0 object-contain p-1 rounded-lg bg-pastel-light-500 dark:bg-pastel-dark-700 h-14 w-14" />
+                                                class="flex-shrink-0 object-contain p-1 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700 h-14 w-14" />
                                         </td>
                                         <td class="td">
                                             {{ brand.name }}
                                         </td>
                                         <td class="text-center td">
                                             <span
-                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold"
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold cursor-default"
                                                 :class="brand.deleted_at
                                                     ? 'bg-pastel-red-300 text-pastel-red-800 dark:bg-pastel-red-900 dark:text-pastel-red-300'
                                                     : 'bg-pastel-green-300 text-pastel-green-800 dark:bg-pastel-green-900 dark:text-pastel-green-300'
@@ -73,14 +72,16 @@
                                                         "
                                                         class="absolute z-50 overflow-hidden border rounded-lg shadow-lg dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 -bottom-3 right-14 dark:bg-pastel-dark-800 w-36 menu-container"
                                                         @click.stop>
-                                                        <router-link :to="`/administrator/brand/${brand.id}`"
+                                                        <router-link
+                                                            :to="{ name: 'brand_edit', params: { id: brand.id } }"
                                                             class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
                                                             Ubah
                                                         </router-link>
                                                         <button @click.stop="
                                                             handleDelete(
                                                                 brand.id,
-                                                                brand.name
+                                                                brand.name,
+                                                                brand.deleted_at ? 0 : 1
                                                             )
                                                             " :class="brand.deleted_at
                                                                 ? 'block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-green-600 hover:bg-gray-100 dark:text-green-red-400 dark:hover:bg-pastel-dark-700'
@@ -116,7 +117,6 @@
                             class="w-6 h-6 border-2 border-t-2 rounded-full border-pastel-dark-300 border-t-pastel-dark-700 animate-spin">
                         </div>
                     </div>
-
                     <div v-else-if="error" class="p-4 text-center text-pastel-red-600 dark:text-pastel-red-400">
                         {{ error }}
                     </div>
@@ -129,9 +129,8 @@
                     </div>
 
                     <div v-else class="space-y-4">
-                        <!-- bg-pastel-light-500 divide-pastel-dark-500 dark:bg-pastel-dark-700 dark:divide-pastel-light-400 -->
                         <div v-for="brand in brands" :key="brand.id"
-                            class="p-4 border rounded-lg shadow-sm dark:border-pastel-dark-500 bg-pastel-light-500 dark:bg-pastel-dark-700">
+                            class="p-4 border rounded-lg shadow-sm dark:border-pastel-dark-500 bg-pastel-light-500 dark:bg-pastel-dark-700 hover:bg-pastel-light-700 dark:hover:bg-pastel-dark-800">
                             <div class="flex items-center justify-between p-1">
                                 <div class="flex items-center flex-1 space-x-4">
                                     <div
@@ -146,7 +145,7 @@
                                         </h3>
                                         <div class="mt-1">
                                             <span
-                                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium"
+                                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium cursor-default"
                                                 :class="brand.deleted_at
                                                     ? 'bg-pastel-red-300 text-pastel-red-800 dark:bg-pastel-red-900 dark:text-pastel-red-300'
                                                     : 'bg-pastel-green-300 text-pastel-green-800 dark:bg-pastel-green-900 dark:text-pastel-green-300'">
@@ -172,7 +171,7 @@
                                         leave-to-class="transform scale-95 opacity-0">
                                         <div v-show="activeMenu === brand.id"
                                             class="absolute right-0 z-50 w-40 mt-2 overflow-hidden border rounded-lg shadow-lg dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 dark:bg-pastel-dark-800 menu-container">
-                                            <router-link :to="`/administrator/brand/${brand.id}`"
+                                            <router-link :to="{ name: 'brand_edit', params: { id: brand.id } }"
                                                 class="flex items-center w-full px-4 py-2.5 font-medium text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
                                                 <span class="mr-2 text-sm material-icons">edit</span>
                                                 Ubah
@@ -297,15 +296,15 @@ const handleClickOutside = (event) => {
     }
 };
 
-const handleDelete = async (itemId, itemName) => {
+const handleDelete = async (itemId, itemName, itemStatus) => {
     const result = await Swal.fire({
-        title: "Konfirmasi Hapus",
-        text: `Apakah Anda yakin ingin menghapus ${itemName}?`,
+        title: `Konfirmasi ${itemStatus ? "Hapus" : "Pemulihan"} Data`,
+        text: `Apakah Anda yakin ingin ${itemStatus ? "menghapus" : "memulihkan"} data brand ${itemName}?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#EF4444",
         cancelButtonColor: "#6B7280",
-        confirmButtonText: "Ya, Hapus",
+        confirmButtonText: itemStatus ? "Ya, Hapus Data" : "Ya, Pulihkan Data",
         cancelButtonText: "Batal",
         background: document.documentElement.classList.contains("dark")
             ? "#1F2937"
@@ -326,7 +325,7 @@ const handleDelete = async (itemId, itemName) => {
 
             await Swal.fire({
                 title: "Berhasil!",
-                text: "Item berhasil dihapus",
+                text: "Brand berhasil " + (itemStatus ? "dihapus" : "dipulihkan"),
                 icon: "success",
                 timer: 1500,
                 background: document.documentElement.classList.contains("dark")
@@ -343,7 +342,7 @@ const handleDelete = async (itemId, itemName) => {
                 title: "Error!",
                 text:
                     error.response?.data?.message ||
-                    "Terjadi kesalahan saat menghapus item",
+                    `Terjadi kesalahan saat ${itemStatus ? "menghapus" : "memulihkan"} data.`,
                 icon: "error",
                 background: document.documentElement.classList.contains("dark")
                     ? "#1F2937"

@@ -34,7 +34,7 @@
 }
 
 .sidebar-item {
-    @apply flex items-center p-2 font-normal transition-all duration-500 rounded-lg !important;
+    @apply flex items-center justify-center sm:justify-start p-2 text-base font-normal rounded-lg hover:bg-pastel-light-200 dark:hover:bg-pastel-dark-600;
 }
 
 .sidebar-item.inactive {
@@ -49,7 +49,7 @@
 }
 
 .navbar {
-    @apply fixed z-30 w-full !important;
+    @apply fixed z-30 w-full h-16 !important;
     @apply border-b border-pastel-light-700 dark:border-pastel-dark-400 !important;
     @apply bg-pastel-light-100 dark:bg-pastel-dark-700 !important;
 }
@@ -80,7 +80,7 @@
 
 .table {
     @apply min-w-full divide-y rounded-t-lg !important;
-    @apply divide-pastel-dark-500 dark:divide-pastel-dark-500 !important;
+    @apply divide-pastel-dark-100 dark:divide-pastel-dark-600 !important;
 }
 
 .thead {
@@ -94,11 +94,11 @@
 
 .tbody {
     @apply divide-y text-nowrap !important;
-    @apply bg-pastel-light-500 divide-pastel-dark-500 dark:bg-pastel-dark-700 dark:divide-pastel-dark-400 !important;
+    @apply bg-pastel-light-100 divide-pastel-dark-500 dark:bg-pastel-dark-700 dark:divide-pastel-dark-400 !important;
 }
 
 .tbody .tr {
-    @apply hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600 !important;
+    @apply hover:bg-pastel-light-600 dark:hover:bg-pastel-dark-600 !important;
 }
 
 .tbody .tr .td {
@@ -303,4 +303,66 @@ html {
 .transform-transition {
     transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
+}
+
+.img-vertical-center {
+    @apply flex items-center justify-center !important;
+    min-height: inherit;
+}
+
+.img-horizontal-center {
+    @apply flex justify-center !important;
+}
+
+:deep(*) {
+    transition: background-color 300ms ease-in-out,
+        border-color 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+:deep(.dark) [class*="dark:"] {
+    transition: background-color 300ms ease-in-out,
+        border-color 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.router-link-active {
+    font-weight: 600;
+}
+
+.theme-icon {
+    display: inline-block;
+    transform: rotate(0deg);
+}
+
+.animate-theme {
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+
+.dark-to-light.animate-theme {
+    animation-name: spinToSun;
+}
+
+.light-to-dark.animate-theme {
+    animation-name: spinToMoon;
+}
+
+@keyframes spinToSun {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinToMoon {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(-45deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }

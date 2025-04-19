@@ -20,6 +20,6 @@ Route::middleware('api')->group(function () {
         Route::apiResource('brand', BrandController::class)
             ->except(['create', 'edit']);
         Route::apiResource('pengguna', UserController::class)
-            ->except(['create', 'store', 'edit']);
+            ->except(['create', 'store', 'edit', 'update', 'destroy']);
     });
 });

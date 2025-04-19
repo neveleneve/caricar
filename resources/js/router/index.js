@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { storage } from "@/utils/storage";
+import { STORAGE_KEYS } from "@/utils/constants";
 
-// admin pages
-import DashboardIndex from "@/components/admin/dashboard/Index.vue";
-import BrandIndex from "@/components/admin/brands/Index.vue";
+// Import components before using them in routes
 import BrandEdit from "@/components/admin/brands/Edit.vue";
 import BrandCreate from "@/components/admin/brands/Create.vue";
+import BrandIndex from "@/components/admin/brands/Index.vue";
+import DashboardIndex from "@/components/admin/dashboard/Index.vue";
 import UserIndex from "@/components/admin/user/Index.vue";
-import UserEdit from "@/components/admin/user/Edit.vue";
+import UserView from "@/components/admin/user/View.vue";
 import ItemIndex from "@/components/admin/item/Index.vue";
 import TransaksiIndex from "@/components/admin/transaksi/Index.vue";
 import ReportIndex from "@/components/admin/report/Index.vue";
-import { storage } from "@/utils/storage";
-import { STORAGE_KEYS } from "@/utils/constants";
 
 // user pages
 import Welcome from "@/components/pages/Welcome.vue";
@@ -46,7 +46,7 @@ const adminRoutes = [
                 component: BrandIndex,
             },
             {
-                path: ":id",
+                path: ":id/edit",
                 name: "brand_edit",
                 component: BrandEdit,
             },
@@ -68,8 +68,8 @@ const adminRoutes = [
             },
             {
                 path: ":id",
-                name: "user_edit",
-                component: UserEdit,
+                name: "user_view",
+                component: UserView,
             },
         ],
     },

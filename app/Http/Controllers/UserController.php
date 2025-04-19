@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
-{
-    public function index(Request $request)
-    {
+class UserController extends Controller {
+
+    public function index(Request $request) {
         $search = $request->get('search', '');
         $query = User::query();
         if ($search) {
@@ -23,7 +22,6 @@ class UserController extends Controller
         $data = $query
             ->with('roles')
             ->paginate(10);
-
         return response()->json([
             'success' => true,
             'message' => 'User list',
@@ -31,33 +29,32 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function create()
-    {
+    public function create() {
         //
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
-    public function show(string $id)
-    {
+    public function show(User $pengguna) {
+        $pengguna->load('roles');
+        return response()->json([
+            'success' => true,
+            'message' => 'User detail',
+            'data' => $pengguna
+        ], 200);
+    }
+
+    public function edit(string $id) {
         //
     }
 
-    public function edit(string $id)
-    {
+    public function update(Request $request, string $id) {
         //
     }
 
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
-    {
+    public function destroy(string $id) {
         //
     }
 }

@@ -1,19 +1,19 @@
 <template>
     <dashboard-layout>
-        <div class="mx-auto mb-4 container-lg">
+        <div class="mx-auto mb-4">
             <header class="page-header">
                 <div class="flex items-center gap-3">
                     <h1
                         class="flex items-center py-1.5 text-xl font-semibold text-pastel-dark-700 dark:text-pastel-light-500">
                         <span class="material-icons">people</span>
                         <span class="ml-1 text-pastel-dark-700 dark:text-pastel-light-500">
-                            Pengguna
+                            Data Pengguna
                         </span>
                     </h1>
                 </div>
             </header>
         </div>
-        <div class="pb-3 mx-auto rounded-lg container-lg">
+        <div class="pb-3 mx-auto rounded-lg">
             <div class="p-4 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700">
                 <div class="flex mb-6">
                     <div class="relative flex-1">
@@ -41,16 +41,16 @@
                                         <td class="td">
                                             <div class="flex items-center space-x-2">
                                                 <img v-if="pengguna.google_id" :src="`/assets/icons/icons8-google.svg`"
-                                                    class="w-5 h-5" alt="Google Logo" />
+                                                    class="w-5 h-5" alt="Google Logo" title="Google" />
                                                 <img v-if="pengguna.facebook_id"
                                                     :src="`/assets/icons/icons8-facebook-logo.svg`" class="w-5 h-5"
-                                                    alt="Facebook Logo" />
+                                                    alt="Facebook Logo" title="Facebook" />
                                             </div>
                                             <p v-if="!pengguna.google_id && !pengguna.facebook_id">-</p>
                                         </td>
                                         <td class="td">
                                             <span
-                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-pastel-blue-100 text-pastel-blue-800 dark:bg-pastel-blue-900 dark:text-pastel-blue-300">
+                                                class="inline-flex items-center cursor-default px-2.5 py-0.5 rounded-full text-xs font-medium bg-pastel-blue-100 text-pastel-blue-800 dark:bg-pastel-blue-900 dark:text-pastel-blue-300">
                                                 {{ pengguna.roles[0]?.name || "-" }}
                                             </span>
                                         </td>
@@ -67,9 +67,10 @@
                                                         "
                                                         class="absolute z-50 overflow-hidden border rounded-lg shadow-lg dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 -bottom-3 right-14 dark:bg-pastel-dark-800 w-36 menu-container"
                                                         @click.stop>
-                                                        <router-link :to="`/administrator/user/${pengguna.id}`"
+                                                        <router-link
+                                                            :to="{ name: 'user_view', params: { id: pengguna.id } }"
                                                             class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
-                                                            Ubah
+                                                            Lihat
                                                         </router-link>
                                                     </div>
                                                 </transition>
@@ -107,7 +108,7 @@
                     </div>
                     <div v-else class="space-y-4">
                         <div v-for="peng in pengguna" :key="peng.id"
-                            class="p-4 border rounded-lg shadow-sm dark:border-pastel-dark-500 bg-pastel-light-500 dark:bg-pastel-dark-700">
+                            class="p-4 border rounded-lg shadow-sm dark:border-pastel-dark-500 bg-pastel-light-500 dark:bg-pastel-dark-700 hover:bg-pastel-light-600 dark:hover:bg-pastel-dark-800">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-1 min-w-0">
                                     <p class="font-medium text-md text-pastel-dark-700 dark:text-pastel-light-200">
@@ -118,14 +119,14 @@
                                     </p>
                                     <div class="flex items-center gap-2 mt-2">
                                         <span
-                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-pastel-blue-100 text-pastel-blue-800 dark:bg-pastel-blue-900 dark:text-pastel-blue-300">
+                                            class="inline-flex items-center px-2.5 py-0.5 cursor-default rounded-full text-xs font-medium bg-pastel-blue-100 text-pastel-blue-800 dark:bg-pastel-blue-900 dark:text-pastel-blue-300">
                                             {{ peng.roles[0]?.name || "-" }}
                                         </span>
                                         <div class="flex items-center space-x-2">
                                             <img v-if="peng.google_id" :src="`/assets/icons/icons8-google.svg`"
-                                                class="w-5 h-5" alt="Google Logo" />
+                                                class="w-5 h-5" alt="Google Logo" title="Google" />
                                             <img v-if="peng.facebook_id" :src="`/assets/icons/icons8-facebook-logo.svg`"
-                                                class="w-5 h-5" alt="Facebook Logo" />
+                                                class="w-5 h-5" alt="Facebook Logo" title="Facebook" />
                                         </div>
                                     </div>
                                 </div>
@@ -143,9 +144,9 @@
                                         <div v-show="activeMenu === peng.id"
                                             class="absolute right-0 z-50 overflow-hidden border rounded-lg shadow-lg top-10 dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 dark:bg-pastel-dark-800 w-36 menu-container"
                                             @click.stop>
-                                            <router-link :to="`/administrator/user/${peng.id}`"
+                                            <router-link :to="{ name: 'user_view', params: { id: peng.id } }"
                                                 class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
-                                                Ubah
+                                                Lihat
                                             </router-link>
                                         </div>
                                     </transition>
@@ -169,7 +170,6 @@ import DashboardLayout from "@/components/layouts/Sidebar.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { storage } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/utils/constants";
-import Swal from "sweetalert2";
 import axios from "axios";
 
 const pengguna = ref([]);

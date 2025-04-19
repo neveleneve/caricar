@@ -1,225 +1,160 @@
 <template>
-    <div
-        class="min-h-screen transition-all duration-500 bg-pastel-light-600 dark:bg-pastel-dark-600"
-    >
+    <div class="min-h-screen transition-all duration-500 bg-pastel-light-100 dark:bg-pastel-dark-600">
         <nav class="navbar">
-            <div class="px-3 py-3 lg:px-5 lg:pl-3">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center justify-start">
-                        <button
-                            @click="toggleSidebar"
-                            class="flex items-center p-2 text-gray-600 rounded cursor-pointer focus:outline-none focus:ring-2 focus:ring-pastel-dark-500 lg:hidden hover:text-gray-900 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600 dark:text-gray-400"
-                        >
-                            <span
-                                class="transition-transform duration-300 material-icons"
-                                :class="{ 'rotate-90': sidebarOpen }"
-                            >
+            <div class="px-3 py-3 lg:py-4">
+                <div class="flex items-center justify-between w-full">
+                    <div class="flex items-center justify-start lg:w-64">
+                        <button @click="toggleSidebar"
+                            class="flex items-center p-2 text-gray-600 rounded cursor-pointer focus:outline-none focus:ring-2 focus:ring-pastel-dark-500 lg:hidden hover:text-gray-900 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600 dark:text-gray-400">
+                            <span class="transition-transform duration-300 material-icons"
+                                :class="{ 'rotate-90': sidebarOpen }">
                                 {{ sidebarOpen ? "close" : "menu" }}
                             </span>
                         </button>
-                        <router-link to="/" class="flex ml-2 md:mr-24">
-                            <img
-                                v-if="themeStore.isDark"
-                                :src="'/assets/logo/caricar-dark.png'"
-                                class="h-6"
-                                alt="Logo Caricar.id Dark"
-                            />
-                            <img
-                                v-else
-                                :src="'/assets/logo/caricar-light.png'"
-                                class="h-6"
-                                alt="Logo Caricar.id Light"
-                            />
-                        </router-link>
-                    </div>
-                    <div class="flex items-center">
-                        <button
-                            @click="toggleTheme"
-                            :disabled="themeStore.isTransitioning"
-                            class="flex items-center p-2 mr-4 text-gray-500 transition-opacity rounded-lg focus:outline-none focus:ring-2 focus:ring-pastel-dark-500 dark:text-gray-400 hover:bg-pastel-light-800 dark:hover:bg-pastel-dark-600"
-                            :class="{
-                                'opacity-50 cursor-wait':
-                                    themeStore.isTransitioning,
-                            }"
-                        >
-                            <span
-                                class="material-icons theme-icon"
-                                :class="[
-                                    themeStore.isDark
-                                        ? 'dark-to-light'
-                                        : 'light-to-dark',
-                                    {
-                                        'animate-theme':
-                                            themeStore.isTransitioning,
-                                    },
-                                ]"
-                            >
-                                {{
-                                    themeStore.isDark
-                                        ? "light_mode"
-                                        : "dark_mode"
-                                }}
-                            </span>
-                        </button>
-
-                        <div
-                            class="items-center hidden mr-2 font-sans font-bold text-gray-700 dark:text-gray-300 text-md md:flex"
-                        >
-                            Welcome, {{ user?.name || "User" }}
-                        </div>
-
-                        <div class="flex items-center ml-3">
-                            <button
-                                @click="logout"
-                                :disabled="isLoggingOut"
-                                class="px-2 py-2 text-sm font-bold text-white border-transparent rounded-lg bg-pastel-red-600 hover:bg-pastel-red-700 focus:outline-none focus:ring-2 focus:ring-pastel-red-300"
-                                :class="{
-                                    'opacity-75 cursor-not-allowed':
-                                        isLoggingOut,
-                                }"
-                            >
-                                <div class="flex items-center justify-center">
-                                    <span
-                                        v-if="isLoggingOut"
-                                        class="material-icons animate-spin"
-                                    >
-                                        sync
-                                    </span>
-                                    <span v-else class="material-icons">
-                                        power_settings_new
-                                    </span>
-                                </div>
-                            </button>
+                        <div class="flex items-center justify-center flex-1">
+                            <router-link to="/" class="flex">
+                                <img v-if="themeStore.isDark" :src="'/assets/logo/caricar-dark.png'" class="h-6"
+                                    alt="Logo Caricar.id Dark" />
+                                <img v-else :src="'/assets/logo/caricar-light.png'" class="h-6"
+                                    alt="Logo Caricar.id Light" />
+                            </router-link>
                         </div>
                     </div>
                 </div>
             </div>
         </nav>
-        <aside
-            class="sidebar"
-            :class="{ open: sidebarOpen, close: !sidebarOpen }"
-        >
-            <div class="flex flex-col flex-1 overflow-y-auto">
-                <div
-                    class="flex-1 px-3 py-4 space-y-1 transition-colors duration-500 bg-pastel-light-100 dark:bg-pastel-dark-700"
-                >
-                    <ul class="py-4 space-y-2">
-                        <li>
-                            <router-link
-                                to="/administrator/dashboard"
-                                class="sidebar-item"
-                                :class="[
+        <aside class="sidebar" :class="{ open: sidebarOpen, close: !sidebarOpen }">
+            <div class="flex flex-col h-full">
+                <div class="px-3 py-4 space-y-4 bg-pastel-light-100 dark:bg-pastel-dark-700">
+                    <div class="flex flex-col items-center justify-center space-y-2">
+                        <div
+                            class="flex items-center justify-center w-20 h-20 text-2xl text-white rounded-full bg-pastel-blue-700">
+                            {{ user?.name?.charAt(0).toUpperCase() || 'U' }}
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="font-semibold text-md text-pastel-dark-700 dark:text-pastel-light-500">
+                                {{ user?.name || 'User' }}
+                            </div>
+                            <div class="text-sm text-pastel-dark-500 dark:text-pastel-light-400">
+                                {{ user?.email || 'user@example.com' }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-lg material-icons text-pastel-dark-700 dark:text-pastel-light-500">
+                                {{ themeStore.isDark ? 'dark_mode' : 'light_mode' }}
+                            </span>
+                            <span class="text-sm font-medium text-pastel-dark-700 dark:text-pastel-light-500">
+                                Dark Mode
+                            </span>
+                        </div>
+                        <button @click="toggleTheme" :disabled="themeStore.isTransitioning"
+                            class="relative inline-flex items-center w-12 h-6 transition-colors duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pastel-dark-500"
+                            :class="{
+                                'bg-pastel-light-700': !themeStore.isDark,
+                                'bg-pastel-blue-700': themeStore.isDark,
+                                'opacity-50 cursor-wait': themeStore.isTransitioning
+                            }">
+                            <span class="sr-only">Toggle theme</span>
+                            <span
+                                class="inline-block w-5 h-5 transition-transform duration-300 transform bg-white rounded-full shadow"
+                                :class="{
+                                    'translate-x-6': themeStore.isDark,
+                                    'translate-x-1': !themeStore.isDark
+                                }"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex flex-col flex-1">
+                    <div
+                        class="flex-1 px-3 space-y-1 transition-colors duration-500 bg-pastel-light-100 dark:bg-pastel-dark-700">
+                        <hr class="h-px border-0 bg-pastel-dark-300 dark:bg-pastel-dark-600">
+                        <ul class="py-2 space-y-2">
+                            <li>
+                                <router-link :to="{ name: 'dashboard', params: {} }" class="sidebar-item" :class="[
                                     $route.path === '/administrator/dashboard'
                                         ? 'active'
                                         : 'inactive',
-                                ]"
-                            >
-                                <span class="material-icons"
-                                    >space_dashboard</span
-                                >
-                                <span class="ml-3">Dashboard</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link
-                                to="/administrator/brand"
-                                class="sidebar-item"
-                                :class="[
+                                ]">
+                                    <span class="material-icons">space_dashboard</span>
+                                    <span class="ml-3">Dashboard</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'brand_index', params: {} }" class="sidebar-item" :class="[
                                     $route.path.includes('/administrator/brand')
                                         ? 'active'
                                         : 'inactive',
-                                ]"
-                            >
-                                <span class="material-icons">verified</span>
-                                <span class="ml-3">Brand</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link
-                                to="/administrator/user"
-                                class="sidebar-item"
-                                :class="[
+                                ]">
+                                    <span class="material-icons">verified</span>
+                                    <span class="ml-3">Brand</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'user_index', params: {} }" class="sidebar-item" :class="[
                                     $route.path.includes('/administrator/user')
                                         ? 'active'
                                         : 'inactive',
-                                ]"
-                            >
-                                <span class="material-icons">people</span>
-                                <span class="ml-3">Pengguna</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link
-                                to="/administrator/item"
-                                class="sidebar-item"
-                                :class="[
+                                ]">
+                                    <span class="material-icons">people</span>
+                                    <span class="ml-3">Pengguna</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'item_index', params: {} }" class="sidebar-item" :class="[
                                     $route.path.includes('/administrator/item')
                                         ? 'active'
                                         : 'inactive',
-                                ]"
-                            >
-                                <span class="material-icons">inventory</span>
-                                <span class="ml-3">List Jual</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link
-                                to="/administrator/transaksi"
-                                class="sidebar-item"
-                                :class="[
+                                ]">
+                                    <span class="material-icons">inventory</span>
+                                    <span class="ml-3">Item</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'transaksi_index', params: {} }" class="sidebar-item" :class="[
                                     $route.path.includes(
                                         '/administrator/transaksi'
                                     )
                                         ? 'active'
                                         : 'inactive',
-                                ]"
-                            >
-                                <span class="material-icons">receipt_long</span>
-                                <span class="ml-3">Transaksi</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link
-                                to="/administrator/report"
-                                class="sidebar-item"
-                                :class="[
+                                ]">
+                                    <span class="material-icons">receipt_long</span>
+                                    <span class="ml-3">Transaksi</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'report_index', params: {} }" class="sidebar-item" :class="[
                                     $route.path.includes(
                                         '/administrator/report'
                                     )
                                         ? 'active'
                                         : 'inactive',
-                                ]"
-                            >
-                                <span class="material-icons">summarize</span>
-                                <span class="ml-3">Report</span>
-                            </router-link>
-                        </li>
-                    </ul>
+                                ]">
+                                    <span class="material-icons">summarize</span>
+                                    <span class="ml-3">Report</span>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="h-px border-0 bg-pastel-light-700 dark:bg-pastel-dark-400">
+                    <div class="px-3 py-4 mt-auto bg-pastel-light-100 dark:bg-pastel-dark-700">
+                        <button @click="logout" :disabled="isLoggingOut"
+                            class="flex items-center justify-between w-full px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-lg text-pastel-red-600 hover:bg-pastel-red-300 dark:text-pastel-red-700 dark:hover:bg-pastel-red-900/30"
+                            :class="{ 'opacity-75 cursor-not-allowed': isLoggingOut }">
+                            <span class="font-black">Logout</span>
+                            <span v-if="isLoggingOut" class="material-icons animate-spin">sync</span>
+                            <span v-else class="material-icons">power_settings_new</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </aside>
-
-        <div
-            class="flex pt-16 overflow-hidden transition-all duration-500 bg-pastel-light-600 dark:bg-pastel-dark-600"
-        >
-            <div
-                class="fixed inset-0 z-10"
-                v-if="sidebarOpen"
-                @click="toggleSidebar"
-            ></div>
-            <!-- <div
-                id="main-content"
-                class="relative w-full h-screen overflow-y-auto transition-all duration-500 bg-pastel-light-600 dark:bg-pastel-dark-600 lg:ml-64"
-            >
-                <main class="px-4 pt-6 pb-0 border-none">
-                    <slot></slot>
-                </main>
-            </div> -->
-            <div
-                id="main-content"
+        <div class="flex pt-16 overflow-hidden transition-all duration-500 bg-pastel-light-600 dark:bg-pastel-dark-600">
+            <div class="fixed inset-0 z-10" v-if="sidebarOpen" @click="toggleSidebar"></div>
+            <div id="main-content"
                 class="relative w-full overflow-y-auto transition-all duration-500 bg-pastel-light-600 dark:bg-pastel-dark-600 lg:ml-64"
-                :style="{ height: 'calc(100vh - 4rem)' }"
-            >
+                :style="{ height: 'calc(100vh - 4rem)' }">
                 <main class="px-4 pt-6 pb-0 border-none">
                     <slot></slot>
                 </main>
@@ -308,57 +243,4 @@ const logout = async () => {
 };
 </script>
 
-<style scoped>
-:deep(*) {
-    transition: background-color 300ms ease-in-out,
-        border-color 300ms ease-in-out, color 300ms ease-in-out;
-}
-
-:deep(.dark) [class*="dark:"] {
-    transition: background-color 300ms ease-in-out,
-        border-color 300ms ease-in-out, color 300ms ease-in-out;
-}
-
-.router-link-active {
-    font-weight: 600;
-}
-
-.theme-icon {
-    display: inline-block;
-    transform: rotate(0deg);
-}
-
-.animate-theme {
-    animation-duration: 500ms;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-in-out;
-}
-
-.dark-to-light.animate-theme {
-    animation-name: spinToSun;
-}
-
-.light-to-dark.animate-theme {
-    animation-name: spinToMoon;
-}
-
-@keyframes spinToSun {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes spinToMoon {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    50% {
-        transform: rotate(-45deg);
-    }
-
-    100% {
-        transform: rotate(0deg);
-    }
-}
-</style>
+<style scoped></style>

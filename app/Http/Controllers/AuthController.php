@@ -12,29 +12,18 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller {
 
-    /* 
-        Handles user login using email and password.
-        @param Request $request The incoming request containing the user's email and password.
-        @return \Illuminate\Http\JsonResponse The response containing the user's data and token upon successful login.
-        @throws ValidationException If the provided credentials are incorrect.
-        @throws Exception If an unexpected error occurs during the login process.
-    */
     public function login(Request $request) {
         try {
-            
             $validated = $request->validate([
                 'email' => 'required|email',
                 'password' => 'required'
             ]);
-
             if (!Auth::attempt($validated)) {
                 throw ValidationException::withMessages([
                     'email' => ['The provided credentials are incorrect.'],
                 ]);
             }
-
             $user = User::where('email', $validated['email'])->first();
-
             return response()->json([
                 'message' => 'Login successful',
                 'user' => [
@@ -66,7 +55,6 @@ class AuthController extends Controller {
             ->user()
             ->tokens()
             ->delete();
-
         return response()
             ->json([
                 'message' => 'Successfully logged out'
@@ -76,7 +64,6 @@ class AuthController extends Controller {
     public function loginWithFacebook(Request $request) {
         try {
             $user = User::where('email', $request->email)->first();
-
             if (!$user) {
                 $user = User::create([
                     'name' => $request->name,
@@ -86,7 +73,6 @@ class AuthController extends Controller {
                 ]);
                 $user->assignRole('pengguna');
             }
-
             return response()->json([
                 'message' => 'Login successful',
                 'user' => [
@@ -107,15 +93,12 @@ class AuthController extends Controller {
 
     public function loginWithGoogle(Request $request) {
         try {
-            // Add validation
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|email',
                 'google_id' => 'required|string'
             ]);
-
             $user = User::where('email', $validated['email'])->first();
-
             if (!$user) {
                 $user = User::create([
                     'name' => $validated['name'],
@@ -125,7 +108,6 @@ class AuthController extends Controller {
                 ]);
                 $user->assignRole('pengguna');
             }
-
             return response()->json([
                 'message' => 'Login successful',
                 'user' => [
