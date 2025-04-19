@@ -15,7 +15,6 @@
         </div>
         <div class="pb-3 mx-auto rounded-lg ">
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <!-- Line Chart -->
                 <div class="p-4 rounded-lg shadow bg-pastel-light-100 dark:bg-pastel-dark-700">
                     <h6 class="text-lg font-semibold text-pastel-dark-700 dark:text-pastel-light-500">
                         Monthly Sales
@@ -23,8 +22,6 @@
                     <line-chart :series="monthlySales" :categories="months">
                     </line-chart>
                 </div>
-
-                <!-- Bar Chart -->
                 <div class="p-4 rounded-lg shadow bg-pastel-light-100 dark:bg-pastel-dark-700">
                     <h6 class="text-lg font-semibold text-pastel-dark-700 dark:text-pastel-light-500">
                         Product Sales
@@ -65,6 +62,10 @@ const monthlySales = ref([
 ])
 
 const productSales = ref([
+    {
+        name: 'Forecast Next Month',
+        data: [57, 38, 44, 46, 77]
+    },
     {
         name: 'Current Month',
         data: [44, 55, 57, 56, 61]

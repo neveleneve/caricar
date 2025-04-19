@@ -19,7 +19,7 @@ class BrandController extends Controller {
         $data = $query
             ->withTrashed()
             ->orderBy('deleted_at')
-            ->paginate(10);
+            ->paginate($request->get('dataTotal', 10));
         return response()->json([
             'success' => true,
             'message' => 'Brand list',

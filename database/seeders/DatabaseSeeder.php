@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder {
             PermissionSeeder::class,
             UserSeeder::class,
             BrandSeeder::class,
+            ItemSeeder::class,
         ]);
     }
 }

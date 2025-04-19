@@ -1,5 +1,5 @@
 <template>
-    <nav class="transition-colors duration-300 bg-pastel-light-100 dark:bg-pastel-dark-600">
+    <nav class="transition-colors duration-300 bg-pastel-light-100 dark:bg-pastel-dark-700">
         <div class="flex items-center justify-between px-2 py-3 mx-auto">
             <div class="flex items-center">
                 <router-link to="/" class="flex">
@@ -21,10 +21,26 @@
                     <router-link to="/sell" class="sell-link">
                         Jual Kendaraan Anda
                     </router-link>
-                    <button @click="toggleTheme" class="theme-button">
-                        <i class="material-icons theme-icon" :class="themeIconClass">
-                            {{ themeIcon }}
-                        </i>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-lg material-icons text-pastel-dark-700 dark:text-pastel-light-500">
+                            {{ themeStore.isDark ? 'dark_mode' : 'light_mode' }}
+                        </span>
+                    </div>
+                    <button @click="toggleTheme" :disabled="themeStore.isTransitioning"
+                        class="relative inline-flex items-center w-12 h-6 transition-colors duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pastel-dark-500"
+                        :class="{
+                            'bg-pastel-light-700': !themeStore.isDark,
+                            'bg-pastel-blue-700': themeStore.isDark,
+                            'opacity-50 cursor-wait': themeStore.isTransitioning
+                        }">
+                        <span class="sr-only">Toggle theme</span>
+                        <span
+                            class="inline-block w-5 h-5 transition-transform duration-300 transform bg-white rounded-full shadow"
+                            :class="{
+                                'translate-x-6': themeStore.isDark,
+                                'translate-x-1': !themeStore.isDark
+                            }">
+                        </span>
                     </button>
                 </nav>
                 <nav v-else class="flex items-center space-x-4">
@@ -32,13 +48,29 @@
                         <span class="text-xl material-icons">home</span>
                         <span class="text-sm font-bold">Dashboard</span>
                     </router-link>
-                    <router-link to="/sell" class="sell-link">
+                    <router-link to="/sell" class="sell-link" v-if="user.role === 'pengguna'">
                         Jual Kendaraan Anda
                     </router-link>
-                    <button @click="toggleTheme" class="theme-button">
-                        <i class="material-icons theme-icon" :class="themeIconClass">
-                            {{ themeIcon }}
-                        </i>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-lg material-icons text-pastel-dark-700 dark:text-pastel-light-500">
+                            {{ themeStore.isDark ? 'dark_mode' : 'light_mode' }}
+                        </span>
+                    </div>
+                    <button @click="toggleTheme" :disabled="themeStore.isTransitioning"
+                        class="relative inline-flex items-center w-12 h-6 transition-colors duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pastel-dark-500"
+                        :class="{
+                            'bg-pastel-light-700': !themeStore.isDark,
+                            'bg-pastel-blue-700': themeStore.isDark,
+                            'opacity-50 cursor-wait': themeStore.isTransitioning
+                        }">
+                        <span class="sr-only">Toggle theme</span>
+                        <span
+                            class="inline-block w-5 h-5 transition-transform duration-300 transform bg-white rounded-full shadow"
+                            :class="{
+                                'translate-x-6': themeStore.isDark,
+                                'translate-x-1': !themeStore.isDark
+                            }">
+                        </span>
                     </button>
                     <button @click="logout" :disabled="isLoggingOut" :class="{
                         'opacity-75 cursor-not-allowed': isLoggingOut,
@@ -62,7 +94,7 @@
                     aria-label="Toggle mobile menu">
                     <i class="material-icons">{{
                         isMobileMenuOpen ? "close" : "menu"
-                        }}</i>
+                    }}</i>
                 </button>
             </div>
         </div>
@@ -123,7 +155,7 @@
                             </button>
                         </li>
                     </div>
-                    <li class="p-4">
+                    <li class="p-4" v-if="loggedIn && user.role === 'pengguna'">
                         <router-link to="/sell"
                             class="flex items-center justify-center w-full px-4 py-2 font-semibold transition-colors rounded text-pastel-light-100 bg-pastel-blue-600 hover:bg-pastel-blue-700"
                             @click="closeMobileMenu">

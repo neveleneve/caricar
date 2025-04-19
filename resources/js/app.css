@@ -81,10 +81,14 @@
 .table {
     @apply min-w-full divide-y rounded-t-lg !important;
     @apply divide-pastel-dark-100 dark:divide-pastel-dark-600 !important;
+    transition: border-color 300ms ease-in-out,
+        background-color 300ms ease-in-out, divide-color 300ms ease-in-out !important;
 }
 
 .thead {
     @apply bg-pastel-light-800 dark:bg-pastel-dark-600 !important;
+    transition: border-color 300ms ease-in-out,
+        background-color 300ms ease-in-out !important;
 }
 
 .thead .th {
@@ -99,10 +103,12 @@
 
 .tbody .tr {
     @apply hover:bg-pastel-light-600 dark:hover:bg-pastel-dark-600 !important;
+    transition: all 300ms ease-in-out !important;
 }
 
 .tbody .tr .td {
     @apply px-6 py-3 text-sm text-pastel-dark-600 dark:text-pastel-light-600 !important;
+    transition: all 300ms ease-in-out !important;
 }
 
 .btn {

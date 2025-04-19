@@ -36,17 +36,17 @@
     "src": "node_modules/car-makes-icons/dist/fonts/car-makes-icons.woff"
   },
   "resources/css/app.css": {
-    "file": "assets/app-xtQoKUG5.css",
+    "file": "assets/app-r7zVPoNL.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-hIOjyyJe.js",
+    "file": "assets/app-wZFp8d2I.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-BoW7JHC8.css"
+      "assets/app-CH_6yua0.css"
     ],
     "assets": [
       "assets/car-makes-icons-Wjs2WKc2.eot",

@@ -15,13 +15,12 @@ class UserController extends Controller {
                 $searchTerm = '%' . $search . '%';
                 $q
                     ->where('name', 'LIKE', $searchTerm)
-                    ->orWhere('email', 'LIKE', $searchTerm)
-                ;
+                    ->orWhere('email', 'LIKE', $searchTerm);
             });
         }
         $data = $query
             ->with('roles')
-            ->paginate(10);
+            ->paginate($request->get('dataTotal', 10));
         return response()->json([
             'success' => true,
             'message' => 'User list',

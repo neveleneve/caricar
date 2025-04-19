@@ -37,9 +37,7 @@
                                     empty-message="Tidak ada data brand">
                                     <template #row="{ item: brand }">
                                         <td class="td">
-                                            <img :src="`https://vl.imgix.net/img/${formatBrandName(
-                                                brand.name
-                                            )}-logo.png`"
+                                            <img :src="`https://vl.imgix.net/img/${formatBrandName(brand.name)}-logo.png`"
                                                 class="flex-shrink-0 object-contain p-1 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700 h-14 w-14" />
                                         </td>
                                         <td class="td">
@@ -48,15 +46,8 @@
                                         <td class="text-center td">
                                             <span
                                                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold cursor-default"
-                                                :class="brand.deleted_at
-                                                    ? 'bg-pastel-red-300 text-pastel-red-800 dark:bg-pastel-red-900 dark:text-pastel-red-300'
-                                                    : 'bg-pastel-green-300 text-pastel-green-800 dark:bg-pastel-green-900 dark:text-pastel-green-300'
-                                                    ">
-                                                {{
-                                                    brand.deleted_at
-                                                        ? "Tidak Aktif"
-                                                        : "Aktif"
-                                                }}
+                                                :class="brand.deleted_at ? 'bg-pastel-red-300 text-pastel-red-800 dark:bg-pastel-red-900 dark:text-pastel-red-300' : 'bg-pastel-green-300 text-pastel-green-800 dark:bg-pastel-green-900 dark:text-pastel-green-300'">
+                                                {{ brand.deleted_at ? "Tidak Aktif" : "Aktif" }}
                                             </span>
                                         </td>
                                         <td class="text-right td">
@@ -67,9 +58,7 @@
                                                     leave-active-class="transition duration-75 ease-in"
                                                     leave-from-class="transform scale-100 opacity-100"
                                                     leave-to-class="transform scale-95 opacity-0">
-                                                    <div v-show="activeMenu ===
-                                                        brand.id
-                                                        "
+                                                    <div v-show="activeMenu === brand.id"
                                                         class="absolute z-50 overflow-hidden border rounded-lg shadow-lg dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 -bottom-3 right-14 dark:bg-pastel-dark-800 w-36 menu-container"
                                                         @click.stop>
                                                         <router-link
@@ -77,30 +66,18 @@
                                                             class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
                                                             Ubah
                                                         </router-link>
-                                                        <button @click.stop="
-                                                            handleDelete(
-                                                                brand.id,
-                                                                brand.name,
-                                                                brand.deleted_at ? 0 : 1
-                                                            )
-                                                            " :class="brand.deleted_at
+                                                        <button
+                                                            @click.stop="handleDelete(brand.id, brand.name, brand.deleted_at ? 0 : 1)"
+                                                            :class="brand.deleted_at
                                                                 ? 'block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-green-600 hover:bg-gray-100 dark:text-green-red-400 dark:hover:bg-pastel-dark-700'
                                                                 : 'block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-red-600 hover:bg-gray-100 dark:text-pastel-red-400 dark:hover:bg-pastel-dark-700'
                                                                 ">
-                                                            {{
-                                                                brand.deleted_at
-                                                                    ? "Pulihkan"
-                                                                    : "Hapus"
-                                                            }}
+                                                            {{ brand.deleted_at ? "Pulihkan" : "Hapus" }}
                                                         </button>
                                                     </div>
                                                 </transition>
-                                                <button @click.stop="
-                                                    toggleMenu(
-                                                        brand.id,
-                                                        $event
-                                                    )
-                                                    " class="font-bold btn btn-sm btn-blue btn-rounded">
+                                                <button @click.stop="toggleMenu(brand.id, $event)"
+                                                    class="font-bold btn btn-sm btn-blue btn-rounded">
                                                     Aksi
                                                 </button>
                                             </div>

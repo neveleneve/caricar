@@ -140,7 +140,7 @@
                     <hr class="h-px border-0 bg-pastel-light-700 dark:bg-pastel-dark-400">
                     <div class="px-3 py-4 mt-auto bg-pastel-light-100 dark:bg-pastel-dark-700">
                         <button @click="logout" :disabled="isLoggingOut"
-                            class="flex items-center justify-between w-full px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-lg text-pastel-red-600 hover:bg-pastel-red-300 dark:text-pastel-red-700 dark:hover:bg-pastel-red-900/30"
+                            class="flex items-center justify-between w-full px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-lg bg-pastel-red-600 text-pastel-light-300 hover:bg-pastel-red-700"
                             :class="{ 'opacity-75 cursor-not-allowed': isLoggingOut }">
                             <span class="font-black">Logout</span>
                             <span v-if="isLoggingOut" class="material-icons animate-spin">sync</span>

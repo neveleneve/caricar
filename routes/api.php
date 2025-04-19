@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,8 @@ Route::middleware('api')->group(function () {
         Route::apiResource('brand', BrandController::class)
             ->except(['create', 'edit']);
         Route::apiResource('pengguna', UserController::class)
+            ->except(['create', 'store', 'edit', 'update', 'destroy']);
+        Route::apiResource('items', ItemController::class)
             ->except(['create', 'store', 'edit', 'update', 'destroy']);
     });
 });
