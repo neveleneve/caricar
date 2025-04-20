@@ -13,6 +13,13 @@ return new class extends Migration {
             $table->id();
             $table->integer('item_id');
             $table->string('nomor_polisi')->nullable();
+            $table->string('nomor_rangka')->nullable();
+            $table->string('deskripsi_kondisi')->nullable();
+            $table->string('color')->nullable();
+            $table->integer('kilometer')->nullable();
+            $table->enum('transmission', ['manual', 'automatic'])->default('manual');
+            $table->integer('indonesia_cities_code');
+            $table->string('tahun_produksi')->nullable();
             $table->timestamps();
         });
     }

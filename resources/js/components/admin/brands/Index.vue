@@ -104,7 +104,6 @@
                             Tidak ada data brand
                         </p>
                     </div>
-
                     <div v-else class="space-y-4">
                         <div v-for="brand in brands" :key="brand.id"
                             class="p-4 border rounded-lg shadow-sm dark:border-pastel-dark-500 bg-pastel-light-500 dark:bg-pastel-dark-700 hover:bg-pastel-light-700 dark:hover:bg-pastel-dark-800">
@@ -133,13 +132,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="relative ml-4">
                                     <button @click.stop="toggleMenu(brand.id, $event)"
                                         class="p-2 text-gray-600 transition-colors rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-pastel-dark-600">
                                         <span class="text-xl material-icons">more_vert</span>
                                     </button>
-
                                     <transition enter-active-class="transition duration-100 ease-out"
                                         enter-from-class="transform scale-95 opacity-0"
                                         enter-to-class="transform scale-100 opacity-100"

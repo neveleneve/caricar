@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('description')->nullable();
             $table->integer('brand_id');
             $table->integer('user_id');
+            $table->enum('vehicle_type', ['car', 'motorcycle'])->default('car');
             $table->enum('condition', ['new', 'used'])->default('new');
             $table->timestamps();
         });

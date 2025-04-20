@@ -48,7 +48,7 @@ class ItemController extends Controller {
      * Display the specified resource.
      */
     public function show(Item $item) {
-        //
+        $item->load(['brand', 'user']);
     }
 
     /**
