@@ -30,15 +30,20 @@ Route::middleware('api')->group(function () {
     Route::get('/villages/{district_code}', [WilayahController::class, 'villagesByDistrictCode']);
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        });
+        Route::get('/user', [AuthController::class, 'user']);
         Route::post('/logout', [AuthController::class, 'logout']);
+
+        // Brand route
         Route::apiResource('brand', BrandController::class)
             ->except(['create', 'edit']);
+
+        // Pengguna route
         Route::apiResource('pengguna', UserController::class)
             ->except(['create', 'store', 'edit', 'update', 'destroy']);
+
+        // Item route
         Route::apiResource('items', ItemController::class)
             ->except(['create', 'store', 'edit', 'update', 'destroy']);
+        Route::get('/items/user/{user_id}', [ItemController::class, 'userItem']);
     });
 });

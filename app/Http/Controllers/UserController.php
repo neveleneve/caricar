@@ -37,7 +37,7 @@ class UserController extends Controller {
     }
 
     public function show(User $pengguna) {
-        $pengguna->load('roles');
+        $pengguna->load('roles', 'items', 'items.itemImages', 'items.brand');
         return response()->json([
             'success' => true,
             'message' => 'User detail',

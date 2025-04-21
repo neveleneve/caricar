@@ -67,7 +67,7 @@
                                                         class="absolute z-50 overflow-hidden border rounded-lg shadow-lg dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 -bottom-3 right-14 dark:bg-pastel-dark-800 w-36 menu-container"
                                                         @click.stop>
                                                         <router-link
-                                                            :to="{ name: 'user_view', params: { id: items.id } }"
+                                                            :to="{ name: 'item_view', params: { id: items.id } }"
                                                             class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
                                                             Lihat
                                                         </router-link>
@@ -142,7 +142,6 @@ const fetchItems = async (search = "", page = 1, dataTotal = 10) => {
             },
         })
         items.value = response.data.data.data
-        console.log(response.data.data);
         pagination.value = {
             current_page: response.data.data.current_page,
             last_page: response.data.data.last_page,
@@ -171,7 +170,6 @@ const changePage = (page) => {
         fetchItems(searchQuery.value, page);
     }
 };
-
 
 const toggleMenu = (itemId, event) => {
     event.stopPropagation();

@@ -71,4 +71,26 @@ class ItemController extends Controller {
     public function destroy(Item $item) {
         //
     }
+
+    public function userItem(Request $request, $user_id) {
+        $search = $request->get('search', '');
+        $query = Item::query();
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $searchTerm = '%' . $search . '%';
+                $q
+                    ->where('name', 'LIKE', $searchTerm)
+                    ->orWhere('description', 'LIKE', $searchTerm);
+            });
+        }
+        $data = $query
+            ->with(['brand'])
+            ->where('user_id', $user_id)
+            ->paginate($request->get('dataTotal', 10));
+        return response()->json([
+            'success' => true,
+            'message' => 'Item list',
+            'data' => $data
+        ], 200);
+    }
 }

@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller {
-
     public function login(Request $request) {
         try {
             $validated = $request->validate([
@@ -129,5 +128,26 @@ class AuthController extends Controller {
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function user() {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'Token invalid',
+                'valid' => false
+            ], 401);
+        }
+
+        return response()->json([
+            'message' => 'Token valid',
+            'valid' => true,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->roles()->first()?->name ?? 'no role',
+            ]
+        ]);
     }
 }

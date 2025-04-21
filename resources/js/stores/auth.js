@@ -120,8 +120,13 @@ export const useAuthStore = defineStore("auth", {
         async verifyToken() {
             try {
                 if (!this.token) return false;
-                const response = await axios.get("/api/auth/verify");
-                return response.status === 200;
+                const response = await axios.get("/api/user");
+                if (response.data.valid) {
+                    this.user = response.data.user;
+                    storage.setItem(STORAGE_KEYS.AUTH, response.data.user);
+                    return true;
+                }
+                return false;
             } catch (error) {
                 this.clearAuth();
                 return false;

@@ -62,9 +62,7 @@
                                                     leave-active-class="transition duration-75 ease-in"
                                                     leave-from-class="transform scale-100 opacity-100"
                                                     leave-to-class="transform scale-95 opacity-0">
-                                                    <div v-show="activeMenu ===
-                                                        pengguna.id
-                                                        "
+                                                    <div v-show="activeMenu === pengguna.id"
                                                         class="absolute z-50 overflow-hidden border rounded-lg shadow-lg dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 -bottom-3 right-14 dark:bg-pastel-dark-800 w-36 menu-container"
                                                         @click.stop>
                                                         <router-link
@@ -74,12 +72,8 @@
                                                         </router-link>
                                                     </div>
                                                 </transition>
-                                                <button @click.stop="
-                                                    toggleMenu(
-                                                        pengguna.id,
-                                                        $event
-                                                    )
-                                                    " class="font-bold btn btn-sm btn-blue btn-rounded">
+                                                <button @click.stop="toggleMenu(pengguna.id, $event)"
+                                                    class="font-bold btn btn-sm btn-blue btn-rounded">
                                                     Aksi
                                                 </button>
                                             </div>
@@ -96,11 +90,9 @@
                             class="w-6 h-6 border-2 border-t-2 rounded-full border-pastel-dark-300 border-t-pastel-dark-700 animate-spin">
                         </div>
                     </div>
-
                     <div v-else-if="error" class="p-4 text-center text-pastel-red-600 dark:text-pastel-red-400">
                         {{ error }}
                     </div>
-
                     <div v-else-if="pengguna.length === 0"
                         class="p-4 text-center text-pastel-dark-600 dark:text-pastel-dark-300">
                         <span class="material-icons" style="font-size: 50px;">sentiment_dissatisfied</span>
@@ -124,7 +116,7 @@
                                         </span>
                                         <div class="flex items-center space-x-2">
                                             <img v-if="peng.google_id" :src="`/assets/icons/icons8-google.svg`"
-                                                class="w-5 h-5" alt="Google Logo" title="Google" />
+                                                alt="Google Logo" title="Google" class="w-5 h-5" />
                                             <img v-if="peng.facebook_id" :src="`/assets/icons/icons8-facebook-logo.svg`"
                                                 class="w-5 h-5" alt="Facebook Logo" title="Facebook" />
                                         </div>
@@ -132,7 +124,7 @@
                                 </div>
                                 <div class="relative ml-4">
                                     <button @click.stop="toggleMenu(peng.id, $event)"
-                                        class="p-2 text-gray-600 transition-colors rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-pastel-dark-600">
+                                        class="flex items-center justify-center p-2 text-gray-600 transition-colors rounded-lg hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-pastel-dark-600">
                                         <span class="text-xl material-icons">more_vert</span>
                                     </button>
                                     <transition enter-active-class="transition duration-100 ease-out"
@@ -141,9 +133,8 @@
                                         leave-active-class="transition duration-75 ease-in"
                                         leave-from-class="transform scale-100 opacity-100"
                                         leave-to-class="transform scale-95 opacity-0">
-                                        <div v-show="activeMenu === peng.id"
-                                            class="absolute right-0 z-50 overflow-hidden border rounded-lg shadow-lg top-10 dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 dark:bg-pastel-dark-800 w-36 menu-container"
-                                            @click.stop>
+                                        <div v-show="activeMenu === peng.id" @click.stop
+                                            class="absolute right-0 z-50 overflow-hidden border rounded-lg shadow-lg top-10 dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 dark:bg-pastel-dark-800 w-36 menu-container">
                                             <router-link :to="{ name: 'user_view', params: { id: peng.id } }"
                                                 class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
                                                 Lihat

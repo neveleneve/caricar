@@ -24,7 +24,7 @@ class Item extends Model {
     public function itemImages() {
         return $this->hasMany(ItemImage::class);
     }
-    public function itemDocument() {
-        return $this->hasMany(ItemDocument::class);
-    }
+    // public function itemDocument() {
+    //     return $this->hasMany(ItemDocument::class);
+    // }
 }

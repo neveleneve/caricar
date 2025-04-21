@@ -3,13 +3,14 @@ import { storage } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/utils/constants";
 
 // Import components before using them in routes
-import BrandEdit from "@/components/admin/brands/Edit.vue";
-import BrandCreate from "@/components/admin/brands/Create.vue";
 import BrandIndex from "@/components/admin/brands/Index.vue";
+import BrandCreate from "@/components/admin/brands/Create.vue";
+import BrandEdit from "@/components/admin/brands/Edit.vue";
 import DashboardIndex from "@/components/admin/dashboard/Index.vue";
 import UserIndex from "@/components/admin/user/Index.vue";
 import UserView from "@/components/admin/user/View.vue";
 import ItemIndex from "@/components/admin/item/Index.vue";
+import ItemView from "@/components/admin/item/View.vue";
 import TransaksiIndex from "@/components/admin/transaksi/Index.vue";
 import ReportIndex from "@/components/admin/report/Index.vue";
 
@@ -81,6 +82,11 @@ const adminRoutes = [
                 path: "",
                 name: "item_index",
                 component: ItemIndex,
+            },
+            {
+                path: ":id",
+                name: "item_view",
+                component: ItemView,
             },
         ],
     },

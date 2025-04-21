@@ -1,11 +1,9 @@
 <template>
     <table class="table">
-        <thead class="thead" v-if="items.length > 0 && !loading && !error">
+        <thead class="thead" v-if="items?.length > 0 && !loading && !error">
             <tr>
-                <th v-for="column in columns" :key="column.key" :class="[
-                    column.align ? 'text-' + column.align : 'text-left',
-                    'th',
-                ]">
+                <th v-for="column in columns" :key="column.key"
+                    :class="[column.align ? 'text-' + column.align : 'text-left', 'th', column.class]">
                     {{ column.label }}
                 </th>
             </tr>
@@ -24,7 +22,7 @@
                     {{ error }}
                 </td>
             </tr>
-            <tr v-else-if="items.length === 0">
+            <tr v-else-if="!items.length">
                 <td :colspan="columns.length" class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400">
                     <span class="material-icons" style="font-size: 50px;">sentiment_dissatisfied</span>
                     <p class="mt-2">
@@ -48,8 +46,8 @@ export default {
             required: true,
         },
         items: {
-            type: Array,
-            required: true,
+            type: Object,
+            default: () => [],
         },
         loading: {
             type: Boolean,
