@@ -8,23 +8,34 @@ use Illuminate\Http\Request;
 
 class BrandController extends Controller {
     public function index(Request $request) {
-        $search = $request->get('search', '');
-        $query = Brand::query();
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $searchTerm = '%' . $search . '%';
-                $q->where('name', 'LIKE', $searchTerm);
-            });
+        try {
+            $query = Brand::query()->withTrashed();
+
+            if ($request->has('search')) {
+                $query->where('name', 'like', '%' . $request->search . '%');
+            }
+
+            if ($request->has('status')) {
+                if ($request->status == 'active') {
+                    $query->where('deleted_at', null);
+                } elseif ($request->status == 'inactive') {
+                    $query->where('deleted_at', '!=', null);
+                }
+            }
+            $brands = $query->orderBy('deleted_at')
+                ->paginate($request->dataTotal ?? 10);
+            return response()->json([
+                'success' => true,
+                'message' => 'Brand list',
+                'data' => $brands,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Brand gagal ditampilkan',
+                'error' => $e->getMessage(),
+            ], 500);
         }
-        $data = $query
-            ->withTrashed()
-            ->orderBy('deleted_at')
-            ->paginate($request->get('dataTotal', 10));
-        return response()->json([
-            'success' => true,
-            'message' => 'Brand list',
-            'data' => $data
-        ], 200);
     }
 
     public function create() {

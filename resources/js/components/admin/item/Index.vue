@@ -5,9 +5,9 @@
                 <div class="flex items-center gap-3">
                     <h1
                         class="flex items-center py-1.5 text-xl font-semibold text-pastel-dark-700 dark:text-pastel-light-500">
-                        <span class="material-icons">inventory</span>
+                        <span class="material-icons">directions_car</span>
                         <span class="ml-1 text-pastel-dark-700 dark:text-pastel-light-500">
-                            Item
+                            Data Kendaraan
                         </span>
                     </h1>
                 </div>
@@ -20,10 +20,11 @@
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                             <span class="w-5 h-5 text-gray-400 material-icons">search</span>
                         </span>
-                        <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Cari item..."
+                        <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Cari kendaraan..."
                             class="search-input-full" id="pencarian" name="pencarian" />
                     </div>
                 </div>
+                <!-- desktop table -->
                 <div class="hidden lg:block">
                     <div class="overflow-x-auto">
                         <div class="inline-block min-w-full align-middle">
@@ -31,27 +32,23 @@
                                 <data-table :columns="columns" :items="items" :loading="loading" :error="error">
                                     <template #row="{ item: items }">
                                         <td class="td">
-                                            -
-                                        </td>
-                                        <td class="td">
-                                            {{ items.name }}
+                                            <div
+                                                class="flex-shrink-0 w-16 h-16 rounded-lg bg-pastel-light-500 dark:bg-pastel-dark-700">
+                                                <img :src="`https://vl.imgix.net/img/${formatBrandName(items.brand.name)}-logo.png`"
+                                                    :alt="items.name" class="object-contain w-full h-full" />
+                                            </div>
                                         </td>
                                         <td class="td">
                                             {{ items.brand.name }}
+                                        </td>
+                                        <td class="td">
+                                            {{ items.name }}
                                         </td>
                                         <td class="td">
                                             {{ items.user.name }}
                                         </td>
                                         <td class="td">
                                             {{ items.condition == 'new' ? 'Baru' : 'Bekas' }}
-                                        </td>
-                                        <td class="td">
-                                            {{ new Date(items.created_at).toLocaleDateString('id-ID', {
-                                                weekday: 'long',
-                                                year: 'numeric',
-                                                month: 'long',
-                                                day: 'numeric'
-                                            }) }}
                                         </td>
                                         <td class="text-right td">
                                             <div class="relative inline-flex items-center justify-end gap-2">
@@ -61,9 +58,7 @@
                                                     leave-active-class="transition duration-75 ease-in"
                                                     leave-from-class="transform scale-100 opacity-100"
                                                     leave-to-class="transform scale-95 opacity-0">
-                                                    <div v-show="activeMenu ===
-                                                        items.id
-                                                        "
+                                                    <div v-show="activeMenu === items.id"
                                                         class="absolute z-50 overflow-hidden border rounded-lg shadow-lg dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 -bottom-3 right-14 dark:bg-pastel-dark-800 w-36 menu-container"
                                                         @click.stop>
                                                         <router-link
@@ -85,6 +80,84 @@
                         </div>
                     </div>
                 </div>
+                <!-- mobile table -->
+                <div class="lg:hidden">
+                    <div v-if="loading" class="flex justify-center p-4">
+                        <div
+                            class="w-6 h-6 border-2 border-t-2 rounded-full border-pastel-dark-300 border-t-pastel-dark-700 animate-spin">
+                        </div>
+                    </div>
+                    <div v-else-if="error" class="p-4 text-center text-pastel-red-600 dark:text-pastel-red-400">
+                        {{ error }}
+                    </div>
+                    <div v-else-if="items.length === 0"
+                        class="p-4 text-center text-pastel-dark-600 dark:text-pastel-dark-300">
+                        <span class="material-icons" style="font-size: 50px;">sentiment_dissatisfied</span>
+                        <p class="mt-2">Tidak ada data item</p>
+                    </div>
+                    <div v-else class="space-y-4">
+                        <div v-for="item in items" :key="item.id"
+                            class="p-4 border rounded-lg shadow-sm dark:border-pastel-dark-500 bg-pastel-light-500 dark:bg-pastel-dark-700 hover:bg-pastel-light-600 dark:hover:bg-pastel-dark-800">
+                            <div class="flex items-center space-x-4">
+                                <!-- Image placeholder -->
+                                <div
+                                    class="flex-shrink-0 w-16 h-16 rounded-lg bg-pastel-light-500 dark:bg-pastel-dark-700">
+                                    <img :src="`https://vl.imgix.net/img/${formatBrandName(item.brand.name)}-logo.png`"
+                                        :alt="item.name" class="object-contain w-full h-full" />
+                                </div>
+
+                                <div class="flex items-center flex-1 space-x-4">
+                                    <div class="flex-1 min-w-0">
+                                        <p
+                                            class="flex items-center gap-2 font-medium text-md text-pastel-dark-700 dark:text-pastel-light-200">
+                                            {{ item.name }}
+                                            <span :class="{
+                                                'inline-flex items-center px-2.5 py-0.5 cursor-default rounded-full text-xs font-medium': true,
+                                                'bg-pastel-green-100 text-pastel-green-800 dark:bg-pastel-green-900 dark:text-pastel-green-300': item.condition === 'new',
+                                                'bg-pastel-yellow-100 text-pastel-yellow-800 dark:bg-pastel-yellow-900 dark:text-pastel-yellow-300': item.condition === 'used'
+                                            }">
+                                                {{ item.condition == 'new' ? 'Baru' : 'Bekas' }}
+                                            </span>
+                                        </p>
+                                        <p class="text-xs font-medium text-pastel-dark-700 dark:text-pastel-light-200">
+                                            {{ item.brand.name }}
+                                        </p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="text-xs text-pastel-dark-600 dark:text-pastel-dark-300">
+                                                by
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 cursor-default rounded-full text-xs font-medium bg-pastel-blue-100 text-pastel-blue-800 dark:bg-pastel-blue-900 dark:text-pastel-blue-300">
+                                                    {{ item.user.name }}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="relative ml-4">
+                                        <button @click.stop="toggleMenu(item.id, $event)"
+                                            class="flex items-center justify-center p-2 text-gray-600 transition-colors rounded-lg hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-pastel-dark-600">
+                                            <span class="text-xl material-icons">more_vert</span>
+                                        </button>
+                                        <transition enter-active-class="transition duration-100 ease-out"
+                                            enter-from-class="transform scale-95 opacity-0"
+                                            enter-to-class="transform scale-100 opacity-100"
+                                            leave-active-class="transition duration-75 ease-in"
+                                            leave-from-class="transform scale-100 opacity-100"
+                                            leave-to-class="transform scale-95 opacity-0">
+                                            <div v-show="activeMenu === item.id" @click.stop
+                                                class="absolute right-0 z-50 overflow-hidden border rounded-lg shadow-lg top-10 dark:border-pastel-dark-500 border-pastel-dark-300 bg-pastel-light-200 dark:bg-pastel-dark-800 w-36 menu-container">
+                                                <router-link :to="{ name: 'item_view', params: { id: item.id } }"
+                                                    class="block w-full px-4 py-3 font-bold text-left transition-colors text-pastel-dark-700 hover:bg-gray-100 dark:text-pastel-light-200 dark:hover:bg-pastel-dark-700">
+                                                    Lihat
+                                                </router-link>
+                                            </div>
+                                        </transition>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <Pagination v-if="!loading && items.length > 0" :current-page="pagination.current_page"
                     :last-page="pagination.last_page" :from="pagination.from" :to="pagination.to"
                     :total="pagination.total" @change-page="changePage" />
@@ -119,13 +192,17 @@ const pagination = ref({
 
 const columns = [
     { name: 'image', label: '' },
-    { name: 'name', label: 'Nama' },
     { name: 'brand', label: 'Brand' },
+    { name: 'name', label: 'Nama' },
     { name: 'seller', label: 'Penjual' },
     { name: 'condition', label: 'Kondisi' },
-    { name: 'created_at', label: 'Tanggal Pos' },
     { name: 'action', label: 'Aksi', align: 'right' },
 ]
+
+// temporary function
+const formatBrandName = (name) => {
+    return name.toLowerCase().replace(/\s+/g, "-");
+};
 
 const fetchItems = async (search = "", page = 1, dataTotal = 10) => {
     loading.value = true

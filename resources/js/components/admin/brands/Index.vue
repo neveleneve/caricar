@@ -21,12 +21,35 @@
         <div class="pb-3 mx-auto rounded-lg">
             <div class="p-4 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700">
                 <div class="flex mb-6">
-                    <div class="relative flex-1">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                            <span class="w-5 h-5 text-gray-400 material-icons">search</span>
-                        </span>
-                        <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Cari brand..."
-                            class="search-input-full" id="pencarian" name="pencarian" />
+                    <div class="flex-1">
+                        <label for="pencarian"
+                            class="block mb-1 text-sm font-medium text-pastel-dark-600 dark:text-pastel-light-300">
+                            Pencarian
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <span class="w-5 h-5 text-gray-400 material-icons">search</span>
+                            </span>
+                            <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Cari brand..."
+                                class="search-input-full" id="pencarian" name="pencarian" />
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <label for="status"
+                            class="block mb-1 text-sm font-medium text-pastel-dark-600 dark:text-pastel-light-300">
+                            Status
+                        </label>
+                        <div class="relative">
+                            <select id="status" v-model="filterStatus" @change="handleFilter"
+                                class="w-full py-2 pl-4 pr-12 border rounded-lg appearance-none text-pastel-dark-600 bg-pastel-light-500 dark:bg-pastel-dark-600 dark:border-pastel-dark-500 dark:text-pastel-light-300 focus:outline-none focus:border-pastel-dark-700">
+                                <option value="">Semua</option>
+                                <option value="active">Aktif</option>
+                                <option value="inactive">Tidak Aktif</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <span class="text-gray-400 material-icons">expand_more</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="hidden lg:block">
@@ -38,7 +61,7 @@
                                     <template #row="{ item: brand }">
                                         <td class="td">
                                             <img :src="`https://vl.imgix.net/img/${formatBrandName(brand.name)}-logo.png`"
-                                                class="flex-shrink-0 object-contain p-1 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700 h-14 w-14" />
+                                                class="flex-shrink-0 object-contain w-16 h-16 p-1 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700" />
                                         </td>
                                         <td class="td">
                                             {{ brand.name }}
@@ -110,7 +133,7 @@
                             <div class="flex items-center justify-between p-1">
                                 <div class="flex items-center flex-1 space-x-4">
                                     <div
-                                        class="flex-shrink-0 p-2 rounded-lg shadow-sm bg-pastel-light-500 dark:bg-pastel-dark-700">
+                                        class="flex-shrink-0 w-16 h-16 p-2 rounded-lg shadow-sm bg-pastel-light-500 dark:bg-pastel-dark-700">
                                         <img :src="`https://vl.imgix.net/img/${formatBrandName(brand.name)}-logo.png`"
                                             class="object-contain w-20 h-16" :alt="brand.name" />
                                     </div>
@@ -134,7 +157,7 @@
                                 </div>
                                 <div class="relative ml-4">
                                     <button @click.stop="toggleMenu(brand.id, $event)"
-                                        class="p-2 text-gray-600 transition-colors rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-pastel-dark-600">
+                                        class="flex items-center justify-center p-2 text-gray-600 transition-colors rounded-lg hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-pastel-dark-600">
                                         <span class="text-xl material-icons">more_vert</span>
                                     </button>
                                     <transition enter-active-class="transition duration-100 ease-out"
@@ -150,7 +173,8 @@
                                                 <span class="mr-2 text-sm material-icons">edit</span>
                                                 Ubah
                                             </router-link>
-                                            <button @click.stop="handleDelete(brand.id, brand.name)"
+                                            <button
+                                                @click.stop="handleDelete(brand.id, brand.name, brand.deleted_at ? 0 : 1)"
                                                 :class="brand.deleted_at
                                                     ? 'flex items-center w-full px-4 py-2.5 font-medium text-left transition-colors text-pastel-green-600 hover:bg-gray-100 dark:text-green-400 dark:hover:bg-pastel-dark-700'
                                                     : 'flex items-center w-full px-4 py-2.5 font-medium text-left transition-colors text-pastel-red-600 hover:bg-gray-100 dark:text-pastel-red-400 dark:hover:bg-pastel-dark-700'">
@@ -190,6 +214,7 @@ const activeItem = ref(null);
 const loading = ref(true);
 const error = ref(null);
 const searchQuery = ref("");
+const filterStatus = ref("");
 let searchTimeout = null;
 const pagination = ref({
     current_page: 1,
@@ -219,6 +244,7 @@ const fetchBrands = async (search = "", page = 1, dataTotal = 10) => {
                 search: search,
                 page: page,
                 dataTotal: dataTotal,
+                status: filterStatus.value,
             },
             headers: {
                 Authorization: `Bearer ${storage.getItem(STORAGE_KEYS.TOKEN)}`,
@@ -245,6 +271,11 @@ const handleSearch = () => {
         pagination.value.current_page = 1;
         fetchBrands(searchQuery.value, pagination.value.current_page);
     }, 300);
+};
+
+const handleFilter = () => {
+    pagination.value.current_page = 1;
+    fetchBrands(searchQuery.value, pagination.value.current_page);
 };
 
 const changePage = (page) => {

@@ -88,7 +88,7 @@
                                         : 'inactive',
                                 ]">
                                     <span class="material-icons">verified</span>
-                                    <span class="ml-3">Brand</span>
+                                    <span class="ml-3">Data Brand</span>
                                 </router-link>
                             </li>
                             <li>
@@ -98,7 +98,7 @@
                                         : 'inactive',
                                 ]">
                                     <span class="material-icons">people</span>
-                                    <span class="ml-3">Pengguna</span>
+                                    <span class="ml-3">Data Pengguna</span>
                                 </router-link>
                             </li>
                             <li>
@@ -107,8 +107,8 @@
                                         ? 'active'
                                         : 'inactive',
                                 ]">
-                                    <span class="material-icons">inventory</span>
-                                    <span class="ml-3">Item</span>
+                                    <span class="material-icons">directions_car</span>
+                                    <span class="ml-3">Data Kendaraan</span>
                                 </router-link>
                             </li>
                             <li>
@@ -120,7 +120,7 @@
                                         : 'inactive',
                                 ]">
                                     <span class="material-icons">receipt_long</span>
-                                    <span class="ml-3">Transaksi</span>
+                                    <span class="ml-3">Data Transaksi</span>
                                 </router-link>
                             </li>
                             <li>
