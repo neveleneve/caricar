@@ -83,7 +83,7 @@
                             </li>
                             <li>
                                 <router-link :to="{ name: 'brand_index', params: {} }" class="sidebar-item" :class="[
-                                    $route.path.includes('/administrator/brand')
+                                    $route.path.includes('/administrator/brands')
                                         ? 'active'
                                         : 'inactive',
                                 ]">

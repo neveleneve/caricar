@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use Exception;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller {
@@ -10,24 +11,29 @@ class ItemController extends Controller {
      * Display a listing of the resource.
      */
     public function index(Request $request) {
-        $search = $request->get('search', '');
-        $query = Item::query();
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $searchTerm = '%' . $search . '%';
-                $q
-                    ->where('name', 'LIKE', $searchTerm)
-                    ->orWhere('description', 'LIKE', $searchTerm);
-            });
+        try {
+            $query = Item::query()->with(['brand', 'user']);
+            if ($request->has('search')) {
+                $query->where('name', 'like', '%' . $request->search . '%');
+            }
+
+            if ($request->has('brand_id')) {
+                $query->where('brand_id', $request->brand_id);
+            }
+            $items = $query
+                ->paginate($request->dataTotal ?? 10);
+            return response()->json([
+                'success' => true,
+                'message' => 'Brand list',
+                'data' => $items,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Brand gagal ditampilkan',
+                'error' => $e->getMessage(),
+            ], 500);
         }
-        $data = $query
-            ->with(['brand', 'user'])
-            ->paginate($request->get('dataTotal', 10));
-        return response()->json([
-            'success' => true,
-            'message' => 'Item list',
-            'data' => $data
-        ], 200);
     }
 
     /**

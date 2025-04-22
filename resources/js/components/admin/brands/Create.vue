@@ -61,7 +61,7 @@ import router from "@/router";
 const addBrand = async () => {
     try {
         const response = await axios.post(
-            `/api/brand`,
+            `/api/brands`,
             {
                 name: brand.value.name,
             },
@@ -87,7 +87,7 @@ const addBrand = async () => {
                 : "#000",
         });
 
-        router.push("/administrator/brand");
+        router.push("/administrator/brands");
     } catch (err) {
         Swal.fire({
             title: "Error!",

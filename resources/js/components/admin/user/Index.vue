@@ -16,12 +16,19 @@
         <div class="pb-3 mx-auto rounded-lg">
             <div class="p-4 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700">
                 <div class="flex mb-6">
-                    <div class="relative flex-1">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                            <span class="w-5 h-5 text-gray-400 material-icons">search</span>
-                        </span>
-                        <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Cari pengguna..."
-                            class="search-input-full" id="pencarian" name="pencarian" />
+                    <div class="flex-1">
+                        <label for="pencarian"
+                            class="block mb-1 text-sm font-medium text-pastel-dark-600 dark:text-pastel-light-300">
+                            Pencarian
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <span class="w-5 h-5 text-gray-400 material-icons">search</span>
+                            </span>
+                            <input type="text" v-model="searchQuery" @input="handleSearch"
+                                placeholder="Cari pengguna..." class="search-input-full" id="pencarian"
+                                name="pencarian" />
+                        </div>
                     </div>
                 </div>
                 <!-- desktop table -->

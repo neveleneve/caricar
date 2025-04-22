@@ -34,7 +34,7 @@ Route::middleware('api')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
 
         // Brand route
-        Route::apiResource('brand', BrandController::class)
+        Route::apiResource('brands', BrandController::class)
             ->except(['create', 'edit']);
 
         // Pengguna route

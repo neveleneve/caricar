@@ -16,12 +16,49 @@
         <div class="pb-3 mx-auto rounded-lg">
             <div class="p-4 rounded-lg bg-pastel-light-100 dark:bg-pastel-dark-700">
                 <div class="flex mb-6">
-                    <div class="relative flex-1">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                            <span class="w-5 h-5 text-gray-400 material-icons">search</span>
-                        </span>
-                        <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Cari kendaraan..."
-                            class="search-input-full" id="pencarian" name="pencarian" />
+                    <div class="flex-1">
+                        <label for="pencarian"
+                            class="block mb-1 text-sm font-medium text-pastel-dark-600 dark:text-pastel-light-300">
+                            Pencarian
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <span class="w-5 h-5 text-gray-400 material-icons">search</span>
+                            </span>
+                            <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Cari brand..."
+                                class="search-input-full" id="pencarian" />
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <label for="brand"
+                            class="block mb-1 text-sm font-medium text-pastel-dark-600 dark:text-pastel-light-300">
+                            Brand
+                        </label>
+                        <div class="relative">
+                            <Combobox v-model="filterStatus" @update:modelValue="handleFilter">
+                                <div class="relative">
+                                    <ComboboxInput
+                                        class="w-full py-2 pl-4 pr-12 border rounded-lg text-pastel-dark-600 bg-pastel-light-500 dark:bg-pastel-dark-600 dark:border-pastel-dark-500 dark:text-pastel-light-300 focus:outline-none focus:border-pastel-dark-700"
+                                        @change="query = $event.target.value"
+                                        :displayValue="(status) => filterOptions.find(opt => opt.value === status)?.label || 'Semua'"
+                                        placeholder="Pilih status..." />
+                                    <ComboboxButton class="absolute inset-y-0 right-0 flex items-center px-2"
+                                        id="brand">
+                                        <span class="text-gray-400 material-icons">expand_more</span>
+                                    </ComboboxButton>
+                                </div>
+                                <ComboboxOptions
+                                    class="absolute z-10 w-full mt-1 overflow-auto rounded-md shadow-lg bg-pastel-light-500 dark:bg-pastel-dark-600 max-h-60">
+                                    <ComboboxOption v-for="option in filteredOptions" :key="option.id"
+                                        :value="option.value" v-slot="{ selected, active }">
+                                        <li
+                                            :class="['cursor-default select-none relative py-2 pl-4 pr-4', active ? 'bg-pastel-red-600 text-white' : 'text-pastel-dark-600 dark:text-pastel-light-300']">
+                                            {{ option.label }}
+                                        </li>
+                                    </ComboboxOption>
+                                </ComboboxOptions>
+                            </Combobox>
+                        </div>
                     </div>
                 </div>
                 <!-- desktop table -->
@@ -99,7 +136,6 @@
                         <div v-for="item in items" :key="item.id"
                             class="p-4 border rounded-lg shadow-sm dark:border-pastel-dark-500 bg-pastel-light-500 dark:bg-pastel-dark-700 hover:bg-pastel-light-600 dark:hover:bg-pastel-dark-800">
                             <div class="flex items-center space-x-4">
-                                <!-- Image placeholder -->
                                 <div
                                     class="flex-shrink-0 w-16 h-16 rounded-lg bg-pastel-light-500 dark:bg-pastel-dark-700">
                                     <img :src="`https://vl.imgix.net/img/${formatBrandName(item.brand.name)}-logo.png`"
@@ -170,7 +206,8 @@
 import DataTable from '@/components/layouts/DataTable.vue'
 import Pagination from '@/components/layouts/Pagination.vue'
 import DashboardLayout from '@/components/layouts/Sidebar.vue'
-import { onUnmounted, onMounted, ref } from 'vue'
+import { Combobox, ComboboxInput, ComboboxOptions, ComboboxButton, ComboboxOption } from "@headlessui/vue";
+import { onUnmounted, onMounted, ref, computed } from 'vue'
 import { storage } from '@/utils/storage'
 import { STORAGE_KEYS } from '@/utils/constants'
 import axios from 'axios'
@@ -181,7 +218,42 @@ const activeItem = ref(null)
 const loading = ref(true)
 const error = ref(null)
 const searchQuery = ref('')
+const filterStatus = ref("");
 let searchTimeout = null
+const query = ref("");
+const filterOptions = ref([
+    { id: 0, value: null, label: 'Semua' }
+])
+
+const fetchBrands = async () => {
+    try {
+        const response = await axios.get('/api/brands', {
+            headers: {
+                Authorization: `Bearer ${storage.getItem(STORAGE_KEYS.TOKEN)}`,
+            },
+        });
+        const brands = response.data.data;
+        if (Array.isArray(brands)) {
+            filterOptions.value = [
+                { id: 0, value: null, label: 'Semua' },
+                ...brands.map(brand => ({
+                    id: brand.id,
+                    value: brand.id,
+                    label: brand.name
+                }))
+            ];
+        }
+    } catch (err) {
+        console.error('Error fetching brands:', err);
+        error.value = 'Failed to load brands';
+    }
+};
+
+const filteredOptions = computed(() => {
+    return filterOptions.value.filter((option) =>
+        option.label.toLowerCase().includes(query.value.toLowerCase())
+    )
+})
 const pagination = ref({
     current_page: 1,
     last_page: 1,
@@ -199,7 +271,10 @@ const columns = [
     { name: 'action', label: 'Aksi', align: 'right' },
 ]
 
-// temporary function
+const handleFilter = () => {
+    pagination.value.current_page = 1;
+    fetchItems(searchQuery.value, pagination.value.current_page);
+};
 const formatBrandName = (name) => {
     return name.toLowerCase().replace(/\s+/g, "-");
 };
@@ -208,12 +283,18 @@ const fetchItems = async (search = "", page = 1, dataTotal = 10) => {
     loading.value = true
     error.value = null
     try {
+        const params = {
+            search: search,
+            page: page,
+            dataTotal: dataTotal,
+        }
+
+        if (filterStatus.value !== 0 && filterStatus.value !== "") {
+            params.brand_id = filterStatus.value;
+        }
+
         const response = await axios.get('/api/items', {
-            params: {
-                search: search,
-                page: page,
-                dataTotal: dataTotal
-            },
+            params: params,
             headers: {
                 Authorization: `Bearer ${storage.getItem(STORAGE_KEYS.TOKEN)}`,
             },
@@ -267,6 +348,7 @@ const handleClickOutside = (event) => {
 
 onMounted(() => {
     fetchItems()
+    fetchBrands()
     document.addEventListener("click", handleClickOutside);
 })
 

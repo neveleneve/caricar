@@ -10,7 +10,7 @@
                             <span class="ml-1 text-pastel-dark-700 dark:text-pastel-light-500">Data Brand</span>
                         </h1>
                     </div>
-                    <router-link :to="'/administrator/brand/create'"
+                    <router-link :to="'/administrator/brands/create'"
                         class="flex items-center px-3 py-1 text-white rounded-lg bg-pastel-red-600 hover:bg-pastel-red-700">
                         <span class="material-icons">add</span>
                         <span class="ml-1 font-bold">Tambah</span>
@@ -31,7 +31,7 @@
                                 <span class="w-5 h-5 text-gray-400 material-icons">search</span>
                             </span>
                             <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Cari brand..."
-                                class="search-input-full" id="pencarian" name="pencarian" />
+                                class="search-input-full" id="pencarian" />
                         </div>
                     </div>
                     <div class="ml-3">
@@ -40,15 +40,29 @@
                             Status
                         </label>
                         <div class="relative">
-                            <select id="status" v-model="filterStatus" @change="handleFilter"
-                                class="w-full py-2 pl-4 pr-12 border rounded-lg appearance-none text-pastel-dark-600 bg-pastel-light-500 dark:bg-pastel-dark-600 dark:border-pastel-dark-500 dark:text-pastel-light-300 focus:outline-none focus:border-pastel-dark-700">
-                                <option value="">Semua</option>
-                                <option value="active">Aktif</option>
-                                <option value="inactive">Tidak Aktif</option>
-                            </select>
-                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                <span class="text-gray-400 material-icons">expand_more</span>
-                            </div>
+                            <Combobox v-model="filterStatus" @update:modelValue="handleFilter">
+                                <div class="relative">
+                                    <ComboboxInput
+                                        class="w-full py-2 pl-4 pr-12 border rounded-lg text-pastel-dark-600 bg-pastel-light-500 dark:bg-pastel-dark-600 dark:border-pastel-dark-500 dark:text-pastel-light-300 focus:outline-none focus:border-pastel-dark-700"
+                                        @change="query = $event.target.value"
+                                        :displayValue="(status) => filterOptions.find(opt => opt.value === status)?.label || 'Semua'"
+                                        placeholder="Pilih status..." />
+                                    <ComboboxButton id="status"
+                                        class="absolute inset-y-0 right-0 flex items-center px-2">
+                                        <span class="text-gray-400 material-icons">expand_more</span>
+                                    </ComboboxButton>
+                                </div>
+                                <ComboboxOptions
+                                    class="absolute z-10 w-full mt-1 overflow-auto rounded-md shadow-lg bg-pastel-light-500 dark:bg-pastel-dark-600 max-h-60">
+                                    <ComboboxOption v-for="option in filteredOptions" :key="option.id"
+                                        :value="option.value" v-slot="{ selected, active }">
+                                        <li
+                                            :class="['cursor-default select-none relative py-2 pl-4 pr-4', active ? 'bg-pastel-red-600 text-white' : 'text-pastel-dark-600 dark:text-pastel-light-300']">
+                                            {{ option.label }}
+                                        </li>
+                                    </ComboboxOption>
+                                </ComboboxOptions>
+                            </Combobox>
                         </div>
                     </div>
                 </div>
@@ -202,7 +216,8 @@
 import DataTable from "@/components/layouts/DataTable.vue";
 import Pagination from "@/components/layouts/Pagination.vue";
 import DashboardLayout from "@/components/layouts/Sidebar.vue";
-import { onMounted, ref, onUnmounted } from "vue";
+import { Combobox, ComboboxInput, ComboboxOptions, ComboboxButton, ComboboxOption } from "@headlessui/vue";
+import { onMounted, ref, onUnmounted, computed } from "vue";
 import { storage } from "@/utils/storage";
 import { STORAGE_KEYS } from "@/utils/constants";
 import Swal from "sweetalert2";
@@ -216,6 +231,17 @@ const error = ref(null);
 const searchQuery = ref("");
 const filterStatus = ref("");
 let searchTimeout = null;
+const query = ref("");
+const filterOptions = [
+    { id: 0, value: 0, label: 'Semua' },
+    { id: 1, value: 'active', label: 'Aktif' },
+    { id: 2, value: 'inactive', label: 'Tidak Aktif' }
+]
+const filteredOptions = computed(() => {
+    return filterOptions.filter((option) =>
+        option.label.toLowerCase().includes(query.value.toLowerCase())
+    )
+})
 const pagination = ref({
     current_page: 1,
     last_page: 1,
@@ -223,26 +249,23 @@ const pagination = ref({
     to: 0,
     total: 0,
 });
-
 const formatBrandName = (name) => {
     return name.toLowerCase().replace(/\s+/g, "-");
 };
-
 const columns = [
     { key: "logo", label: "Logo" },
     { key: "name", label: "Nama Brand" },
     { key: "status", label: "Status", align: "center" },
     { key: "actions", label: "Aksi", align: "right" },
 ];
-
 const fetchBrands = async (search = "", page = 1, dataTotal = 10) => {
     loading.value = true;
     error.value = null;
     try {
-        const response = await axios.get("/api/brand", {
+        const response = await axios.get("/api/brands", {
             params: {
                 search: search,
-                page: page,
+                paginate: true,
                 dataTotal: dataTotal,
                 status: filterStatus.value,
             },
@@ -264,7 +287,6 @@ const fetchBrands = async (search = "", page = 1, dataTotal = 10) => {
         loading.value = false;
     }
 };
-
 const handleSearch = () => {
     if (searchTimeout) clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
@@ -272,24 +294,20 @@ const handleSearch = () => {
         fetchBrands(searchQuery.value, pagination.value.current_page);
     }, 300);
 };
-
 const handleFilter = () => {
     pagination.value.current_page = 1;
     fetchBrands(searchQuery.value, pagination.value.current_page);
 };
-
 const changePage = (page) => {
     if (page >= 1 && page <= pagination.value.last_page) {
         fetchBrands(searchQuery.value, page);
     }
 };
-
 const toggleMenu = (itemId, event) => {
     event.stopPropagation();
     activeMenu.value = activeMenu.value === itemId ? null : itemId;
     activeItem.value = brands.value.find((b) => b.id === itemId);
 };
-
 const handleClickOutside = (event) => {
     const isClickedOutside =
         !event.target.closest(".menu-container") &&
@@ -300,7 +318,6 @@ const handleClickOutside = (event) => {
         activeItem.value = null;
     }
 };
-
 const handleDelete = async (itemId, itemName, itemStatus) => {
     const result = await Swal.fire({
         title: `Konfirmasi ${itemStatus ? "Hapus" : "Pemulihan"} Data`,
@@ -322,7 +339,7 @@ const handleDelete = async (itemId, itemName, itemStatus) => {
     if (result.isConfirmed) {
         try {
             const token = storage.getItem(STORAGE_KEYS.TOKEN);
-            await axios.delete(`/api/brand/${itemId}`, {
+            await axios.delete(`/api/brands/${itemId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -366,7 +383,6 @@ onMounted(() => {
     fetchBrands();
     document.addEventListener("click", handleClickOutside);
 });
-
 onUnmounted(() => {
     document.removeEventListener("click", handleClickOutside);
 });

@@ -6,6 +6,7 @@
         "dev": "vite"
     },
     "dependencies": {
+        "@headlessui/vue": "^1.7.23",
         "@material-design-icons/font": "^0.14.15",
         "@vitejs/plugin-vue": "^5.2.1",
         "apexcharts": "^4.5.0",

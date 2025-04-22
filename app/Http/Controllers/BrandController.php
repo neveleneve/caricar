@@ -22,8 +22,15 @@ class BrandController extends Controller {
                     $query->where('deleted_at', '!=', null);
                 }
             }
-            $brands = $query->orderBy('deleted_at')
-                ->paginate($request->dataTotal ?? 10);
+
+            $query->orderBy('deleted_at');
+
+            if ($request->has('paginate') && $request->paginate === 'true') {
+                $brands = $query->paginate($request->dataTotal ?? 10);
+            } else {
+                $brands = $query->get();
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Brand list',

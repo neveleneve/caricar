@@ -74,7 +74,7 @@ const fetchBrand = async () => {
     loading.value = true;
     error.value = null;
     try {
-        const response = await axios.get(`/api/brand/${brandId.value}`, {
+        const response = await axios.get(`/api/brands/${brandId.value}`, {
             headers: {
                 Authorization: `Bearer ${storage.getItem(STORAGE_KEYS.TOKEN)}`,
             },
@@ -101,7 +101,7 @@ const updateBrand = async () => {
 
     try {
         await axios.put(
-            `/api/brand/${brandId.value}`,
+            `/api/brands/${brandId.value}`,
             { name: brand.value.name },
             {
                 headers: {
@@ -120,7 +120,7 @@ const updateBrand = async () => {
             color: isDark ? "#fff" : "#000",
         });
 
-        router.push("/administrator/brand");
+        router.push("/administrator/brands");
     } catch (err) {
         const message =
             err.response?.data?.message || "Terjadi kesalahan saat mengupdate brand";
