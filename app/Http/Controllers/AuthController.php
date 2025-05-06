@@ -56,10 +56,10 @@ class AuthController extends Controller {
             ->delete();
         return response()
             ->json([
-                'message' => 'Successfully logged out'
+                'message' => 'Successfully logged out',
             ]);
     }
-
+    
     public function loginWithFacebook(Request $request) {
         try {
             $user = User::where('email', $request->email)->first();

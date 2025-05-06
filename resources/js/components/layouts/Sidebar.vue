@@ -78,12 +78,12 @@
                                         : 'inactive',
                                 ]">
                                     <span class="material-icons">space_dashboard</span>
-                                    <span class="ml-3">Dashboard</span>
+                                    <span class="ml-3 text-center">Dashboard</span>
                                 </router-link>
                             </li>
                             <li>
                                 <router-link :to="{ name: 'brand_index', params: {} }" class="sidebar-item" :class="[
-                                    $route.path.includes('/administrator/brands')
+                                    $route.path.includes('/administrator/brand')
                                         ? 'active'
                                         : 'inactive',
                                 ]">
@@ -169,6 +169,7 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useThemeStore } from "@/stores/theme";
 import Swal from "sweetalert2";
+
 const sidebarOpen = ref(false);
 const isLoggingOut = ref(false);
 const router = useRouter();
@@ -212,10 +213,8 @@ const logout = async () => {
                 cancelButtonText: "Batal",
             })
         );
-
         if (result.isConfirmed) {
             isLoggingOut.value = true;
-            await authStore.logout();
             await Swal.fire(
                 getSwalConfig({
                     title: "Berhasil Logout!",
@@ -226,6 +225,7 @@ const logout = async () => {
                     allowOutsideClick: false,
                 })
             );
+            await authStore.logout();
             router.push("/");
         }
     } catch (error) {

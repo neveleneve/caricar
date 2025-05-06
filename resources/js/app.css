@@ -34,7 +34,7 @@
 }
 
 .sidebar-item {
-    @apply flex items-center justify-center sm:justify-start p-2 text-base font-normal rounded-lg hover:bg-pastel-light-200 dark:hover:bg-pastel-dark-600;
+    @apply flex items-center justify-center sm:justify-start  p-2 text-base font-normal rounded-lg hover:bg-pastel-light-200 dark:hover:bg-pastel-dark-600;
 }
 
 .sidebar-item.inactive {

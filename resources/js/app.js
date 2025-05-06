@@ -23,7 +23,7 @@ try {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
 } catch (error) {
-    console.error("Error accessing token:", error);
+    console.error("Error accessing token:", error);             
 }
 
 const style = document.createElement("style");
